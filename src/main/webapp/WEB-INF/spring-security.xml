@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http disable-url-rewriting="false">
+		<headers disabled="true"/>
+		<csrf disabled="true"/>
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/**" access="hasRole('COLABORADOR')"/>
+		<form-login login-page="/login"/>
+		<logout logout-url="/j_spring_security_logout" logout-success-url="/"/>
+	</http>
+
+	<authentication-manager>
+            <authentication-provider>
+                <user-service>
+                    <user name="colaborador@gmail.com" password="colaborador" authorities="ROLE_COLABORADOR" />
+                    <user name="admin@gmail.com" password="admin" authorities="ROLE_COLABORADOR,ROLE_ADMINISTRADOR" />
+                </user-service>
+            </authentication-provider>
+	</authentication-manager>
+
+	<global-method-security pre-post-annotations="enabled" />
+
+</b:beans>

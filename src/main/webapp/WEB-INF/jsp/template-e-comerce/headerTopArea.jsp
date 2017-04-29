@@ -22,7 +22,7 @@
                                     <c:out value="${sessionScope.user}"/>    
                                     <i class="fa fa-angle-down"></i></a>
                                     <ul>
-                                        <li><a href="logout.html"><i class="fa fa-sign-out" aria-hidden="true"></i>salir</a></li>
+                                        <li><a href="${param.logout != null ? param.logout:'logout.html'}"><i class="fa fa-sign-out" aria-hidden="true"></i>salir</a></li>
                                         <!--<li><a href="#">AUD</a></li>
                                         <li><a href="#">Rs</a></li>-->
                                     </ul>

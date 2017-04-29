@@ -15,6 +15,7 @@ import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class LoginController {
         return modelAndView;
     }
     @RequestMapping(value="login.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public @ResponseBody String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpSession session){
+    public @ResponseBody String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpSession session,HttpServletRequest request){
         log.info("INICIO");
         log.info("datos ->{}",loginForm.toString());
         LoginResponse response = usuarioServices.validacionUsuario(new LoginRequest(loginForm.getUser(), loginForm.getPassword()));
@@ -64,6 +65,13 @@ public class LoginController {
             usuarioSession.setIdUsuario(response.getIdUsuario());//rut de cliente sin dv
             session.setAttribute("user", loginForm.getUser());
             rBody.setGoToUrl(GoToUrl.URL_HOME);
+            String uri = request.getScheme() + "://" +
+             request.getServerName() + 
+             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+             request.getRequestURI() +
+            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+            
+            log.info("{} uri->{}",mensajeLog,uri);
             log.info("{} Se redirecciona a login",mensajeLog);
         }
         String respJson =  new Gson().toJson(rBody);
@@ -85,10 +93,15 @@ public class LoginController {
      * @return 
      */
     @RequestMapping(value="requestPassword.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public @ResponseBody String recuperarPassword(@RequestParam("u") String usuario){
+    public @ResponseBody String recuperarPassword(@RequestParam("u") String usuario,HttpServletRequest request){
         log.info("INICIO");
         log.info("Usuario/correo a recuperar password ->{}",usuario);
-        ValidacionResponse response = usuarioServices.recuperacionPassword(new RecuperacionPasswordRequest(usuario));
+        String uri = request.getScheme() + "://" +
+             request.getServerName() + 
+             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+             "/BennderB2BWeb/index.html";
+        log.info("url index->{}",uri);    
+        ValidacionResponse response = usuarioServices.recuperacionPassword(new RecuperacionPasswordRequest(usuario,uri));
         String respJson =  new Gson().toJson(response);
         log.info("FIN");
         return respJson;

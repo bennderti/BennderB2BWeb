@@ -54,6 +54,7 @@
             <div class="row center-login">
                 <div class="col-md-6 col-sm-6">
                     <p>Bienvenidos al <strong>mantenedor</strong> de beneficios</p>
+                    <button type="button" class="btn btn-primary crea-beneficio" onclick="location.href = 'beneficio/crear.html';"><i class="fa fa-plus-circle" aria-hidden="true"></i><span> Beneficio</span></button>
                 </div>
             </div>
         </div>
@@ -83,5 +84,6 @@
     <!-- Loading -->
     <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
     <!-- Loading -->
+    <script type="text/javascript" src="<c:url value="/resources/js/proveedor/proveedor.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
 </body>
 </html>

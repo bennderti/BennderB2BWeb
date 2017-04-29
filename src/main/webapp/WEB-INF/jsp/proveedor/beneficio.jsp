@@ -50,7 +50,85 @@
 <!--        <div class="my-account-area">-->
             <div class="container">
                 <h2>Información de beneficio</h2>
-                <form></form>
+                <!--https://v4-alpha.getbootstrap.com/components/forms/-->
+                <form:form  method="POST" 
+                            action="../proveedor/informacionGeneral.html" 
+                            id="form-proveedor" 
+                            modelAttribute="beneficioForm" 
+                            enctype="multipart/form-data">
+                      <div class="form-group">
+                        <label for="ti-nombre-promocion" class="col-2 col-form-label">Nombre Promoción</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" value="" id="ti-nombre-promocion">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="example-datetime-local-input" class="col-2 col-form-label">Fecha Inicio</label>
+                        <div class="col-10">
+                          <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="example-date-input" class="col-2 col-form-label">Fecha Expiración</label>
+                        <div class="col-10">
+                          <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="ul-lista-condiciones" class="col-2 col-form-label">Condiciones</label>
+                        <div class="col-10">
+                            <button type="button" class="btn btn-primary">+ Agregar</button>
+                            <ul class="list-group" id="ul-lista-condiciones">
+                                <li class="list-group-item disabled">Cras justo odio</li>
+                                <li class="list-group-item">Dapibus ac facilisis in</li>
+                                <li class="list-group-item">Morbi leo risus</li>
+                                <li class="list-group-item">Porta ac consectetur ac</li>
+                                <li class="list-group-item">Vestibulum at eros</li>
+                            </ul>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="ti-stock" class="col-2 col-form-label">Stock</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" value="1" id="ti-stock">
+                        </div>
+                      </div>
+                     <div class="form-group">
+                        <label for="ti-stock" class="col-2 col-form-label">Categoría</label>
+                        <div class="col-10">
+                            <select class="form-control">
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>                                
+                            </select>
+                        </div>
+                      </div>
+                    <div class="form-group">
+                        <label for="ti-stock" class="col-2 col-form-label">Sub-Categoría</label>
+                        <div class="col-10">
+                            <select class="form-control">
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>                                
+                            </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group"> 
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <div class="checkbox">
+                            <label><input type="checkbox"> Remember me</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group"> 
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                      </div>
+                </form:form> 
             </div>
 <!--        </div>-->
 

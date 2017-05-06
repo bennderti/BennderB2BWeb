@@ -105,7 +105,7 @@ public class ProveedorController {
                 log.info("proveedorForm.getLogoImagen())->{}, tamanio->{}",proveedorForm.getLogoImagen().getName(),tamanio);
             }
             DatosGeneralProveedorRequest request = new DatosGeneralProveedorRequest(new Proveedor(proveedorForm.getIdProveedorSelect(), proveedorForm.getNombre(), proveedorForm.getRut(), null, proveedorForm.getPathLogo(), null,proveedorForm.getLogoImagen()!=null?proveedorForm.getLogoImagen().getBytes():null,proveedorForm.getLogoImagen()!=null?proveedorForm.getLogoImagen().getOriginalFilename():null));
-            request.setIdUsuario(usuarioSession.getIdUsuario());
+            //request.setIdUsuario(usuarioSession.getIdUsuario());
             DatosGeneralProveedorResponse response = proveedorServices.guardaDatosGeneralesProveedor(request);
             if("0".equals(response.getValidacion().getCodigo())){
                 proveedorSession.setLista(null);

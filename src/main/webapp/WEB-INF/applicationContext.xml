@@ -18,6 +18,9 @@
     <bean id="proveedorSession" class="cl.bennder.bennderweb.session.ProveedorSession" scope="session">
         <aop:scoped-proxy/>
     </bean> 
+    <bean id="beneficioSession" class="cl.bennder.bennderweb.session.BeneficioSession" scope="session">
+        <aop:scoped-proxy/>
+    </bean> 
     <bean id="SessionFilter" name="SessionFilter" class="cl.bennder.bennderweb.filter.SessionFilter" />
   
 </beans>

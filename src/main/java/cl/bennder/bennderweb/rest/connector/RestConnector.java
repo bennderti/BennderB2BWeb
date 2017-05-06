@@ -13,11 +13,13 @@ import cl.bennder.entitybennderwebrest.request.CategoriasRequest;
 import cl.bennder.entitybennderwebrest.request.DatosGeneralProveedorRequest;
 import cl.bennder.entitybennderwebrest.request.GeneraCuponQrRequest;
 import cl.bennder.entitybennderwebrest.request.GetCuponBeneficioRequest;
+import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.ProveedorIdRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
 import cl.bennder.entitybennderwebrest.request.SubCategoriaProveedorRequest;
 import cl.bennder.entitybennderwebrest.request.UploadBeneficioImagenRequest;
+import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.request.ValidacionCuponPOSRequest;
 import cl.bennder.entitybennderwebrest.response.BeneficiosCargadorResponse;
 import cl.bennder.entitybennderwebrest.response.CanjeaCuponResponse;
@@ -25,10 +27,12 @@ import cl.bennder.entitybennderwebrest.response.CategoriasResponse;
 import cl.bennder.entitybennderwebrest.response.DatosGeneralProveedorResponse;
 import cl.bennder.entitybennderwebrest.response.GeneraCuponQrResponse;
 import cl.bennder.entitybennderwebrest.response.GetCuponBeneficioResponse;
+import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ProveedoresResponse;
 import cl.bennder.entitybennderwebrest.response.SubCategoriaProveedorResponse;
 import cl.bennder.entitybennderwebrest.response.UploadBeneficioImagenResponse;
+import cl.bennder.entitybennderwebrest.response.UploadImagenesGenericaResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionCuponPOSResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import org.slf4j.Logger;
@@ -47,6 +51,13 @@ import org.springframework.web.client.RestTemplate;
  */
 public class RestConnector {
     private static final Logger LOG = LoggerFactory.getLogger(RestConnector.class);
+    
+    public static UploadImagenesGenericaResponse uploadImagenesGenerica(final UploadImagenesGenericaRequest query){
+        return clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_UPLOAD_IMAGENES_GENERICA, query, UploadImagenesGenericaResponse.class);
+    }
+    public static GetTodasCategoriaResponse getTodasCategorias(final GetTodasCategoriaRequest query){
+        return clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_ALL_CATEGORIA, query, GetTodasCategoriaResponse.class);
+    }
     
     public static UploadBeneficioImagenResponse uploadImagenesBeneficios( final UploadBeneficioImagenRequest query ) {
         return clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_UPLOAD_IMAGENES_BENEFICIOS, query, UploadBeneficioImagenResponse.class);

@@ -15,7 +15,9 @@ public abstract class URLServiciosBennderB2B {
     public static final String URL_GET_SUB_CATEGORIAS_BY_ID_CAT_PROV = "proveedor/getSubCategoriasProveedor";
     public static final String URL_GET_CATEGORIAS_BY_PROVEEDOR = "proveedor/obtenerCategoriaByProveedor";
     public static final String URL_GURDA_DATOS_GRALES_PROVEEDOR = "proveedor/guardaDatosGenerales";
-    public static final String URL_UPLOAD_IMAGENES_BENEFICIOS = "proveedor/uploadImagenesBeneficios";    
+    public static final String URL_UPLOAD_IMAGENES_BENEFICIOS = "proveedor/uploadImagenesBeneficios"; 
+    public static final String URL_GET_ALL_CATEGORIA = "beneficio/getTodasCategorias"; 
+    public static final String URL_UPLOAD_IMAGENES_GENERICA = "beneficio/uploadImagenesGenerica";
     public static final String URL_GET_PROVEEDORES_HABILITADOS = "proveedor/obtenerProveedorHabilitados";    
     public static final String URL_GET_BENEFICIOS_BY_ID_CAT = "proveedor/getBeneficiosByIdCat";
     

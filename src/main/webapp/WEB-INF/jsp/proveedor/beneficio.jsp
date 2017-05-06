@@ -9,6 +9,28 @@
         <jsp:include page="/WEB-INF/jsp/template-e-comerce/head.jsp"/>
         <!-- all css here -->
         <jsp:include page="/WEB-INF/jsp/template-e-comerce/cssTemplate.jsp"/>
+        
+        <style>            
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+        </style>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -52,26 +74,26 @@
                 <h2>Información de beneficio</h2>
                 <!--https://v4-alpha.getbootstrap.com/components/forms/-->
                 <form:form  method="POST" 
-                            action="../proveedor/informacionGeneral.html" 
-                            id="form-proveedor" 
+                            action="../beneficio/guardar.html" 
+                            id="form-beneficio" 
                             modelAttribute="beneficioForm" 
                             enctype="multipart/form-data">
                       <div class="form-group">
                         <label for="ti-nombre-promocion" class="col-2 col-form-label">Nombre Promoción</label>
                         <div class="col-10">
-                          <input class="form-control" type="text" value="" id="ti-nombre-promocion">
+                          <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="50" cssClass="form-control"/>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="example-datetime-local-input" class="col-2 col-form-label">Fecha Inicio</label>
+                        <label for="f-inicio" class="col-2 col-form-label">Fecha Expiración</label>
                         <div class="col-10">
-                          <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+                            <input class="form-control" type="date" value="2011-08-19" id="f-inicio" name="fechaInicio">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="example-date-input" class="col-2 col-form-label">Fecha Expiración</label>
+                        <label for="f-expiracion" class="col-2 col-form-label">Fecha Expiración</label>
                         <div class="col-10">
-                          <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                            <input class="form-control" type="date" value="2011-08-19" id="f-expiracion" name="fechaExpiracion">
                         </div>
                       </div>
                       <div class="form-group">
@@ -83,38 +105,126 @@
                                 <li class="list-group-item">Dapibus ac facilisis in</li>
                                 <li class="list-group-item">Morbi leo risus</li>
                                 <li class="list-group-item">Porta ac consectetur ac</li>
-                                <li class="list-group-item">Vestibulum at eros</li>
+                                <li class="list-group-item">Vestibulum at eros</li>                                
                             </ul>
+                            <input type="hidden" name="condiciones[0]" value="condicion 1"/>
+                            <input type="hidden" name="condiciones[1]" value="condicion 2"/>
+                            <input type="hidden" name="condiciones[2]" value="condicion 3"/>
+                            <input type="hidden" name="condiciones[3]" value="condicion 4"/>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="ti-stock" class="col-2 col-form-label">Stock</label>
                         <div class="col-10">
-                          <input class="form-control" type="text" value="1" id="ti-stock">
+                          <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control"/>
                         </div>
                       </div>
                      <div class="form-group">
-                        <label for="ti-stock" class="col-2 col-form-label">Categoría</label>
+                        <label for="ti-categoria" class="col-2 col-form-label">Categoría</label>
                         <div class="col-10">
-                            <select class="form-control">
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>                                
-                            </select>
+                            <form:select path="idCategoriaSelected" 
+                                         id = "select-categorias" 
+                                         cssClass="form-control" onchange="Beneficio.onChangeCategoria();">
+                                <form:option value="-1" label="--Seleccione Categoria--"/>
+                                <form:options items="${categorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
+                            </form:select>
                         </div>
                       </div>
                     <div class="form-group">
-                        <label for="ti-stock" class="col-2 col-form-label">Sub-Categoría</label>
+                        <label for="ti-categoria" class="col-2 col-form-label">Sub-Categoría</label>
                         <div class="col-10">
-                            <select class="form-control">
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>                                
-                            </select>
+                            <form:select path="idSubCategoriaSelected" 
+                                         id = "select-sub-categorias" 
+                                         cssClass="form-control">
+                                <form:option value="-1" label="--Seleccione Sub Categoria--"/>
+                                <form:options items="${subCategorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
+                            </form:select>
                         </div>
                       </div>
+                      
+                      <div class="form-group">
+                        <label for="ti-stock" class="col-2 col-form-label">Sucursales/Tiendas de Canje</label>
+                      </div>
+                      <c:if test="${not empty sucursalesProveedor}">
+                        <c:forEach items="${sucursalesProveedor}" var="sp">
+                            <div class="form-check form-check-inline">
+                              <label class="form-check-label">
+<!--                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled> Sucursal 3-->
+                                      <form:checkbox cssClass="form-check-input" path="sucursalesSelected" value="${sp.idSucursal}"/><c:out value="${sp.nombreSucursal}"/>
+                              </label>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                        
+                        
+                        
+                      <div class="form-group">
+                        <label class="btn btn-default btn-file">
+                            Adjuntar <input type="file" hidden id="f-adjuntar" multiple="multiple" name = "images">
+                        </label>
+                          <span class ="n-file-adjuntar">0 Imagenes</span>  
+                      </div>
+                    <div class="form-group">
+                        <label class="btn btn-default btn-file">
+                            <button type="button" class="btn btn-primary">Adjuntar Genérico</button>
+                        </label>
+                        <span class ="n-file-adjuntar-generico">0 Imagenes</span>
+                        <input name="imagenesGenericas[0]" type="hidden" value="/etc/1.png"/>
+                        <input name="imagenesGenericas[1]" type="hidden" value="/etc/2.png"/>
+                        <input name="imagenesGenericas[2]" type="hidden" value="/etc/3.png"/>
+                        <input name="imagenesGenericas[3]" type="hidden" value="/etc/4.png"/>
+                        <input name="imagenesGenericas[4]" type="hidden" value="/etc/5.png"/>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="ta-descripcion">Descripción</label>
+                         <form:textarea path="descripcion" id="ti-descripcion" cssClass="form-control"/>  
+                      </div>
+                      <div class="form-group">
+                        <label for="ti-stock" class="col-2 col-form-label">Tipo de Promoción</label>
+                      </div>                                            
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                          Descuento
+                        </label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" value="50%" id="ti-dscto">
+                        </div>
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                          Precio Oferta
+                        </label>                          
+                        <label for="ti-antes" class="col-2 col-form-label">Antes</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" value="1" id="ti-antes">
+                        </div>
+                        <label for="ti-hoy" class="col-2 col-form-label">Hoy</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" value="1" id="ti-hoy">
+                        </div>
+                      </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                          Producto/Servicio Adicional
+                        </label>
+                        <div class="form-group">
+                            <div class="col-10">
+                                <button type="button" class="btn btn-primary">+ Agregar</button>
+                                <ul class="list-group" id="ul-lista-condiciones">
+                                    <li class="list-group-item disabled">Adicional 1</li>
+                                    <li class="list-group-item">Adicional 2</li>
+                                    <li class="list-group-item">Adicional 3</li>
+                                    <li class="list-group-item">Adicional 4</li>
+                                    <li class="list-group-item">Adicional 5</li>
+                                </ul>
+                            </div>
+                        </div>
+                      </div>
+                    
                       
                       <div class="form-group"> 
                         <div class="col-sm-offset-2 col-sm-10">
@@ -125,7 +235,7 @@
                       </div>
                       <div class="form-group"> 
                         <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-default">Submit</button>
+                          <button type="submit" class="btn btn-default btn-guardar">Guardar</button>
                         </div>
                       </div>
                 </form:form> 

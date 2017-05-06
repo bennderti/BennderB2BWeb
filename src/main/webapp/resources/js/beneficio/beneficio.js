@@ -1,18 +1,41 @@
 jQuery(document).on('ready', function () {
 
     //https://www.w3schools.com/bootstrap/bootstrap_popover.asp
-    $("#select-proveedores").on("change",function(){
-        Cargador.cargarCategoriaProveedor();
-    });
-
-    $("#select-categorias").on("change",function(){
-        Cargador.cargarSubCatById();
-    });
-    $("#select-sub-categorias").on("change",function(){
-        Cargador.cargarBeneficioByIdCat();
-    });
+//    $("#select-proveedores").on("change",function(){
+//        Cargador.cargarCategoriaProveedor();
+//    });
+//
+//    $("#select-categorias").on("change",function(){
+//        Cargador.cargarSubCatById();
+//    });
+//    $("#select-sub-categorias").on("change",function(){
+//        Cargador.cargarBeneficioByIdCat();
+//    });
 });
 var Beneficio = {
+    onValidaUploadImagen:function(){
+        var idCat=$("#select-categorias").val();
+        var idSubCat=$("#select-sub-categorias").val();
+        $("#input-idProv").val(idSubCat);
+        if(idCat!=='-1' && idSubCat !== '-1'){            
+            $("#ipth-id-subcat").val(idSubCat);
+            $("#form-img-generica").submit();
+            
+        }
+        else{
+            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar categoría y sub-categoría.", titulo: "Cargador"});
+        }
+        
+    },
+    onChangeCategoria:function(){        
+//        var id = $("#lista-proveedor").val();
+//        if(id !== null && id !== "-1"){
+//            window.location.href = context+"/proveedor/informacionGeneral.html?id="+id;
+//        }
+//        else{
+//            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar proveedor", titulo: "Proveedor"});            
+//        }
+    },
     previewImage:function(a){
         var imgSrc = $(a).parent().parent().parent().find("td div img").attr("src");
         if(imgSrc !== undefined && imgSrc !== ''){
@@ -139,21 +162,20 @@ var Beneficio = {
             }
         }); 
     },
-    cargarSubCatById:function(){
+    onChangeSubCategoriaImgGenerica:function(){
         var idCat = $("#select-categorias").val();
-        var idProv = $("#select-proveedores").val();
-        if(idProv!=='-1' && idCat!=='-1'){
+        if(idCat!=='-1'){
             $.ajax({
-                url: context+'/proveedor/getSubCatById.html',
+                url: context+'/beneficio/getSubCatById.html',
                 type: 'GET',
                 dataType: 'JSON',
-                data: {idCat:idCat,idProv:idProv},
-                success: function (response) {
-                    if(response !==undefined && response !== null){
+                data: {idCat:idCat},
+                success: function (array) {
+                    if(array !==undefined && array !== null){
                         $("#select-sub-categorias option").remove();
-                        $("#select-sub-categorias").append("<option value ='-1'>Seleccione sub categoria...</option>");
-                        for(var i= 0;i < response.subCategorias.length;i++){
-                           var c = response.subCategorias[i];
+                        $("#select-sub-categorias").append("<option value ='-1'>--Seleccione Sub Categoria--</option>");
+                        for(var i= 0;i < array.length;i++){
+                           var c = array[i];
                            $("#select-sub-categorias").append("<option value ='"+c.idCategoria+"'>"+c.nombre+"</option>");
                         } 
                     }
@@ -164,10 +186,8 @@ var Beneficio = {
             }); 
         }
         else{
-            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar proveedor/categoróa.", titulo: "Cargador"});
+            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar categoróa.", titulo: "Cargador"});
         }
-
-        
     }
 };
 

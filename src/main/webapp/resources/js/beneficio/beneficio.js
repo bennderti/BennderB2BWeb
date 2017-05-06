@@ -13,6 +13,10 @@ jQuery(document).on('ready', function () {
 //    });
 });
 var Beneficio = {
+    onValidaGuardaBeneficio:function(){
+        $("#input-idSubCategoriaSelected").val($("#select-sub-categorias").val());
+        $("#form-beneficio").submit();
+    },
     onValidaUploadImagen:function(){
         var idCat=$("#select-categorias").val();
         var idSubCat=$("#select-sub-categorias").val();
@@ -28,13 +32,31 @@ var Beneficio = {
         
     },
     onChangeCategoria:function(){        
-//        var id = $("#lista-proveedor").val();
-//        if(id !== null && id !== "-1"){
-//            window.location.href = context+"/proveedor/informacionGeneral.html?id="+id;
-//        }
-//        else{
-//            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar proveedor", titulo: "Proveedor"});            
-//        }
+        var idCat = $("#select-categorias").val();
+        if(idCat!=='-1'){
+            $.ajax({
+                url: context+'/beneficio/getSubCatById.html',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {idCat:idCat},
+                success: function (array) {
+                    if(array !==undefined && array !== null){
+                        $("#select-sub-categorias option").remove();
+                        $("#select-sub-categorias").append("<option value ='-1'>--Seleccione Sub Categoria--</option>");
+                        for(var i= 0;i < array.length;i++){
+                           var c = array[i];
+                           $("#select-sub-categorias").append("<option value ='"+c.idCategoria+"'>"+c.nombre+"</option>");
+                        } 
+                    }
+                },
+                error: function (x, y, z) {
+                    ModalBennder.mostrar({tipo: "error", mensaje: "Error al cargar subctegorias", titulo: "Categoria Beneficio"});
+                }
+            }); 
+        }
+        else{
+            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar categoróa.", titulo: "Categoria Beneficio"});
+        }
     },
     previewImage:function(a){
         var imgSrc = $(a).parent().parent().parent().find("td div img").attr("src");

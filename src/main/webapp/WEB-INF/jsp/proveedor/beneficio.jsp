@@ -131,14 +131,12 @@
                         </div>
                       </div>
                     <div class="form-group">
-                        <label for="ti-categoria" class="col-2 col-form-label">Sub-Categoría</label>
+                        <label for="ti-sub-categoria" class="col-2 col-form-label">Sub-Categoría</label>
                         <div class="col-10">
-                            <form:select path="idSubCategoriaSelected" 
-                                         id = "select-sub-categorias" 
-                                         cssClass="form-control">
-                                <form:option value="-1" label="--Seleccione Sub Categoria--"/>
-                                <form:options items="${subCategorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
-                            </form:select>
+                            <select id = "select-sub-categorias" class="form-control">
+                                <option value="-1">--Seleccione Sub Categoria--</option>                                
+                            </select>
+                            <input type="hidden" name="idSubCategoriaSelected" id="input-idSubCategoriaSelected"/>
                         </div>
                       </div>
                       
@@ -233,12 +231,12 @@
                           </div>
                         </div>
                       </div>
-                      <div class="form-group"> 
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-default btn-guardar">Guardar</button>
-                        </div>
-                      </div>
                 </form:form> 
+                <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default btn-guardar-beneficio" onclick="Beneficio.onValidaGuardaBeneficio();">Guardar</button>
+                    </div>
+                </div>
             </div>
 <!--        </div>-->
 

@@ -69,8 +69,7 @@ public class BeneficioController {
         //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
         GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
         //r.setIdUsuario(usuarioSession.getIdUsuario());
-        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r));
-        modelAndView.addObject("subCategorias", beneficioService.getSubCategoriasByIdCat(1)); 
+        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
         modelAndView.addObject("sucursalesProveedor", beneficioService.sucursalesProveedor());
         
         log.info("FIN");

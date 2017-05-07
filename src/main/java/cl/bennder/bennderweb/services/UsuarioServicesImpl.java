@@ -5,7 +5,10 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.bennderweb.constantes.URLServiciosBennderB2B;
+import cl.bennder.bennderweb.properties.Properties;
 import cl.bennder.bennderweb.rest.connector.RestConnector;
+import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
@@ -21,15 +24,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UsuarioServicesImpl implements UsuarioServices{
+
+    @Autowired
+    UsuarioSession usuarioSession;
     
     @Override
     public ValidacionResponse recuperacionPassword(RecuperacionPasswordRequest request) {
-        return RestConnector.recuperacionPassword(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_MAIL_RECUPERACION_PASSWORD, request, ValidacionResponse.class, usuarioSession.getToken());
     }    
     
     @Override
     public LoginResponse validacionUsuario(LoginRequest request) {
-        return RestConnector.validacionUsuario(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_VALIDACION_USUARIO, request, LoginResponse.class, usuarioSession.getToken());
     }
     
 }

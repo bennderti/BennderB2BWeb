@@ -61,18 +61,18 @@ public class LoginController {
         LoginBodyResponse rBody = new LoginBodyResponse();
         rBody.setValidacion(response.getValidacion());
         if(response.getValidacion()!=null && response.getValidacion().getCodigo()!=null && "0".equals(response.getValidacion().getCodigo())){
-            String mensajeLog = "[IdUsuario -> "+response.getIdUsuario()+"]";
-            usuarioSession.setIdUsuario(response.getIdUsuario());//rut de cliente sin dv
+
             session.setAttribute("user", loginForm.getUser());
+            usuarioSession.setToken(response.getToken());
+
             rBody.setGoToUrl(GoToUrl.URL_HOME);
             String uri = request.getScheme() + "://" +
              request.getServerName() + 
              ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
              request.getRequestURI() +
             (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-            
-            log.info("{} uri->{}",mensajeLog,uri);
-            log.info("{} Se redirecciona a login",mensajeLog);
+
+            log.info("{} Se redirecciona a login");
         }
         String respJson =  new Gson().toJson(rBody);
         log.info("FIN");

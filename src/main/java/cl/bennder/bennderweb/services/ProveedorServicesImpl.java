@@ -5,8 +5,11 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.bennderweb.constantes.URLServiciosBennderB2B;
+import cl.bennder.bennderweb.properties.Properties;
 import cl.bennder.bennderweb.rest.connector.RestConnector;
 import cl.bennder.bennderweb.session.ProveedorSession;
+import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.entitybennderwebrest.model.BeneficioImagen;
 import cl.bennder.entitybennderwebrest.model.Proveedor;
 import cl.bennder.entitybennderwebrest.model.Validacion;
@@ -40,9 +43,12 @@ public class ProveedorServicesImpl implements ProveedorServices{
     @Autowired
     private ProveedorSession proveedorSession;
 
+    @Autowired
+    private UsuarioSession usuarioSession;
+
     @Override
     public DatosGeneralProveedorResponse guardaDatosGeneralesProveedor(DatosGeneralProveedorRequest request) {
-        return RestConnector.guardaDatosGeneralesProveedor(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GURDA_DATOS_GRALES_PROVEEDOR, request, DatosGeneralProveedorResponse.class, usuarioSession.getToken());
     }
 
     /***
@@ -52,12 +58,13 @@ public class ProveedorServicesImpl implements ProveedorServices{
      */
     @Override
 //    public CategoriasResponse obtenerCategoriasById(CategoriaByIdRequest request) {
-    public SubCategoriaProveedorResponse getSubCategoriasProveedor(SubCategoriaProveedorRequest request){
-        return RestConnector.obtenerSubCategoriasByIdCatProveedor(request);    }
+    public SubCategoriaProveedorResponse getSubCategoriasProveedor(SubCategoriaProveedorRequest request) {
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_SUB_CATEGORIAS_BY_ID_CAT_PROV, request, SubCategoriaProveedorResponse.class, usuarioSession.getToken());
+    }
 
     @Override
     public BeneficiosCargadorResponse getBeneficiosByIdCat(CategoriaByIdRequest request) {
-        return RestConnector.getBeneficiosByIdCat(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_BENEFICIOS_BY_ID_CAT, request, BeneficiosCargadorResponse.class, usuarioSession.getToken());
     }
     
     @Override
@@ -99,7 +106,7 @@ public class ProveedorServicesImpl implements ProveedorServices{
                             request.getBeneficioImagenes().add(bimagen);
                     }
                     log.info("inicio - consultando servicio para enviar imagenes de beneficio...");
-                    response = RestConnector.uploadImagenesBeneficios(request); 
+                    response = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_UPLOAD_IMAGENES_BENEFICIOS, request, UploadBeneficioImagenResponse.class, usuarioSession.getToken());
                     log.info("fin - consultando servicio para enviar imagenes de beneficio...");
                 }
                 else{
@@ -140,12 +147,12 @@ public class ProveedorServicesImpl implements ProveedorServices{
     
     @Override
     public CategoriasResponse obtenerCategoriaByProveedor(ProveedorIdRequest request) {
-        return RestConnector.obtenerCategoriaByProveedor(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_CATEGORIAS_BY_PROVEEDOR, request, CategoriasResponse.class, usuarioSession.getToken());
     }
 
     @Override
     public ProveedoresResponse obtenerProveedorHabilitados(ProveedorIdRequest request) {
-        return RestConnector.obtenerProveedorHabilitados(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_PROVEEDORES_HABILITADOS, request, ProveedoresResponse.class, usuarioSession.getToken());
     }
 
     @Override

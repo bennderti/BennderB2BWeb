@@ -5,6 +5,8 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.bennderweb.constantes.URLServiciosBennderB2B;
+import cl.bennder.bennderweb.properties.Properties;
 import cl.bennder.bennderweb.rest.connector.RestConnector;
 import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.bennderweb.session.UsuarioSession;
@@ -34,14 +36,14 @@ public class BeneficioServiceImpl implements BeneficioService{
 
     @Override
     public UploadImagenesGenericaResponse uploadImagenesGenerica(UploadImagenesGenericaRequest request) {
-        return RestConnector.uploadImagenesGenerica(request);
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_UPLOAD_IMAGENES_GENERICA, request, UploadImagenesGenericaResponse.class, usuarioSession.getToken());
     }
     
     
 
     @Override
     public GetTodasCategoriaResponse getTodasCategorias(GetTodasCategoriaRequest request) {
-        GetTodasCategoriaResponse r = RestConnector.getTodasCategorias(request);
+        GetTodasCategoriaResponse r = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GET_ALL_CATEGORIA, request, GetTodasCategoriaResponse.class, usuarioSession.getToken());
         beneficioSession.setCategorias(r.getCategorias());
         return r;
     }

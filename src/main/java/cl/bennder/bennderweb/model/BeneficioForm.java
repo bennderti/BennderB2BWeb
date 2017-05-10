@@ -5,6 +5,7 @@
  */
 package cl.bennder.bennderweb.model;
 
+import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +20,23 @@ public class BeneficioForm {
     private String fechaExpiracion;
     private String descripcion;
     private Integer stock;
+    private Integer limiteStock;
     private Integer idCategoriaSelected;
     private Integer idSubCategoriaSelected;
+    private Integer idTipoBeneficioSelected;
     private List<Integer> sucursalesSelected;
     private List<MultipartFile> images;
-    private List<String> imagenesGenericas;
+    private List<ImagenGenerica> imagenesGenericas;
     private List<String> condiciones;
+    private List<String> adicionales;
+    private Integer precioNormal;
+    private Integer precioOferta;
+    private Integer porcentajeDescuento;
+    
+    
+    
+    
+    
     public BeneficioForm() {
     }
 
@@ -68,13 +80,14 @@ public class BeneficioForm {
         this.images = images;
     }
 
-    public List<String> getImagenesGenericas() {
+    public List<ImagenGenerica> getImagenesGenericas() {
         return imagenesGenericas;
     }
 
-    public void setImagenesGenericas(List<String> imagenesGenericas) {
+    public void setImagenesGenericas(List<ImagenGenerica> imagenesGenericas) {
         this.imagenesGenericas = imagenesGenericas;
     }
+    
 
     public String getFechaInicio() {
         return fechaInicio;
@@ -124,14 +137,62 @@ public class BeneficioForm {
         this.sucursalesSelected = sucursalesSelected;
     }
 
+    public Integer getLimiteStock() {
+        return limiteStock;
+    }
+
+    public void setLimiteStock(Integer limiteStock) {
+        this.limiteStock = limiteStock;
+    }
+
+    public Integer getIdTipoBeneficioSelected() {
+        return idTipoBeneficioSelected;
+    }
+
+    public void setIdTipoBeneficioSelected(Integer idTipoBeneficioSelected) {
+        this.idTipoBeneficioSelected = idTipoBeneficioSelected;
+    }
+
+    public List<String> getAdicionales() {
+        return adicionales;
+    }
+
+    public void setAdicionales(List<String> adicionales) {
+        this.adicionales = adicionales;
+    }
+
+    public Integer getPrecioNormal() {
+        return precioNormal;
+    }
+
+    public void setPrecioNormal(Integer precioNormal) {
+        this.precioNormal = precioNormal;
+    }
+
+    public Integer getPrecioOferta() {
+        return precioOferta;
+    }
+
+    public void setPrecioOferta(Integer precioOferta) {
+        this.precioOferta = precioOferta;
+    }
+
+    public Integer getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Integer porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+
     @Override
     public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", sucursalesSelected=" + sucursalesSelected + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + '}';
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + '}';
     }
 
     
-    
-    
-    
+
+
+        
     
 }

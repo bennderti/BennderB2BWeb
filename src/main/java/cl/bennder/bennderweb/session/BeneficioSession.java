@@ -6,6 +6,7 @@
 package cl.bennder.bennderweb.session;
 
 import cl.bennder.entitybennderwebrest.model.Categoria;
+import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import java.util.List;
 
 /**
@@ -13,8 +14,9 @@ import java.util.List;
  * @author dyanez
  */
 public class BeneficioSession {
+    private List<ImagenGenerica> iamgenesGenericas;
     private List<Categoria> categorias;
-
+    
     public BeneficioSession() {
     }
 
@@ -24,6 +26,14 @@ public class BeneficioSession {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public List<ImagenGenerica> getIamgenesGenericas() {
+        return iamgenesGenericas;
+    }
+
+    public void setIamgenesGenericas(List<ImagenGenerica> iamgenesGenericas) {
+        this.iamgenesGenericas = iamgenesGenericas;
     }
     
 }

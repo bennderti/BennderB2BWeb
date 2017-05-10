@@ -5,12 +5,16 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
+import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
+import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.UploadImagenesGenericaResponse;
+import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import java.util.List;
 
 /**
@@ -19,6 +23,8 @@ import java.util.List;
  */
 public interface BeneficioService {
     
+    public List<String> getImagenesGenericasByCatSubSession(Integer idCat,Integer idSubCat);
+     
     //.- obtención de datos iniciales para creación/edicion beneficio
     
     //.- obtencion de categorias session
@@ -43,5 +49,15 @@ public interface BeneficioService {
      * @return 
      */
     public UploadImagenesGenericaResponse uploadImagenesGenerica(UploadImagenesGenericaRequest request);
+    
+    
+       /***
+     * Obtiene los datos de inicio necesarios para la creación/edición de beneficio
+     * @param request datos de inicio como categorias, sucursales, info de imagenes genéricas
+     * @return 
+     */
+    public InfoInicioBeneficioResponse getInfoInicioCreaActualizaBeneficio(InfoInicioBeneficioRequest request);
+    
+    public ValidacionResponse validaGuardarBeneficio(BeneficioForm beneficioForm);
     
 }

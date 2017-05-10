@@ -11,9 +11,83 @@ jQuery(document).on('ready', function () {
 //    $("#select-sub-categorias").on("change",function(){
 //        Cargador.cargarBeneficioByIdCat();
 //    });
+
+    $(".img-generica").on("click",Beneficio.onImgGenericSelected);
 });
-var Beneficio = {
+var Beneficio = {    
+    onImgGenericSelected:function(e){
+        if($(this).hasClass("selected")){
+            $(this).removeClass("selected");
+        }
+        else{
+            $(this).addClass("selected");
+        }
+    },
+    onLoadImagenGenerica:function(){
+        
+        var idCat = $("#select-categorias").val();
+        var idSubCat = $("#select-sub-categorias").val();
+        if(idCat!=='-1' && idSubCat!=='-1'){
+            $.ajax({
+                url: context+'/beneficio/getImgsGenericas.html',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {idCat:idCat,idSubCat:idSubCat},
+                success: function (array) {
+                    if(array !==undefined && array !== null && array.length > 0){
+                        $("#t-img-generica tr").remove();
+                        var trs ="";
+                        var td ="";
+                        for(var i = 0;i < array.length;i++)
+                        {
+                            
+//                            if((i+1)%3 < 3){
+//                                td+="<td><img src ='"+array[i]+"' class ='img-50'/></td>";
+//                            }
+//                            
+//                            else{
+//                                trs += "<tr>"+td+"</tr>";                                
+//                                td = "";
+//                            }
+                           trs+="<tr><td><img src ='"+array[i]+"' class ='img-50 img-generica'/></td></tr>";
+                        }
+                        $("#t-img-generica").html(trs);
+                        $(".img-generica").on("click",Beneficio.onImgGenericSelected);
+                        $('#gallery-imagen-generica').modal('show'); 
+                    }
+                    else{
+                        ModalBennder.mostrar({tipo: "advertencia", mensaje: "Sin imágenes genéricas para cetegoria seleccionada", titulo: "Imágenes"});
+                    }
+                },
+                error: function (x, y, z) {
+                    ModalBennder.mostrar({tipo: "error", mensaje: "Error al obtener imaágenes genéricas", titulo: "Cargador"});
+                }
+            }); 
+        }
+        else{
+            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar categoría y subcategoria para mostrar imagenes genéricas.", titulo: "Imágenes"});
+        }
+          
+//      var imgSrc = $(a).parent().parent().parent().find("td div img").attr("src");
+//        if(imgSrc !== undefined && imgSrc !== ''){
+//            $('#imagepreview').attr('src', imgSrc); 
+//            $('#imagemodal').modal('show'); 
+//        }
+//        else{
+//            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Aún no ha cargado imagen", titulo: "Cargador"});
+//        }
+
+
+    },
     onValidaGuardaBeneficio:function(){
+        //.- guardando
+        var inputGenerica ="";
+        $(".img-generica.selected").each(function(index){
+            var src = $(this).attr("src");
+            inputGenerica+="<input name='imagenesGenericas["+index+"].urlImagen' type='hidden' value='"+src+"'/>";
+        });
+        $(".contents-imagen-generica").append(inputGenerica);
+        
         $("#input-idSubCategoriaSelected").val($("#select-sub-categorias").val());
         $("#form-beneficio").submit();
     },

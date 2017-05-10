@@ -20,6 +20,7 @@ public abstract class URLServiciosBennderB2B {
     public static final String URL_UPLOAD_IMAGENES_GENERICA = "beneficio/uploadImagenesGenerica";
     public static final String URL_GET_PROVEEDORES_HABILITADOS = "proveedor/obtenerProveedorHabilitados";    
     public static final String URL_GET_BENEFICIOS_BY_ID_CAT = "proveedor/getBeneficiosByIdCat";
-    
+    public static final String URL_INFO_CREA_UPDATE_BENEFICIO = "beneficio/infoCreaActualiza";
+    public static final String URL_GUARDAR_BENEFICIO = "beneficio/guardar";
     
 }

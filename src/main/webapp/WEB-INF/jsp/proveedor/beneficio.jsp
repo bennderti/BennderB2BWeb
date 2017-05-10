@@ -1,5 +1,6 @@
 <%@page import="java.util.Calendar"%>
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>--%>
+<%@page pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <!DOCTYPE html>
@@ -29,6 +30,13 @@
                 background: white;
                 cursor: inherit;
                 display: block;
+            }
+            img.img-50{
+                width: 50%;
+                height: 50%;
+            }
+            .img-generica.selected{
+                border: 2px #337ab7 solid;
             }
         </style>
     </head>
@@ -79,6 +87,7 @@
                             modelAttribute="beneficioForm" 
                             enctype="multipart/form-data">
                       <div class="form-group">
+                        <form:hidden path="idBeneficio"/>  
                         <label for="ti-nombre-promocion" class="col-2 col-form-label">Nombre Promoción</label>
                         <div class="col-10">
                           <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="50" cssClass="form-control"/>
@@ -117,6 +126,12 @@
                         <label for="ti-stock" class="col-2 col-form-label">Stock</label>
                         <div class="col-10">
                           <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control"/>
+                        </div>
+                      </div>
+                    <div class="form-group">
+                        <label for="ti-limite-stock" class="col-2 col-form-label">Limite Stock</label>
+                        <div class="col-10">
+                          <form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control"/>
                         </div>
                       </div>
                      <div class="form-group">
@@ -164,14 +179,12 @@
                       </div>
                     <div class="form-group">
                         <label class="btn btn-default btn-file">
-                            <button type="button" class="btn btn-primary">Adjuntar Genérico</button>
+                            <button type="button" class="btn btn-primary adj-generica" onclick="Beneficio.onLoadImagenGenerica();">Adjuntar Genérico</button>
                         </label>
                         <span class ="n-file-adjuntar-generico">0 Imagenes</span>
-                        <input name="imagenesGenericas[0]" type="hidden" value="/etc/1.png"/>
-                        <input name="imagenesGenericas[1]" type="hidden" value="/etc/2.png"/>
-                        <input name="imagenesGenericas[2]" type="hidden" value="/etc/3.png"/>
-                        <input name="imagenesGenericas[3]" type="hidden" value="/etc/4.png"/>
-                        <input name="imagenesGenericas[4]" type="hidden" value="/etc/5.png"/>
+                        <div class="contents-imagen-generica">
+                        </div>
+                        
                       </div>
                       
                       <div class="form-group">
@@ -183,32 +196,37 @@
                       </div>                                            
                       <div class="form-check">
                         <label class="form-check-label">
-                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                          Descuento
+<!--                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>-->
+                          <form:radiobutton path="idTipoBeneficioSelected" value="1" cssClass="form-check-input"/> Descuento
+                          
                         </label>
                         <div class="col-10">
-                          <input class="form-control" type="text" value="50%" id="ti-dscto">
+<!--                          <input class="form-control" type="text" value="50%" id="ti-dscto">-->
+                          <form:input path="porcentajeDescuento" autocomplete="off" id="ti-descuento" maxlength="50" cssClass="form-control"/>
                         </div>
                       </div>
                       <div class="form-check">
                         <label class="form-check-label">
-                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                          Precio Oferta
+<!--                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">-->
+                          <form:radiobutton path="idTipoBeneficioSelected" value="2" cssClass="form-check-input"/> Precio Oferta
+                          
                         </label>                          
                         <label for="ti-antes" class="col-2 col-form-label">Antes</label>
                         <div class="col-10">
-                          <input class="form-control" type="text" value="1" id="ti-antes">
+<!--                          <input class="form-control" type="text" value="1" id="ti-antes">-->
+                          <form:input path="precioNormal" autocomplete="off" id="ti-normal" maxlength="50" cssClass="form-control"/>
                         </div>
                         <label for="ti-hoy" class="col-2 col-form-label">Hoy</label>
                         <div class="col-10">
-                          <input class="form-control" type="text" value="1" id="ti-hoy">
+<!--                          <input class="form-control" type="text" value="1" id="ti-hoy">-->
+                          <form:input path="precioOferta" autocomplete="off" id="ti-oferta" maxlength="50" cssClass="form-control"/>
                         </div>
                       </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                          Producto/Servicio Adicional
-                        </label>
+<!--                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">-->
+                          <form:radiobutton path="idTipoBeneficioSelected" value="3" cssClass="form-check-input"/> Producto/Servicio Adicional
+                         </label>
                         <div class="form-group">
                             <div class="col-10">
                                 <button type="button" class="btn btn-primary">+ Agregar</button>
@@ -219,6 +237,11 @@
                                     <li class="list-group-item">Adicional 4</li>
                                     <li class="list-group-item">Adicional 5</li>
                                 </ul>
+                                <input type="hidden" name="adicionales[0]" value="Adicional 1"/>
+                                <input type="hidden" name="adicionales[1]" value="Adicional 2"/>
+                                <input type="hidden" name="adicionales[2]" value="Adicional 3"/>
+                                <input type="hidden" name="adicionales[3]" value="Adicional 4"/>
+                                <input type="hidden" name="adicionales[4]" value="Adicional 5"/>
                             </div>
                         </div>
                       </div>
@@ -274,6 +297,27 @@
                     <div class="modal-body">
                         <img src="" id="imagepreview">
                         <!--img src="" id="imagepreview" style="width: 400px; height: 264px;" >-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Creates the bootstrap modal where the image will appear -->
+        <div class="modal fade" id="gallery-imagen-generica" tabindex="-1" role="dialog" aria-labelledby="gallery-imagen-generica" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title"> Listado Imagenes Genéricas</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id = "t-img-generica">
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

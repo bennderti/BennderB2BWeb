@@ -10,13 +10,15 @@ import cl.bennder.bennderweb.model.ImagenGenericaForm;
 import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
+import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
+import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
+import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -42,6 +44,9 @@ public class BeneficioController {
     @Autowired
     private UsuarioSession usuarioSession;
     
+    @Autowired
+    private BeneficioSession beneficioSession;
+    
     private static final Logger log = LoggerFactory.getLogger(BeneficioController.class);
     
     @Autowired
@@ -66,11 +71,19 @@ public class BeneficioController {
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
         ModelAndView modelAndView = new ModelAndView("proveedor/beneficio");
         modelAndView.addObject("beneficioForm", new BeneficioForm());
-        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
-        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
-        //r.setIdUsuario(usuarioSession.getIdUsuario());
-        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
-        modelAndView.addObject("sucursalesProveedor", beneficioService.sucursalesProveedor());
+//        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
+//        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
+//        //r.setIdUsuario(usuarioSession.getIdUsuario());
+//        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
+//        modelAndView.addObject("sucursalesProveedor", beneficioService.sucursalesProveedor());
+          InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
+          //.- sacar despues que tenga
+          request.setIdUsuario(usuarioSession.getIdUsuario());
+          InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
+          modelAndView.addObject("categorias", response.getCategorias());
+          modelAndView.addObject("sucursalesProveedor", response.getSucursales());
+          beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
+          
         
         log.info("FIN");
         return modelAndView;
@@ -82,16 +95,7 @@ public class BeneficioController {
         log.info("Datos beneficio ->{}.",beneficioForm.toString());
         
         ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        try {            
-             if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
-                 for(MultipartFile m : beneficioForm.getImages()){
-                     log.info("m.getOriginalFilename() ->{}",m.getOriginalFilename());
-                 }
-             }          
-            
-        } catch (Exception ex) {
-            log.error("Error en guardaInformacionGeneral, ",ex);
-        }
+        beneficioService.validaGuardarBeneficio(beneficioForm);
         
         log.info("FIN");
         return modelAndView;
@@ -147,6 +151,18 @@ public class BeneficioController {
             log.info("subcategorias.size()->{}",subcategorias.size());
         }
         String respJson =  new Gson().toJson(subcategorias);
+        log.info("FIN");
+        return respJson;
+    }
+    
+    @RequestMapping(value="/beneficio/getImgsGenericas.html", method=RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String getImagenesGenericas(@RequestParam("idCat") Integer idCategoria, 
+                                                     @RequestParam("idSubCat") Integer idSubCategoria,
+                                                    HttpSession session){
+        log.info("INICIO");
+        log.info("Obteniendo iamgenes genericas para cat->{}  y subcat->{}",idCategoria,idSubCategoria);
+        List<String> imgs = beneficioService.getImagenesGenericasByCatSubSession(idCategoria,idSubCategoria);
+        String respJson =  new Gson().toJson(imgs);
         log.info("FIN");
         return respJson;
     }

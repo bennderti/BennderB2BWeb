@@ -1,6 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <meta charset="utf-8">
+<!--    <meta charset="utf-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Bennder</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">

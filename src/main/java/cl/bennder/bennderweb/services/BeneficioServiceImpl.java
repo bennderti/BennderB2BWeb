@@ -62,7 +62,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             request.setDescripcion(beneficioForm.getDescripcion());
             request.setStock(beneficioForm.getStock());
             request.setLimiteStock(beneficioForm.getLimiteStock());
-            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");            
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
             request.setFechaCreacion(formatoDelTexto.parse(beneficioForm.getFechaInicio()));
             request.setFechaExpiracion(formatoDelTexto.parse(beneficioForm.getFechaExpiracion()));
             request.setIdCategoria(beneficioForm.getIdSubCategoriaSelected());

@@ -89,6 +89,23 @@ var Beneficio = {
         $(".contents-imagen-generica").append(inputGenerica);
         
         $("#input-idSubCategoriaSelected").val($("#select-sub-categorias").val());
+//        ModalLoading.mostrar();
+//        $.ajax({
+//            url: context+'/beneficio/guardar.html',
+//            type: 'POST',
+//            dataType: 'JSON',
+//            data: $("#form-beneficio").serialize(),
+//            success: function (data) {
+//                window.location.href = "../home.html";
+//                ModalLoading.cerrar();
+//            },
+//            error: function (x, y, z) {
+//                ModalLoading.cerrar();
+//                ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al validar usuario", titulo: "Login"});
+//            }
+//        });
+        
+        
         $("#form-beneficio").submit();
     },
     onValidaUploadImagen:function(){

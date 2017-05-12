@@ -13,6 +13,7 @@ import cl.bennder.bennderweb.services.UsuarioServices;
 import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
+import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
@@ -100,6 +101,22 @@ public class BeneficioController {
         log.info("FIN");
         return modelAndView;
     }
+    
+//    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+//        log.info("INICIO");
+//        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+//        log.info("Datos beneficio ->{}.",beneficioForm.toString());
+//        
+//        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+//        beneficioService.validaGuardarBeneficio(beneficioForm);
+//        
+//        log.info("FIN");
+//        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
+//        return respJson;
+//    }
+    
+    
     
     @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public ModelAndView imagenesGenericas() {

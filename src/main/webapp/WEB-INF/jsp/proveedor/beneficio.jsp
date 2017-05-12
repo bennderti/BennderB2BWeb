@@ -1,10 +1,11 @@
 <%@page import="java.util.Calendar"%>
 <%--<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>--%>
-<%@page pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html>
     <head>
         <!--head-->
         <jsp:include page="/WEB-INF/jsp/template-e-comerce/head.jsp"/>
@@ -85,12 +86,13 @@
                             action="../beneficio/guardar.html" 
                             id="form-beneficio" 
                             modelAttribute="beneficioForm" 
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data"
+                            accept-charset="iso-8859-1">
                       <div class="form-group">
                         <form:hidden path="idBeneficio"/>  
                         <label for="ti-nombre-promocion" class="col-2 col-form-label">Nombre Promoción</label>
                         <div class="col-10">
-                          <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="50" cssClass="form-control"/>
+                          <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="100" cssClass="form-control"/>
                         </div>
                       </div>
                       <div class="form-group">

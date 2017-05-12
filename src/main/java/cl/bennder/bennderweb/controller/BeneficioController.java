@@ -89,32 +89,32 @@ public class BeneficioController {
         log.info("FIN");
         return modelAndView;
     }
-    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
-        log.info("INICIO");
-        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-        log.info("Datos beneficio ->{}.",beneficioForm.toString());
-        
-        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        beneficioService.validaGuardarBeneficio(beneficioForm);
-        
-        log.info("FIN");
-        return modelAndView;
-    }
-    
 //    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-//    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+//    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
 //        log.info("INICIO");
 //        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
 //        log.info("Datos beneficio ->{}.",beneficioForm.toString());
 //        
-//        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+//        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
 //        beneficioService.validaGuardarBeneficio(beneficioForm);
 //        
 //        log.info("FIN");
-//        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
-//        return respJson;
+//        return modelAndView;
 //    }
+    
+    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+        log.info("INICIO");
+        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+        log.info("Datos beneficio ->{}.",beneficioForm.toString());
+        
+        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        beneficioService.validaGuardarBeneficio(beneficioForm);
+        
+        log.info("FIN");
+        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
+        return respJson;
+    }
     
     
     

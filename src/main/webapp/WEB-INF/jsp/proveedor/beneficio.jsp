@@ -92,7 +92,7 @@
                         <form:hidden path="idBeneficio"/>  
                         <label for="ti-nombre-promocion" class="col-2 col-form-label">Nombre Promoción</label>
                         <div class="col-10">
-                          <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="100" cssClass="form-control"/>
+                          <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="150" cssClass="form-control"/>
                         </div>
                       </div>
                       <div class="form-group">

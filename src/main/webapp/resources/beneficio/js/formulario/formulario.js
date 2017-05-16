@@ -61,6 +61,31 @@ var Beneficio = {
             $(this).addClass("selected");
         }
     },
+    cleanButton:function(){
+	
+        $(".button-checkbox").each(function(){
+            var $widget = $(this),
+            $button = $widget.find('button'),
+            $checkbox = $widget.find('input:checkbox'),
+            settings = {
+                on: {
+                    icon: 'glyphicon glyphicon-check'
+                },
+                off: {
+                    icon: 'glyphicon glyphicon-unchecked'
+                }
+            };
+
+            $button.find('.state-icon')
+                    .removeClass()
+                    .addClass('state-icon ' + settings['off'].icon);
+            $button
+                    .removeClass('btn-primary active')
+                    .addClass('btn-default');
+            $checkbox.prop('checked', false);
+
+        });
+    },
     onChangePrincipal:function(btn){
         this.cleanButton();
         //var isChecked = $(btn).parent().find("input[type='checkbox']").is(':checked');
@@ -136,16 +161,17 @@ var Beneficio = {
                         {
                             if(countFila === 4){
                                 countFila = 0;
-                                htmlFinal += '<div class="row">'+htmlTemp+'<div class="row">';
+                                htmlFinal += '<div class="row">'+htmlTemp+'</div>';
                                 htmlTemp = "";
                             }                           
                             htmlTemp+=  '<div class="col-xs-6 col-md-3">'+
-                                        '    <a href="#" class="thumbnail">'+
+                                        '    <a  class="thumbnail">'+
                                         '        <img src ="'+array[i]+'" class ="img-generica"/>'+
                                         '    </a>'+
                                         '</div>';
                             countFila++;                            
                         }
+                        htmlFinal += '<div class="row">'+htmlTemp+'</div>';
                         $(".content-body-generico").html(htmlFinal);
                         $(".img-generica").on("click",Beneficio.onImgGenericSelected);
                         $('#gallery-imagen-generica').modal('show'); 
@@ -164,6 +190,17 @@ var Beneficio = {
         }
           
 
+    },
+    onCargaSeleccionImagenesGenerica:function(){
+        //limpiamos a imagenes ejemplos
+      $(".carousel-inner .thumbnail img").attr("src",$("#rutaImagenExample").val());
+      var nImg=$(".carousel-inner .thumbnail img").length;
+      $(".img-generica.selected").each(function(index){
+            if(index < nImg){
+                var src = $(this).attr("src");
+                $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
+            }
+      });
     },
     onValidaGuardaBeneficio:function(){
         //.- guardando

@@ -377,13 +377,14 @@
                                 <div class="modal-body content-body-generico">                                    
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cargar Selección</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="Beneficio.onCargaSeleccionImagenesGenerica();">Cargar Selección</button>
                                 </div>
                             </div>
                         </div>
                         <!-- BOTÓN PROCESAR FORMULARIO --> 
                     </div>
                </div>
+             <input type="hidden" value="${rutaImagenExample}" id="rutaImagenExample"/>
             </form:form>
             <div class="form-group"> 
                 <div class="col-sm-offset-2 col-sm-10">

@@ -13,6 +13,8 @@
         <link rel="shortcut icon" type="image/x-icon" href='<c:url value="/resources/beneficio/img/favicon.png"/>'>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link href="<c:url value="/resources/beneficio/css/bootstrap.min.css"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"  rel="stylesheet">
+        <link href="<c:url value="/resources/beneficio/css/dataTables.bootstrap.min.css"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"  rel="stylesheet">
+        
         <link href="<c:url value="/resources/beneficio/css/style.css"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>" rel="stylesheet">
 
         <title>Bennder App - Mantenedor</title>
@@ -46,12 +48,12 @@
         <!-- CONTENIDO FINAL-->
 
         <!-- TABLA MANTENEDOR --> 
-        
+        <!-- example : https://datatables.net/examples/styling/bootstrap.html -->
         <div class="container formulario_mantenedor">   
             <div class="form-group">
                 <button type="button" class="btn btn-primary crea-beneficio" onclick="location.href = 'beneficio/crear.html';"><i class="fa fa-plus-circle" aria-hidden="true"></i><span> Nuevo Beneficio</span></button>
             </div>
-            <div class="table-responsive table-hover"> 
+<!--            <div class="table-responsive table-hover"> 
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="beneficios_mantenedor" width="100%">
                 <thead>
                         <tr>
@@ -63,7 +65,46 @@
                         </tr>
                 </thead>
             </table>
-            </div>
+            </div>-->
+            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Nombre Promoci&oacute;n</th>
+                        <th>Categoria</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Expiraci&oacute;n</th>
+                        <th>Estado de Publicaci&oacute;n</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+<!--                 <tfoot>
+                    <tr>
+                        <th>Nombre Promoci&oacute;n</th>
+                        <th>Categoria</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Expiraci&oacute;n</th>
+                        <th>Estado de Publicaci&oacute;n</th>
+                    </tr>
+                </tfoot>-->
+                   <tbody>
+                    <tr>
+                        <td>Cena para 2</td>
+                        <td>Restaurante</td>
+                        <td>16-05-2017</td>
+                        <td>28-05-2017</td>
+                        <td>Publicado</td>
+                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                    </tr>
+                    <tr>
+                        <td>60 Piezas Sushi</td>
+                        <td>Restaurante</td>
+                        <td>16-05-2017</td>
+                        <td>28-05-2017</td>
+                        <td>Por publicar</td>
+                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                    </tr>
+                   </tbody>
+            </table>
 
         </div>
         <!-- BOTÓN PROCESAR FORMULARIO --> 
@@ -85,9 +126,25 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="<c:url value="/resources/beneficio/js/jquery.1.12.4.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script src="<c:url value="/resources/beneficio/js/bootstrap.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        <script src="<c:url value="/resources/beneficio/js/jquery.dataTables.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        <script src="<c:url value="/resources/beneficio/js/dataTables.bootstrap.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="<c:url value="/resources/beneficio/js/ie10-viewport-bug-workaround.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
-         <!--Modal -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    "language": {
+                      "paginate": {
+                        "next": "siguiente",
+                        "previous": "Anterior"
+                      }
+                    }
+                  } );
+            } );
+        </script> 
+        
+        <!--Modal -->
         <jsp:include page="/WEB-INF/jsp/utils/modal.jsp">     
             <jsp:param name="btnAceptar" value="Aceptar"/>
             <jsp:param name="btnCancelar" value="Cancelar"/>

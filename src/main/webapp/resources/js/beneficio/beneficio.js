@@ -14,7 +14,7 @@ jQuery(document).on('ready', function () {
 
     $(".img-generica").on("click",Beneficio.onImgGenericSelected);
 });
-var Beneficio = {    
+var Beneficio = {
     onImgGenericSelected:function(e){
         if($(this).hasClass("selected")){
             $(this).removeClass("selected");

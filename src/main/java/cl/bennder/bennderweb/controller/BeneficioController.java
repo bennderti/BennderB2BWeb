@@ -76,7 +76,10 @@ public class BeneficioController {
           request.setIdUsuario(usuarioSession.getIdUsuario());
           InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
           modelAndView.addObject("categorias", response.getCategorias());
-          modelAndView.addObject("regiones", response.getRegionesSucursal());
+          modelAndView.addObject("regiones", response.getRegionesSucursal());          
+          modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
+          
+          
           beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
           beneficioSession.setComunasSucursales(response.getComunasSucursales());
           beneficioSession.setRegionesSucursal(response.getRegionesSucursal());

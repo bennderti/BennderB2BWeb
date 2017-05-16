@@ -7,6 +7,7 @@ package cl.bennder.bennderweb.services;
 
 import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.entitybennderwebrest.model.Categoria;
+import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
@@ -59,5 +60,9 @@ public interface BeneficioService {
     public InfoInicioBeneficioResponse getInfoInicioCreaActualizaBeneficio(InfoInicioBeneficioRequest request);
     
     public ValidacionResponse validaGuardarBeneficio(BeneficioForm beneficioForm);
+    
+    public List<Comuna> getComunaByIdReg(Integer idRegion);
+    
+    public List<SucursalProveedor> getSucursalByIdComuna(Integer idComuna);
     
 }

@@ -13,6 +13,7 @@ import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.entitybennderwebrest.model.BeneficioImagen;
 import cl.bennder.entitybennderwebrest.model.Categoria;
+import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.model.TipoBeneficio;
@@ -48,7 +49,36 @@ public class BeneficioServiceImpl implements BeneficioService{
     private UsuarioSession usuarioSession;
     
     @Autowired
-    BeneficioSession beneficioSession;
+    private BeneficioSession beneficioSession;
+
+    @Override
+    public List<SucursalProveedor> getSucursalByIdComuna(Integer idComuna) {
+        
+        List<SucursalProveedor>  lista = new ArrayList<>();
+        if(beneficioSession!=null && beneficioSession.getSucursales()!=null && beneficioSession.getSucursales().size() > 0){
+            for(SucursalProveedor s : beneficioSession.getSucursales()){
+                if(s.getIdComuna().compareTo(idComuna) == 0){
+                    lista.add(s);
+                }
+            }
+        }        
+        return lista;
+    }
+
+    @Override
+    public List<Comuna> getComunaByIdReg(Integer idRegion) {
+        List<Comuna>  lista = new ArrayList<>();
+        if(beneficioSession!=null && beneficioSession.getComunasSucursales()!=null && beneficioSession.getComunasSucursales().size() > 0){
+            for(Comuna c : beneficioSession.getComunasSucursales()){
+                if(c.getRegion()!=null && c.getRegion().getIdRegion()!=null &&  c.getRegion().getIdRegion().compareTo(idRegion) == 0){
+                    lista.add(c);
+                }
+            }
+        }        
+        return lista;
+    }
+    
+    
 
     @Override
     public ValidacionResponse validaGuardarBeneficio(BeneficioForm beneficioForm) {

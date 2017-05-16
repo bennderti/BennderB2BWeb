@@ -28,7 +28,9 @@
     <body>
 
         <!-- HEADER INCICIO -->
-        <jsp:include page="/WEB-INF/jsp/proveedor/navbar.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/proveedor/navbar.jsp">
+            <jsp:param name="logout" value="../logout.html"/>
+        </jsp:include>
         <!-- HEADER FINAL -->
 
         <!-- CONTENIDO INICIO-->

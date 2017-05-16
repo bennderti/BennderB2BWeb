@@ -12,7 +12,9 @@ import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
 import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.entitybennderwebrest.model.Categoria;
+import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
+import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
@@ -50,8 +52,6 @@ public class BeneficioController {
     
     private static final Logger log = LoggerFactory.getLogger(BeneficioController.class);
     
-    @Autowired
-    private UsuarioServices usuarioServices;
     
     @Autowired
     private BeneficioService beneficioService;
@@ -72,19 +72,15 @@ public class BeneficioController {
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
         ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
         modelAndView.addObject("beneficioForm", new BeneficioForm());
-//        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
-//        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
-//        //r.setIdUsuario(usuarioSession.getIdUsuario());
-//        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
-//        modelAndView.addObject("sucursalesProveedor", beneficioService.sucursalesProveedor());
           InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
-          //.- sacar despues que tenga
           request.setIdUsuario(usuarioSession.getIdUsuario());
           InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
           modelAndView.addObject("categorias", response.getCategorias());
-          modelAndView.addObject("sucursalesProveedor", response.getSucursales());
+          modelAndView.addObject("regiones", response.getRegionesSucursal());
           beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
-          
+          beneficioSession.setComunasSucursales(response.getComunasSucursales());
+          beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
+          beneficioSession.setSucursales(response.getSucursales());
         
         log.info("FIN");
         return modelAndView;
@@ -136,45 +132,45 @@ public class BeneficioController {
     
     
     
-    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public ModelAndView imagenesGenericas() {
-        log.info("INICIO");
-        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
-        ModelAndView modelAndView = new ModelAndView("proveedor/uploadImgGenericas");
-        modelAndView.addObject("imagenGenericaForm", new ImagenGenericaForm());
-        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
-        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
-        //r.setIdUsuario(usuarioSession.getIdUsuario());
-        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
-        
-        log.info("FIN");
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+//    public ModelAndView imagenesGenericas() {
+//        log.info("INICIO");
+//        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
+//        ModelAndView modelAndView = new ModelAndView("proveedor/uploadImgGenericas");
+//        modelAndView.addObject("imagenGenericaForm", new ImagenGenericaForm());
+//        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
+//        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
+//        //r.setIdUsuario(usuarioSession.getIdUsuario());
+//        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
+//        
+//        log.info("FIN");
+//        return modelAndView;
+//    }
     
-    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public ModelAndView uploadImagenesGenericas(@ModelAttribute("imagenGenericaForm") ImagenGenericaForm imagenGenericaForm) {
-        log.info("INICIO");
-        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
-        UploadImagenesGenericaRequest request = new UploadImagenesGenericaRequest();
-        
-        try {
-            if(imagenGenericaForm !=null && imagenGenericaForm.getImages()!=null && imagenGenericaForm.getImages().size() > 0){
-                log.info("completando datos de imagenes genéricas a enviar, datos ->{}",imagenGenericaForm.toString());
-                for(MultipartFile mFile : imagenGenericaForm.getImages()){
-                    if(mFile!=null && mFile.getBytes()!=null && mFile.getOriginalFilename()!=null && mFile.getBytes().length > 0){
-                        request.getImagenes().add(new ImagenGenerica(imagenGenericaForm.getIdCategoria(), imagenGenericaForm.getIdSubCategoria(), mFile.getOriginalFilename(), mFile.getBytes(), null, null));
-                    }
-                }
-                log.info("enviando imagenes a servidor...");
-                beneficioService.uploadImagenesGenerica(request);
-            }
-        } catch (IOException ex) {
-                    log.error("Error IOException.",ex);
-        }
-        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        log.info("FIN");
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public ModelAndView uploadImagenesGenericas(@ModelAttribute("imagenGenericaForm") ImagenGenericaForm imagenGenericaForm) {
+//        log.info("INICIO");
+//        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
+//        UploadImagenesGenericaRequest request = new UploadImagenesGenericaRequest();
+//        
+//        try {
+//            if(imagenGenericaForm !=null && imagenGenericaForm.getImages()!=null && imagenGenericaForm.getImages().size() > 0){
+//                log.info("completando datos de imagenes genéricas a enviar, datos ->{}",imagenGenericaForm.toString());
+//                for(MultipartFile mFile : imagenGenericaForm.getImages()){
+//                    if(mFile!=null && mFile.getBytes()!=null && mFile.getOriginalFilename()!=null && mFile.getBytes().length > 0){
+//                        request.getImagenes().add(new ImagenGenerica(imagenGenericaForm.getIdCategoria(), imagenGenericaForm.getIdSubCategoria(), mFile.getOriginalFilename(), mFile.getBytes(), null, null));
+//                    }
+//                }
+//                log.info("enviando imagenes a servidor...");
+//                beneficioService.uploadImagenesGenerica(request);
+//            }
+//        } catch (IOException ex) {
+//                    log.error("Error IOException.",ex);
+//        }
+//        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+//        log.info("FIN");
+//        return modelAndView;
+//    }
     
     
     @RequestMapping(value="/beneficio/getSubCatById.html", method=RequestMethod.GET, produces = "text/html;charset=UTF-8")
@@ -186,6 +182,32 @@ public class BeneficioController {
             log.info("subcategorias.size()->{}",subcategorias.size());
         }
         String respJson =  new Gson().toJson(subcategorias);
+        log.info("FIN");
+        return respJson;
+    }
+    
+    @RequestMapping(value="/beneficio/getComunaByIdReg.html", method=RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String getComunaByIdReg(@RequestParam("idRegion") Integer idRegion, 
+                                              HttpSession session){
+        log.info("INICIO");
+        List<Comuna> comunas = beneficioService.getComunaByIdReg(idRegion);
+        if(comunas!=null){
+            log.info("comunas.size()->{}",comunas.size());
+        }
+        String respJson =  new Gson().toJson(comunas);
+        log.info("FIN");
+        return respJson;
+    }
+    
+     @RequestMapping(value="/beneficio/getSucursalByIdComuna.html", method=RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String getSucursalByIdComuna(@RequestParam("idComuna") Integer idComuna, 
+                                              HttpSession session){
+        log.info("INICIO");
+        List<SucursalProveedor> sucursales = beneficioService.getSucursalByIdComuna(idComuna);
+        if(sucursales!=null){
+            log.info("sucursales.size()->{}",sucursales.size());
+        }
+        String respJson =  new Gson().toJson(sucursales);
         log.info("FIN");
         return respJson;
     }

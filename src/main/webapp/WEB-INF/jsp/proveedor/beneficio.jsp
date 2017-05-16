@@ -164,7 +164,6 @@
                         <c:forEach items="${sucursalesProveedor}" var="sp">
                             <div class="form-check form-check-inline">
                               <label class="form-check-label">
-<!--                                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled> Sucursal 3-->
                                       <form:checkbox cssClass="form-check-input" path="sucursalesSelected" value="${sp.idSucursal}"/><c:out value="${sp.nombreSucursal}"/>
                               </label>
                             </div>

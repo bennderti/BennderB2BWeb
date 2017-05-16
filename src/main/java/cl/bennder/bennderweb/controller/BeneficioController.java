@@ -70,7 +70,7 @@ public class BeneficioController {
     public ModelAndView crearBeneficio() {
         log.info("INICIO");
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
-        ModelAndView modelAndView = new ModelAndView("proveedor/beneficio");
+        ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
         modelAndView.addObject("beneficioForm", new BeneficioForm());
 //        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
 //        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
@@ -84,6 +84,24 @@ public class BeneficioController {
           modelAndView.addObject("categorias", response.getCategorias());
           modelAndView.addObject("sucursalesProveedor", response.getSucursales());
           beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
+          
+        
+        log.info("FIN");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/beneficio/nuevo.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView nuevo() {
+        log.info("INICIO");
+        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
+        ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
+//        modelAndView.addObject("beneficioForm", new BeneficioForm());
+//          InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
+//          //.- sacar despues que tenga
+//          request.setIdUsuario(usuarioSession.getIdUsuario());
+//          InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
+//          modelAndView.addObject("categorias", response.getCategorias());
+//          modelAndView.addObject("sucursalesProveedor", response.getSucursales());
+//          beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
           
         
         log.info("FIN");
@@ -109,7 +127,7 @@ public class BeneficioController {
         log.info("Datos beneficio ->{}.",beneficioForm.toString());
         
         //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        beneficioService.validaGuardarBeneficio(beneficioForm);
+        //beneficioService.validaGuardarBeneficio(beneficioForm);
         
         log.info("FIN");
         String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));

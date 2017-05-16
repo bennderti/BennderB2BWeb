@@ -32,12 +32,13 @@ public class BeneficioForm {
     private Integer precioNormal;
     private Integer precioOferta;
     private Integer porcentajeDescuento;
-    
+    private Integer idRegionSelected;
     
     
     
     
     public BeneficioForm() {
+        this.idTipoBeneficioSelected = -1;
     }
 
     public String getDescripcion() {
@@ -185,11 +186,21 @@ public class BeneficioForm {
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    @Override
-    public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + '}';
+    public Integer getIdRegionSelected() {
+        return idRegionSelected;
     }
 
+    public void setIdRegionSelected(Integer idRegionSelected) {
+        this.idRegionSelected = idRegionSelected;
+    }
+
+    @Override
+    public String toString() {
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + '}';
+    }
+
+    
+    
     
 
 

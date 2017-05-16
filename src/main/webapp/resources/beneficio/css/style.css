@@ -1,0 +1,18 @@
+/* CSS Mantenedor Bennder */
+.formulario_mantenedor {
+	margin-top: 0;
+	margin-bottom: 20px;
+	/*border: 1px solid red;*/
+}
+
+/* Agrega Elimina Opciones */
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+.glyphicon
+{
+    font-size: 12px;
+}
+/* Agrega Elimina Opciones */

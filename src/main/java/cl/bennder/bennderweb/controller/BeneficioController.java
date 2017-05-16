@@ -132,45 +132,45 @@ public class BeneficioController {
     
     
     
-//    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-//    public ModelAndView imagenesGenericas() {
-//        log.info("INICIO");
-//        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
-//        ModelAndView modelAndView = new ModelAndView("proveedor/uploadImgGenericas");
-//        modelAndView.addObject("imagenGenericaForm", new ImagenGenericaForm());
-//        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
-//        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
-//        //r.setIdUsuario(usuarioSession.getIdUsuario());
-//        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
-//        
-//        log.info("FIN");
-//        return modelAndView;
-//    }
+    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView imagenesGenericas() {
+        log.info("INICIO");
+        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
+        ModelAndView modelAndView = new ModelAndView("proveedor/uploadImgGenericas");
+        modelAndView.addObject("imagenGenericaForm", new ImagenGenericaForm());
+        //.- obtener y guardar en sesion rutas de categorias y subcategorias de imagenes
+        GetTodasCategoriaRequest r = new GetTodasCategoriaRequest();
+        //r.setIdUsuario(usuarioSession.getIdUsuario());
+        modelAndView.addObject("categorias", beneficioService.getTodasCategorias(r).getCategorias());
+        
+        log.info("FIN");
+        return modelAndView;
+    }
     
-//    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-//    public ModelAndView uploadImagenesGenericas(@ModelAttribute("imagenGenericaForm") ImagenGenericaForm imagenGenericaForm) {
-//        log.info("INICIO");
-//        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
-//        UploadImagenesGenericaRequest request = new UploadImagenesGenericaRequest();
-//        
-//        try {
-//            if(imagenGenericaForm !=null && imagenGenericaForm.getImages()!=null && imagenGenericaForm.getImages().size() > 0){
-//                log.info("completando datos de imagenes genéricas a enviar, datos ->{}",imagenGenericaForm.toString());
-//                for(MultipartFile mFile : imagenGenericaForm.getImages()){
-//                    if(mFile!=null && mFile.getBytes()!=null && mFile.getOriginalFilename()!=null && mFile.getBytes().length > 0){
-//                        request.getImagenes().add(new ImagenGenerica(imagenGenericaForm.getIdCategoria(), imagenGenericaForm.getIdSubCategoria(), mFile.getOriginalFilename(), mFile.getBytes(), null, null));
-//                    }
-//                }
-//                log.info("enviando imagenes a servidor...");
-//                beneficioService.uploadImagenesGenerica(request);
-//            }
-//        } catch (IOException ex) {
-//                    log.error("Error IOException.",ex);
-//        }
-//        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-//        log.info("FIN");
-//        return modelAndView;
-//    }
+    @RequestMapping(value = "/beneficio/imagenesGenericas.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public ModelAndView uploadImagenesGenericas(@ModelAttribute("imagenGenericaForm") ImagenGenericaForm imagenGenericaForm) {
+        log.info("INICIO");
+        log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
+        UploadImagenesGenericaRequest request = new UploadImagenesGenericaRequest();
+        
+        try {
+            if(imagenGenericaForm !=null && imagenGenericaForm.getImages()!=null && imagenGenericaForm.getImages().size() > 0){
+                log.info("completando datos de imagenes genéricas a enviar, datos ->{}",imagenGenericaForm.toString());
+                for(MultipartFile mFile : imagenGenericaForm.getImages()){
+                    if(mFile!=null && mFile.getBytes()!=null && mFile.getOriginalFilename()!=null && mFile.getBytes().length > 0){
+                        request.getImagenes().add(new ImagenGenerica(imagenGenericaForm.getIdCategoria(), imagenGenericaForm.getIdSubCategoria(), mFile.getOriginalFilename(), mFile.getBytes(), null, null));
+                    }
+                }
+                log.info("enviando imagenes a servidor...");
+                beneficioService.uploadImagenesGenerica(request);
+            }
+        } catch (IOException ex) {
+                    log.error("Error IOException.",ex);
+        }
+        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        log.info("FIN");
+        return modelAndView;
+    }
     
     
     @RequestMapping(value="/beneficio/getSubCatById.html", method=RequestMethod.GET, produces = "text/html;charset=UTF-8")

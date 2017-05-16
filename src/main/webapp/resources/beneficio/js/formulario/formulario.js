@@ -141,12 +141,12 @@ var Beneficio = {
                             }                           
                             htmlTemp+=  '<div class="col-xs-6 col-md-3">'+
                                         '    <a href="#" class="thumbnail">'+
-                                        '        <img src ='+array[i]+' class ="img-generica"/>'+
+                                        '        <img src ="'+array[i]+'" class ="img-generica"/>'+
                                         '    </a>'+
                                         '</div>';
                             countFila++;                            
                         }
-                        $(".content-body-generico .row").html(htmlFinal);
+                        $(".content-body-generico").html(htmlFinal);
                         $(".img-generica").on("click",Beneficio.onImgGenericSelected);
                         $('#gallery-imagen-generica').modal('show'); 
                     }
@@ -300,6 +300,7 @@ var Beneficio = {
     onChangeCategoria:function(){        
         var idCat = $("#select-categorias").val();
         if(idCat!=='-1'){
+            ModalLoading.mostrar();
             $.ajax({
                 url: context+'/beneficio/getSubCatById.html',
                 type: 'GET',
@@ -308,14 +309,19 @@ var Beneficio = {
                 success: function (array) {
                     if(array !==undefined && array !== null){
                         $("#select-sub-categorias option").remove();
-                        $("#select-sub-categorias").append("<option value ='-1'>--Seleccione Sub Categoria--</option>");
+                        //$("#select-sub-categorias").append("<option value ='-1'>--Seleccione Sub Categoria--</option>");
+                        var htmlOption = "<option value ='-1'>--Seleccione Sub Categoria--</option>";
                         for(var i= 0;i < array.length;i++){
                            var c = array[i];
-                           $("#select-sub-categorias").append("<option value ='"+c.idCategoria+"'>"+c.nombre+"</option>");
+                           htmlOption+="<option value ='"+c.idCategoria+"'>"+c.nombre+"</option>";
+                           //$("#select-sub-categorias").append("<option value ='"+c.idCategoria+"'>"+c.nombre+"</option>");
                         } 
+                        $("#select-sub-categorias").html(htmlOption);
                     }
+                    ModalLoading.cerrar();
                 },
                 error: function (x, y, z) {
+                    ModalLoading.cerrar();
                     ModalBennder.mostrar({tipo: "error", mensaje: "Error al cargar subctegorias", titulo: "Categoria Beneficio"});
                 }
             }); 

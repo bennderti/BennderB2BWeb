@@ -121,10 +121,11 @@ public class BeneficioServiceImpl implements BeneficioService{
                      tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());
                      request.setTipoBeneficio(tb);
                  }
+                 log.info("Datos formulario(parte 2) ->{}",beneficioForm.toString());
                  
-                 log.info("consumiendo servicio encargado de guardar datos de beneficio");      
-                 InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());
-                 log.info("Validación de servicio guardar beneficio ->{}",rGuardarBeneficio.toString());
+//                 log.info("consumiendo servicio encargado de guardar datos de beneficio");      
+//                 InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());
+//                 log.info("Validación de servicio guardar beneficio ->{}",rGuardarBeneficio.toString());
              }          
             
         } catch (Exception ex) {

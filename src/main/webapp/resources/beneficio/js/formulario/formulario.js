@@ -13,6 +13,8 @@ jQuery(document).on('ready', function () {
 //    });
 
     $(".img-generica").on("click",Beneficio.onImgGenericSelected);
+    $("#f-adjuntar").on("change",Beneficio.onSeleccionImagenPrivadas);
+    
 });
 var Beneficio = {
     agregaProductoAdicional:function(btn){			
@@ -141,7 +143,32 @@ var Beneficio = {
             $checkbox.prop('checked', false);
         });
 },
-    onLoadImagenGenerica:function(){
+onSeleccionImagenPrivadas:function(){
+        
+        var haSeleccionado=false;
+        var fileList = this.files;
+        if(fileList!==null && fileList!=='undefined' && fileList.length > 0){
+            Beneficio.cleanThumbnail();
+            var anyWindow = window.URL || window.webkitURL;
+            for(var i = 0; i < fileList.length; i++){
+                haSeleccionado = true;
+              //get a blob to play with
+              var objectUrl = anyWindow.createObjectURL(fileList[i]);
+              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );							
+              //$('.preview-area').append('<img src="' + objectUrl + '" />');
+              // get rid of the blob
+              window.URL.revokeObjectURL(fileList[i]);
+            }
+        }
+        else{
+            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Ud no ha seleccionado ninguna imágen, se conservan las anteriores", titulo: "Imágenes"});
+        }
+        if(haSeleccionado){
+          Beneficio.setTipoCarga(1);
+        }
+        
+},
+ onLoadImagenGenerica:function(){
         
         var idCat = $("#select-categorias").val();
         var idSubCat = $("#select-sub-categorias").val();
@@ -191,16 +218,35 @@ var Beneficio = {
           
 
     },
+    cleanThumbnail:function(){       
+       $(".carousel-inner .thumbnail img").attr("src",$("#rutaImagenExample").val());
+    },
+    setTipoCarga:function(tipoCarga){
+        $("#tipoCargaImagen").val(tipoCarga);
+    },
     onCargaSeleccionImagenesGenerica:function(){
         //limpiamos a imagenes ejemplos
-      $(".carousel-inner .thumbnail img").attr("src",$("#rutaImagenExample").val());
+      
+      var haSeleccionado=false;
+      //tipo carga imagen, 1: Privada,2:Generica
       var nImg=$(".carousel-inner .thumbnail img").length;
-      $(".img-generica.selected").each(function(index){
+      var nSelected =$(".img-generica.selected").length;
+      if(nSelected>0){
+        this.cleanThumbnail();
+        $(".img-generica.selected").each(function(index){
+            haSeleccionado = true;
             if(index < nImg){
                 var src = $(this).attr("src");
                 $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
             }
-      });
+        });
+      }
+      else{
+          ModalBennder.mostrar({tipo: "advertencia", mensaje: "Ud no ha seleccionado ninguna imágen, se conservan las anteriores", titulo: "Imágenes"});
+      }
+      if(haSeleccionado){
+          this.setTipoCarga(2);
+      }
     },
     onValidaGuardaBeneficio:function(){
         //.- guardando
@@ -212,6 +258,18 @@ var Beneficio = {
         $(".contents-imagen-generica").append(inputGenerica);
         
         $("#input-idSubCategoriaSelected").val($("#select-sub-categorias").val());
+        
+        //.- sucursales seleccionadas
+        var inputSucursales ="";
+        $(".content-sucursales input.i-sucursales").remove();
+        $(".content-sucursales input[type='checkbox']:checked").each(function(index){
+            var v = $(this).val();
+            inputSucursales+="<input class = 'i-sucursales' name='sucursalesSelected["+index+"]' type='hidden' value='"+v+"'/>";
+        });
+        $(".content-sucursales").append(inputSucursales);
+        
+        
+        
 //        ModalLoading.mostrar();
 //        $.ajax({
 //            url: context+'/beneficio/guardar.html',

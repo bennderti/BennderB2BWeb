@@ -6,6 +6,7 @@
 package cl.bennder.bennderweb.model;
 
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
+import cl.bennder.entitybennderwebrest.utils.UtilsBennder;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,12 +34,13 @@ public class BeneficioForm {
     private Integer precioOferta;
     private Integer porcentajeDescuento;
     private Integer idRegionSelected;
-    
-    
+    private Integer tipoCargaImagen;//tipo carga imagen, 1: Privada,2:Generica
+    private String nameImagePrincipal;//nombre de imagen principal seleccionada
     
     
     public BeneficioForm() {
         this.idTipoBeneficioSelected = -1;
+        this.tipoCargaImagen = 0;
     }
 
     public String getDescripcion() {
@@ -91,6 +93,9 @@ public class BeneficioForm {
     
 
     public String getFechaInicio() {
+        if(fechaInicio == null){
+            fechaInicio = UtilsBennder.getFechaActualFormato("yyyy-MM-dd");
+        }        
         return fechaInicio;
     }
 
@@ -99,6 +104,12 @@ public class BeneficioForm {
     }
 
     public String getFechaExpiracion() {
+        if(fechaExpiracion == null){
+            fechaExpiracion = UtilsBennder.getFechaActualFormato("yyyy-MM-dd");
+        }
+        else{
+           fechaExpiracion = UtilsBennder.getFechaActualFormato(fechaExpiracion); 
+        }
         return fechaExpiracion;
     }
 
@@ -194,10 +205,29 @@ public class BeneficioForm {
         this.idRegionSelected = idRegionSelected;
     }
 
+    public Integer getTipoCargaImagen() {
+        return tipoCargaImagen;
+    }
+
+    public void setTipoCargaImagen(Integer tipoCargaImagen) {
+        this.tipoCargaImagen = tipoCargaImagen;
+    }
+
+    public String getNameImagePrincipal() {
+        return nameImagePrincipal;
+    }
+
+    public void setNameImagePrincipal(String nameImagePrincipal) {
+        this.nameImagePrincipal = nameImagePrincipal;
+    }
+
     @Override
     public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + '}';
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + '}';
     }
+
+    
+    
 
     
     

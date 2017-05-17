@@ -126,7 +126,7 @@ public class BeneficioController {
         log.info("Datos beneficio ->{}.",beneficioForm.toString());
         
         //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        //beneficioService.validaGuardarBeneficio(beneficioForm);
+        beneficioService.validaGuardarBeneficio(beneficioForm);
         
         log.info("FIN");
         String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));

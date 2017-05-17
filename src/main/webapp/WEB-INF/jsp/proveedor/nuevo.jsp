@@ -59,6 +59,7 @@
                 <!-- PROMOCIÓN -->	
                 <div class="row">
                     <form:hidden path="idBeneficio"/>  
+                    <input type="hidden" name="nameImagePrincipal" id="nameImagePrincipal" value="${beneficioForm.nameImagePrincipal}"/>
                     <div class="col-md-4">
                         <label for="nombrePromo">Nombre Promoción</label>
                         <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="150" cssClass="form-control" placeholder="Ingrese nombre de promoción"/>
@@ -98,13 +99,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="f-inicio">Fecha Inicio</label>
-                            <input class="form-control" type="date" value="2017-05-14" id="f-inicio" name="fechaInicio">
+                            <input class="form-control" type="date" value="" id="f-inicio" name="fechaInicio"/>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="f-expiracion" >Fecha Expiración</label>
-                            <input class="form-control" type="date" value="2017-05-14" id="f-expiracion" name="fechaExpiracion">
+                            <input class="form-control" type="date" value="" id="f-expiracion" name="fechaExpiracion"/>
                         </div>
                     </div>
                 </div>
@@ -112,13 +113,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="ti-stock">Stock</label>
-                            <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control" placeholder="ingrese stock"/>
+                            <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese stock"/>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="ti-limite-stock">Limite Stock</label>
-                            <form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese limite stock para alertar"/>
+                            <form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese límite stock para alertar"/>
                         </div>
                     </div>
                 </div>
@@ -176,7 +177,7 @@
                     <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
                 </ul><!--/.nav-tabs.content-tabs -->
                 <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}"/>
-
+                <input type="hidden" name="tipoCargaImagen" value ="${beneficioForm.tipoCargaImagen}" id="tipoCargaImagen"/>
                 <!-- CONTENIDOS TABS -->
                 <div class="tab-content">
                     <!-- DESCUENTO -->
@@ -415,6 +416,12 @@
         <script src="<c:url value="/resources/beneficio/js/ie10-viewport-bug-workaround.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <!-- AGREGA ELIMINA -->
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/formulario/formulario.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#f-inicio").val('${beneficioForm.fechaInicio}');
+                $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
+            });
+        </script>
         <!-- AGREGA ELIMINA -->
         
          <!--Modal -->

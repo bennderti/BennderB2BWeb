@@ -36,11 +36,12 @@ public class BeneficioForm {
     private Integer idRegionSelected;
     private Integer tipoCargaImagen;//tipo carga imagen, 1: Privada,2:Generica
     private String nameImagePrincipal;//nombre de imagen principal seleccionada
-    
+    private Integer totalImagenessPermitidos;//total de imagenes permitidas
     
     public BeneficioForm() {
         this.idTipoBeneficioSelected = -1;
         this.tipoCargaImagen = 0;
+        this.totalImagenessPermitidos = 12;
     }
 
     public String getDescripcion() {
@@ -221,10 +222,20 @@ public class BeneficioForm {
         this.nameImagePrincipal = nameImagePrincipal;
     }
 
+    public Integer getTotalImagenessPermitidos() {
+        return totalImagenessPermitidos;
+    }
+
+    public void setTotalImagenessPermitidos(Integer totalImagenessPermitidos) {
+        this.totalImagenessPermitidos = totalImagenessPermitidos;
+    }
+
     @Override
     public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + '}';
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + '}';
     }
+
+    
 
     
     

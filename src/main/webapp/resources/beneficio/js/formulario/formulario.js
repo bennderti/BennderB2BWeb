@@ -16,7 +16,96 @@ jQuery(document).on('ready', function () {
     $("#f-adjuntar").on("change",Beneficio.onSeleccionImagenPrivadas);
     
 });
-var Beneficio = {
+var Beneficio = {    
+    init:function(){
+        //.- generamos visualizador de iamgenes cargadas        
+        this.generarVisualizadorImagenes([]);
+        
+    },
+    generarItemRow:function(urlImg,nombreImagenPrincipal,includeBtn){
+      var item = "";
+      if(includeBtn){
+          item =    '<div class="col-md-3 content-img-benefio">'+
+                    '    <span class="button-checkbox sup-izq">'+
+                    '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>'+
+                    '        <input type="checkbox" class="hidden">'+
+                    '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
+                    '    </span>'+
+                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '</div>';
+      }  
+      else{
+          item =    '<div class="col-md-3 content-img-benefio">'+
+                    '    <span class="button-checkbox sup-izq"/>'+
+                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '</div>';
+      }
+        
+        return item;
+    },
+    generarVisualizadorImagenes:function(arrayImagenes){
+        var totalPermitidos = $("#totalPermitidos").val();
+        var nImages = arrayImagenes.length;
+        var indicators = totalPermitidos/4 + (totalPermitidos%4===0?0:1);
+        //.- indicadores
+        var htmlLiIndicators = "";
+        for(var i = 0;i < indicators ;i++){
+            htmlLiIndicators+= '<li data-target="#Carousel" data-slide-to="'+i+'" class=""></li>';
+        }
+        var carouselIndicators = '<ol class="carousel-indicators">'+htmlLiIndicators+'</ol>';
+        
+        var countFila = 0;
+        var htmlTemp = "";
+        var htmlFinal = "";
+        var  imgExample = $("#rutaImagenExample").val();
+        var name = "";
+        var urlImagen = "";
+        for(var i = 0;i < totalPermitidos;i++)
+        {
+            
+            if(countFila === 4){
+                countFila = 0;
+                htmlFinal += '<div class="item">'+
+                            '    <div class="row">'+
+                            ''+htmlTemp+''+
+                            '    </div>'+
+                            '</div>';
+                htmlTemp = "";
+            }
+            if(i < nImages){
+               name = arrayImagenes[i].split("/")[arrayImagenes[i].split("/").length-1]; 
+               urlImagen = arrayImagenes[i];
+            }
+            else{
+                name = "example-"+i;
+                urlImagen = imgExample;
+            }
+            htmlTemp+= this.generarItemRow(urlImagen,name,i < nImages);
+            countFila++;                            
+        }
+        htmlFinal += '<div class="item">'+
+                            '    <div class="row">'+
+                            ''+htmlTemp+''+
+                            '    </div>'+
+                            '</div>';
+                    
+        var carouselInner = '<div class="carousel-inner"> '+htmlFinal+'</div>';           
+        var prevNext = '<a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>'+
+                       '<a data-slide="next" href="#Carousel" class="right carousel-control">›</a>';  
+               
+        var content = '<div class="row">'+
+                      '      <div class="col-md-12">'+
+                      '          <div id="Carousel" class="carousel slide"> '+
+                      ''+carouselIndicators + carouselInner + prevNext +''+
+                      '          </div>'+
+                      '      </div>'+
+                      '</div>';
+               
+        $(".content-imagenes-add").html(content);
+        $("ol.carousel-indicators li:eq(0)").addClass("active")
+        $(".content-imagenes-add .carousel-inner .item:eq(0)").addClass("active");
+        
+    },
     agregaProductoAdicional:function(btn){			
         var $btnAdd = $(btn);
         var index = $(".adicional-added").length;
@@ -62,6 +151,9 @@ var Beneficio = {
         else{
             $(this).addClass("selected");
         }
+        
+        var n = $(".img-generica.selected").length;
+        $("label.count-img-selected").text(n+ " Imágenes seleccionadas.");
     },
     cleanButton:function(){
 	
@@ -119,6 +211,12 @@ var Beneficio = {
                     .removeClass('btn-' + color + ' active')
                     .addClass('btn-default');
         }
+        
+        $("#nameImagePrincipal").val($button.parent().find("input.nameImg").val());
+        
+        
+        
+        
     },
     cleanSeleccionPrincipal:function(){
          $(".button-checkbox").each(function () {
@@ -143,7 +241,7 @@ var Beneficio = {
             $checkbox.prop('checked', false);
         });
 },
-onSeleccionImagenPrivadas:function(){
+    onSeleccionImagenPrivadas:function(){
         
         var haSeleccionado=false;
         var fileList = this.files;
@@ -154,7 +252,8 @@ onSeleccionImagenPrivadas:function(){
                 haSeleccionado = true;
               //get a blob to play with
               var objectUrl = anyWindow.createObjectURL(fileList[i]);
-              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );							
+              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );	
+              $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(fileList[i].name));
               //$('.preview-area').append('<img src="' + objectUrl + '" />');
               // get rid of the blob
               window.URL.revokeObjectURL(fileList[i]);
@@ -168,7 +267,13 @@ onSeleccionImagenPrivadas:function(){
         }
         
 },
- onLoadImagenGenerica:function(){
+    getHtmlBtnPrincipal:function(nombreImagenPrincipal){
+
+        return   '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>'+
+                 '        <input type="checkbox" class="hidden">'+
+                 '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>';
+    },
+    onLoadImagenGenerica:function(){
         
         var idCat = $("#select-categorias").val();
         var idSubCat = $("#select-sub-categorias").val();
@@ -180,7 +285,7 @@ onSeleccionImagenPrivadas:function(){
                 data: {idCat:idCat,idSubCat:idSubCat},
                 success: function (array) {
                     if(array !==undefined && array !== null && array.length > 0){
-                        $(".content-body-generico .row").remove();
+                        $(".content-body-generico").html('');
                         var countFila = 0;
                         var htmlTemp = "";
                         var htmlFinal = "";
@@ -193,13 +298,17 @@ onSeleccionImagenPrivadas:function(){
                             }                           
                             htmlTemp+=  '<div class="col-xs-6 col-md-3">'+
                                         '    <a  class="thumbnail">'+
-                                        '        <img src ="'+array[i]+'" class ="img-generica"/>'+
+                                        '        <img src ="'+array[i]+'" class ="img-generica" style="cursor:pointer;"/>'+
                                         '    </a>'+
                                         '</div>';
                             countFila++;                            
                         }
                         htmlFinal += '<div class="row">'+htmlTemp+'</div>';
                         $(".content-body-generico").html(htmlFinal);
+                        $(".content-body-generico").append('<div class="form-group">'+
+                                                            '    <label class ="count-img-selected">0 Imagenes seleccionadas</label>'+
+                                                            '</div>');
+                        
                         $(".img-generica").on("click",Beneficio.onImgGenericSelected);
                         $('#gallery-imagen-generica').modal('show'); 
                     }
@@ -220,6 +329,7 @@ onSeleccionImagenPrivadas:function(){
     },
     cleanThumbnail:function(){       
        $(".carousel-inner .thumbnail img").attr("src",$("#rutaImagenExample").val());
+       $(".content-img-benefio span.button-checkbox").html('');
     },
     setTipoCarga:function(tipoCarga){
         $("#tipoCargaImagen").val(tipoCarga);
@@ -231,13 +341,16 @@ onSeleccionImagenPrivadas:function(){
       //tipo carga imagen, 1: Privada,2:Generica
       var nImg=$(".carousel-inner .thumbnail img").length;
       var nSelected =$(".img-generica.selected").length;
+      var name = "";
       if(nSelected>0){
         this.cleanThumbnail();
         $(".img-generica.selected").each(function(index){
             haSeleccionado = true;
             if(index < nImg){
                 var src = $(this).attr("src");
+                name = src.split("/")[src.split("/").length-1];
                 $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
+                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(name));
             }
         });
       }

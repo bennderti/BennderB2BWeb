@@ -239,132 +239,8 @@
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
-                    <div class="container content-imagenes-add">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="Carousel" class="carousel slide ">                 
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#Carousel" data-slide-to="0" class="active"></li>
-                                        <li data-target="#Carousel" data-slide-to="1"></li>
-                                        <li data-target="#Carousel" data-slide-to="2"></li>
-                                    </ol>                 
-
-                                    <div class="carousel-inner">                    
-                                        <div class="item active">
-                                            <div class="row">
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>						
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="row">
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>						
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="item">
-                                            <div class="row">
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>						
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                                <div class="col-md-3 content-img-benefio">
-                                                    <span class="button-checkbox sup-izq">
-                                                        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>
-                                                        <input type="checkbox" class="hidden">
-                                                    </span>
-                                                    <a href="#" class="thumbnail"><img src="<c:url value="/resources/beneficio/img/example.png"/>" alt="Image" style="max-width:100%;"></a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
-                                    <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
-                                </div>
-
-                            </div>
-                        </div>
+                    <input type="hidden" id="totalPermitidos" value="${beneficioForm.totalImagenessPermitidos}"/>
+                    <div class="container content-imagenes-add">                        
                     </div>
 
                     <!-- Creates the bootstrap modal where the image will appear -->
@@ -418,6 +294,7 @@
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/formulario/formulario.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script type="text/javascript">
             $(function () {
+                Beneficio.init();
                 $("#f-inicio").val('${beneficioForm.fechaInicio}');
                 $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
             });

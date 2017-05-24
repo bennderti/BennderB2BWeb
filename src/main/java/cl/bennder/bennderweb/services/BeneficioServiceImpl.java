@@ -5,6 +5,7 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.bennderweb.constantes.TipoImagenes;
 import cl.bennder.bennderweb.constantes.URLServiciosBennderB2B;
 import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.bennderweb.properties.Properties;
@@ -52,6 +53,46 @@ public class BeneficioServiceImpl implements BeneficioService{
     private BeneficioSession beneficioSession;
 
     @Override
+    public BeneficioForm convertirDatosFormularioBeneficio(InfoBeneficioRequest request) {
+        
+        BeneficioForm beneficioForm = new BeneficioForm();
+        beneficioForm.setNombre(request.getTitulo());
+        beneficioForm.setIdBeneficio(request.getIdBeneficio());
+        beneficioForm.setDescripcion(request.getDescripcion());
+        beneficioForm.setStock(request.getStock());
+        beneficioForm.setLimiteStock(request.getLimiteStock());
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+        beneficioForm.setFechaInicio(formatoDelTexto.format(request.getFechaInicial()));
+        beneficioForm.setFechaExpiracion(formatoDelTexto.format(request.getFechaExpiracion()));
+        beneficioForm.setIdCategoriaSelected(request.getIdCategoria());
+        beneficioForm.setIdSubCategoriaSelected(request.getIdSubCategoria());
+        beneficioForm.setAdicionales(request.getAdicionales());
+        beneficioForm.setSucursalesSelected(request.getSucursales());
+        beneficioForm.setCondiciones(request.getCondiciones());
+        beneficioForm.setPorcentajeDescuento(request.getPorcentajeDescuento());
+        beneficioForm.setPrecioNormal(request.getPrecioNormal());
+        beneficioForm.setPrecioOferta(request.getPrecioOferta());
+        beneficioForm.setIdTipoBeneficioSelected(request.getTipoBeneficio().getIdTipoBeneficio());
+        if(request.isTieneImagenGenerica()){
+           beneficioForm.setTipoCargaImagen(TipoImagenes.GENERICA);
+        }
+        else{
+            beneficioForm.setTipoCargaImagen(TipoImagenes.PRIVADA);
+        }
+        //genéricos y específicos
+        if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size() > 0){
+            for(BeneficioImagen bimg: request.getImagenesBeneficio()){
+               beneficioForm.getImagenesBeneficio().add(bimg.getUrlImagen());
+            }
+        }
+        
+        
+        return beneficioForm;
+    }
+    
+    
+
+    @Override
     public List<SucursalProveedor> getSucursalByIdComuna(Integer idComuna) {
         
         List<SucursalProveedor>  lista = new ArrayList<>();
@@ -93,10 +134,10 @@ public class BeneficioServiceImpl implements BeneficioService{
             request.setStock(beneficioForm.getStock());
             request.setLimiteStock(beneficioForm.getLimiteStock());
             SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-            request.setFechaCreacion(formatoDelTexto.parse(beneficioForm.getFechaInicio()));
+            request.setFechaInicial(formatoDelTexto.parse(beneficioForm.getFechaInicio()));
             request.setFechaExpiracion(formatoDelTexto.parse(beneficioForm.getFechaExpiracion()));
             request.setIdCategoria(beneficioForm.getIdSubCategoriaSelected());
-            request.setImagenesGenericas(beneficioForm.getImagenesGenericas());
+            
             request.setAdicionales(beneficioForm.getAdicionales());
             request.setSucursales(beneficioForm.getSucursalesSelected());
             request.setCondiciones(beneficioForm.getCondiciones());
@@ -105,28 +146,101 @@ public class BeneficioServiceImpl implements BeneficioService{
             request.setPrecioOferta(beneficioForm.getPrecioOferta());
             
             
+            /*
+            int ordenBase = 1;
+                    int orden = 1;
+                    for (MultipartFile multipartFile : imagenes) {
+                            String fileName = multipartFile.getOriginalFilename();
+                            log.info("imagen subida ->{}",fileName);
+                            //Integer idBeneficio, Integer idImagen, String nombre, byte[] imagen, Integer orden, String imagenBase64, String path
+                            //BeneficioImagen bimagen = new BeneficioImagen(idBeneficio, fileName, multipartFile.getBytes(), ordenBase);
+                            BeneficioImagen bimagen = new BeneficioImagen();
+                            bimagen.setNombre(fileName);
+                            bimagen.setImagen(multipartFile.getBytes());
+                            bimagen.setIdBeneficio(idBeneficio);
+                            if(ordenBase < (indexPrincipal + 1)){
+                                orden = ordenBase + 1;
+                            }
+                            else if ( ordenBase == (indexPrincipal + 1 )){
+                                orden = 1;//ya que indexPrincipal comienza desde 0
+                                log.info("La imagen ->{} se configura como principal (orden 1)",fileName);
+                            }
+                            else{
+                                orden  = ordenBase;
+                            }
+                            log.info("Orden a actualizar ->{} para beneficio ->{}",orden,fileName);
+                            bimagen.setOrden(orden);
+                            ordenBase++;
+                            request.getBeneficioImagenes().add(bimagen);
+                    }*/
             
-            if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
-                 for(MultipartFile m : beneficioForm.getImages()){
-                     if(m!=null && m.getBytes()!=null && m.getBytes().length > 0){
-                        log.info("m.getOriginalFilename() ->{}",m.getOriginalFilename());
-                        BeneficioImagen img = new BeneficioImagen();
-                        img.setNombre(m.getOriginalFilename());
-                        img.setImagen(m.getBytes());
-                        request.getImagenesBeneficio().add(img);
+            
+            if(TipoImagenes.PRIVADA.equals(beneficioForm.getTipoCargaImagen())){
+                log.info("Cargando información de imágenes privadas...");
+                List<BeneficioImagen> temps = new ArrayList<>();
+                if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
+                     for(MultipartFile m : beneficioForm.getImages()){
+                         if(m!=null && m.getBytes()!=null && m.getBytes().length > 0){
+                            
+                             if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().contains(m.getOriginalFilename())){
+                                log.info("m.getOriginalFilename() válida ->{}",m.getOriginalFilename());
+                                BeneficioImagen img = new BeneficioImagen();
+                                img.setNombre(m.getOriginalFilename());
+                                img.setImagen(m.getBytes());
+                                if(!img.getNombre().equals(beneficioForm.getNameImagePrincipal())){
+
+                                    temps.add(img);
+                                }
+                                else{
+                                    log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
+                                    request.getImagenesBeneficio().add(img);
+                                }
+                             }
+                             else{
+                                 log.info("m.getOriginalFilename() NO válida(dimensiones no válidas)->{}",m.getOriginalFilename());
+                             }
+
+                         }
                      }
-                 }
-                 if(beneficioForm.getIdTipoBeneficioSelected()!=null){
-                     TipoBeneficio tb = new TipoBeneficio();
-                     tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());
-                     request.setTipoBeneficio(tb);
-                 }
-                 log.info("Datos formulario(parte 2) ->{}",beneficioForm.toString());
-                 
-//                 log.info("consumiendo servicio encargado de guardar datos de beneficio");      
-//                 InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());
-//                 log.info("Validación de servicio guardar beneficio ->{}",rGuardarBeneficio.toString());
-             }          
+                     request.getImagenesBeneficio().addAll(temps);
+                     if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size()>0){
+                        request.setTieneImagenGenerica(false);
+                     }
+                     if(beneficioForm.getIdTipoBeneficioSelected()!=null){
+                         TipoBeneficio tb = new TipoBeneficio();
+                         tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());
+                         request.setTipoBeneficio(tb);
+                     }
+                 } 
+            }
+            else{
+                log.info("Vendedro ha indicador imágenes genéricas...");
+                if(beneficioForm.getImagenesGenericas()!=null && beneficioForm.getImagenesGenericas().size() > 0){
+                    List<ImagenGenerica> temps = new ArrayList<>();
+                    for(ImagenGenerica imgG : beneficioForm.getImagenesGenericas()){
+                            if(!imgG.getNombre().equals(beneficioForm.getNameImagePrincipal())){                                
+                                temps.add(imgG);
+                            }
+                            else{
+                                log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
+                                request.getImagenesGenericas().add(imgG);
+                            }
+                    }
+                    if(request.getImagenesGenericas()!=null && request.getImagenesGenericas().size() > 0){
+                        request.setTieneImagenGenerica(true);
+                    }
+                    
+                    request.getImagenesGenericas().addAll(temps);
+                }                
+            }
+            
+            
+            
+            request.setImagenesGenericas(beneficioForm.getImagenesGenericas());
+            log.info("Datos formulario(parte 2) ->{}",beneficioForm.toString());
+            log.info("consumiendo servicio encargado de guardar datos de beneficio");      
+            InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());
+            log.info("Validación de servicio guardar beneficio ->{}",rGuardarBeneficio.toString());
             
         } catch (Exception ex) {
             log.error("Error en validaGuardarBeneficio, ",ex);

@@ -10,6 +10,7 @@ import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
+import cl.bennder.entitybennderwebrest.request.InfoBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public interface BeneficioService {
     
+    public BeneficioForm convertirDatosFormularioBeneficio(InfoBeneficioRequest request);
     public List<String> getImagenesGenericasByCatSubSession(Integer idCat,Integer idSubCat);
      
     //.- obtención de datos iniciales para creación/edicion beneficio

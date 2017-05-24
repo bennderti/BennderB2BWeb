@@ -61,7 +61,21 @@ public class BeneficioController {
     public ModelAndView editarBeneficio(@PathVariable Integer idBeneficio) {
         log.info("INICIO");
         log.info("idBeneficio ->{}",idBeneficio);
-        ModelAndView modelAndView = new ModelAndView("proveedor/beneficio");
+        ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
+        
+        InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
+        request.setIdUsuario(usuarioSession.getIdUsuario());
+        request.setIdBeneficio(idBeneficio);
+        InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
+        BeneficioForm beneficioForm = beneficioService.convertirDatosFormularioBeneficio(response.getDatosBeneficio());
+        modelAndView.addObject("beneficioForm", beneficioForm);
+        modelAndView.addObject("categorias", response.getCategorias());
+        modelAndView.addObject("regiones", response.getRegionesSucursal());          
+        modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
+        beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
+        beneficioSession.setComunasSucursales(response.getComunasSucursales());
+        beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
+        beneficioSession.setSucursales(response.getSucursales());     
         
         log.info("FIN");
         return modelAndView;
@@ -72,19 +86,16 @@ public class BeneficioController {
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
         ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
         modelAndView.addObject("beneficioForm", new BeneficioForm());
-          InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
-          request.setIdUsuario(usuarioSession.getIdUsuario());
-          InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
-          modelAndView.addObject("categorias", response.getCategorias());
-          modelAndView.addObject("regiones", response.getRegionesSucursal());          
-          modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
-          
-          
-          beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
-          beneficioSession.setComunasSucursales(response.getComunasSucursales());
-          beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
-          beneficioSession.setSucursales(response.getSucursales());
-        
+        InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
+        request.setIdUsuario(usuarioSession.getIdUsuario());
+        InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
+        modelAndView.addObject("categorias", response.getCategorias());
+        modelAndView.addObject("regiones", response.getRegionesSucursal());          
+        modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
+        beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
+        beneficioSession.setComunasSucursales(response.getComunasSucursales());
+        beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
+        beneficioSession.setSucursales(response.getSucursales());        
         log.info("FIN");
         return modelAndView;
     }
@@ -106,32 +117,32 @@ public class BeneficioController {
         log.info("FIN");
         return modelAndView;
     }
-//    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-//    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
-//        log.info("INICIO");
-//        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-//        log.info("Datos beneficio ->{}.",beneficioForm.toString());
-//        
-//        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-//        beneficioService.validaGuardarBeneficio(beneficioForm);
-//        
-//        log.info("FIN");
-//        return modelAndView;
-//    }
-    
     @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
         log.info("INICIO");
         log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
         log.info("Datos beneficio ->{}.",beneficioForm.toString());
         
-        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
         beneficioService.validaGuardarBeneficio(beneficioForm);
         
         log.info("FIN");
-        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
-        return respJson;
+        return modelAndView;
     }
+    
+//    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+//    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+//        log.info("INICIO");
+//        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+//        log.info("Datos beneficio ->{}.",beneficioForm.toString());
+//        
+//        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+//        beneficioService.validaGuardarBeneficio(beneficioForm);
+//        
+//        log.info("FIN");
+//        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
+//        return respJson;
+//    }
     
     
     

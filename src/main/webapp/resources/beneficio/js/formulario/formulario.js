@@ -14,30 +14,170 @@ jQuery(document).on('ready', function () {
 
     $(".img-generica").on("click",Beneficio.onImgGenericSelected);
     $("#f-adjuntar").on("change",Beneficio.onSeleccionImagenPrivadas);
+    $(".icon-delete-img").on("click",VisualizadorImg.onDeleteImage);
     
 });
+
+var VisualizadorImg = {
+    init:function(w,h){
+        this.dimension.w =w;
+        this.dimension.h =h;
+    },
+    filesUp:0,
+    imgNoVal:[],
+    dimension:{w:700,h:420},
+    getImgExample:function(){
+        return $("#rutaImagenExample").val();
+    },
+    onDeleteImage:function(){
+        $iconDelte = $(this);
+        $iconDelte.parent().find("img").attr("src",VisualizadorImg.getImgExample());
+        $iconDelte.parent().find("span.t-image").text("");
+        $iconDelte.parent().find("a.thumbnail").removeClass("load");
+        $iconDelte.parent().find(".button-checkbox").css("display","none");
+        
+        //$iconDelte.remove();
+        VisualizadorImg.reordenarImagen();
+    },
+    validaDimensionImg:function(file,N){
+	
+        /*var $img = $("#myImage");
+        console.log(
+                $img.prop("naturalWidth") +'\n'+  // Width  (Natural)
+                $img.prop("naturalHeight") +'\n'+ // Height (Natural)
+                $img.prop("width") +'\n'+         // Width  (Rendered)
+                $img.prop("height") +'\n'+        // Height (Rendered)
+                $img.prop("x") +'\n'+             // X offset
+                $img.prop("y")                    // Y offset ... 
+        );*/
+
+
+        var img = new Image();
+        img.src = window.URL.createObjectURL( file );
+        var width,height;
+        img.onload = function() {
+        width = img.naturalWidth;
+        height = img.naturalHeight;
+            window.URL.revokeObjectURL( img.src );
+            VisualizadorImg.filesUp++;
+            if( width > VisualizadorImg.dimension.w || height > VisualizadorImg.dimension.h ) {
+                VisualizadorImg.imgNoVal.push(file.name);
+            }
+            else{
+                VisualizadorImg.addImgValida(file.name);
+     
+            }
+            if(VisualizadorImg.filesUp === N){
+                VisualizadorImg.validarImagenFueraRango();
+            }
+        };
+    },
+    validarImagenFueraRango:function(){
+        if(VisualizadorImg.imgNoVal.length > 0){
+            $(".valida-upload-img").css("display","block");
+            $(".valida-upload-img span").text("Las siguientes imágenes NO cumplen con dimensiones permitidas(ancho max: "+VisualizadorImg.dimension.w+" px, alto max: "+VisualizadorImg.dimension.h+" px) y fueron eliminadas: "+VisualizadorImg.imgNoVal);
+            VisualizadorImg.eliminarImgsNoValidas();
+            
+        }
+     },
+    eliminarImgsNoValidas:function(){
+
+        /*$iconDelte = $(this);
+         $iconDelte.parent().find("img").attr("src","beneficio/1.jpg");
+         $iconDelte.parent().find("span.t-image").text("");
+         $iconDelte.parent().find("a.thumbnail").removeClass("load");
+         //$iconDelte.hide('slow');
+         $iconDelte.remove();*/
+       $(".thumbnail.load").each(function(){	
+            var nameImg = $(this).parent().find("span.t-image").text();			
+            if($.inArray(nameImg,VisualizadorImg.imgNoVal) !== -1){
+                $(this).parent().find("img").attr("src",VisualizadorImg.getImgExample());
+                $(this).parent().find("span.t-image").text("");
+                $(this).parent().find("a.thumbnail").removeClass("load");
+                $(this).parent().find(".button-checkbox").css("display","none");
+                VisualizadorImg.deleImageFromTypeFile(nameImg);
+            }
+        //$.inArray("3423454322254.jpg",imgs);
+        //imgLoad.push({src:$(this).find("img").attr("src"),name:$(this).parent().find("span.t-image").text()});
+       });
+       if(VisualizadorImg.imgNoVal!==null && VisualizadorImg.imgNoVal.length > 0){
+           VisualizadorImg.reordenarImagen();
+       }
+       
+    },
+    deleImageFromTypeFile:function(name){ 
+        var fileList = $("#f-adjuntar")[0].files;
+        if(fileList!==null && fileList!=='undefined' && fileList.length > 0){
+            for(var i = 0; i < fileList.length; i++){
+                if(fileList[i].name === name){
+                    fileList[i].name = "";
+                    fileList[i].size = 0;   
+                    break;
+                }
+            }
+        }
+    },
+    reordenarImagen:function(){
+        var imgLoad=[];
+        $(".thumbnail.load").each(function(){	
+                imgLoad.push({src:$(this).find("img").attr("src"),name:$(this).parent().find("span.t-image").text()});
+        });
+        $(".thumbnail").each(function(index){
+            if(index < imgLoad.length){
+                $(this).find("img").attr("src",imgLoad[index].src);
+                $(this).parent().find("span.t-image").text(imgLoad[index].name);                
+                $(this).parent().find("span.button-checkbox").css("display","block");
+                $(this).removeClass("load")
+                       .addClass("load");
+                       
+            }
+            else{
+                $(this).find("img").attr("src",VisualizadorImg.getImgExample());
+                $(this).parent().find("span.t-image").text("");
+                $(this).addClass("load")
+                       .removeClass("load");
+                $(this).parent().find("span.button-checkbox").css("display","none");
+            }
+        });
+        $("ol.carousel-indicators li").removeClass("active");
+        $("ol.carousel-indicators li:eq(0)").addClass("active");		
+    },
+    cleanImgValidas:function(){
+       $(".name-img-validas input").remove();  
+    },
+    addImgValida:function(name){
+        var index = $(".name-img-validas input").length;
+        $(".name-img-validas").append("<input type='hidden' name='nameImagenesValidas["+index+"]' value ='"+name+"'/>");
+    }
+    
+};
 var Beneficio = {    
     init:function(){
         //.- generamos visualizador de iamgenes cargadas        
         this.generarVisualizadorImagenes([]);
+        VisualizadorImg.init(700,420);
         
     },
     generarItemRow:function(urlImg,nombreImagenPrincipal,includeBtn){
       var item = "";
       if(includeBtn){
-          item =    '<div class="col-md-3 content-img-benefio">'+
+          item =    '<div class="col-md-3 content-img-benefio">'+                    
                     '    <span class="button-checkbox sup-izq">'+
                     '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>'+
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
                     '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
+                    '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
       }  
       else{
           item =    '<div class="col-md-3 content-img-benefio">'+
                     '    <span class="button-checkbox sup-izq"/>'+
                     '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <span class ="t-image"></span>'+
+                    '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
       }
         
@@ -102,7 +242,7 @@ var Beneficio = {
                       '</div>';
                
         $(".content-imagenes-add").html(content);
-        $("ol.carousel-indicators li:eq(0)").addClass("active")
+        $("ol.carousel-indicators li:eq(0)").addClass("active");
         $(".content-imagenes-add .carousel-inner .item:eq(0)").addClass("active");
         
     },
@@ -114,7 +254,7 @@ var Beneficio = {
 
 
          var addAdicional = ' <div class="control-group input-group adicional-added" style="margin-top:10px">'+
-                                                '	<input type="text" name="adicional['+index+']" value = "'+adicional+'" class="form-control" placeholder="Eliminar producto adicional">'+
+                                                '	<input type="text" name="adicional['+index+']" value = "'+adicional+'" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">'+
                                                 '	<div class="input-group-btn"> '+
                                                 '	  <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarProdAdicional(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>'+
                                                 '	</div>'
@@ -211,12 +351,6 @@ var Beneficio = {
                     .removeClass('btn-' + color + ' active')
                     .addClass('btn-default');
         }
-        
-        $("#nameImagePrincipal").val($button.parent().find("input.nameImg").val());
-        
-        
-        
-        
     },
     cleanSeleccionPrincipal:function(){
          $(".button-checkbox").each(function () {
@@ -242,7 +376,8 @@ var Beneficio = {
         });
 },
     onSeleccionImagenPrivadas:function(){
-        
+        VisualizadorImg.imgNoVal = [];
+        VisualizadorImg.cleanImgValidas();       
         var haSeleccionado=false;
         var fileList = this.files;
         if(fileList!==null && fileList!=='undefined' && fileList.length > 0){
@@ -252,18 +387,22 @@ var Beneficio = {
                 haSeleccionado = true;
               //get a blob to play with
               var objectUrl = anyWindow.createObjectURL(fileList[i]);
-              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );	
+              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );
+              $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").css("display","block");
               $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(fileList[i].name));
+              $(".thumbnail:eq("+i+")").addClass("load");
+              $(".thumbnail:eq("+i+")").parent().find("span.t-image").text(fileList[i].name);
               //$('.preview-area').append('<img src="' + objectUrl + '" />');
               // get rid of the blob
               window.URL.revokeObjectURL(fileList[i]);
+              VisualizadorImg.validaDimensionImg(fileList[i],fileList.length);
             }
         }
         else{
             ModalBennder.mostrar({tipo: "advertencia", mensaje: "Ud no ha seleccionado ninguna imágen, se conservan las anteriores", titulo: "Imágenes"});
         }
         if(haSeleccionado){
-          Beneficio.setTipoCarga(1);
+            Beneficio.setTipoCarga(1);
         }
         
 },
@@ -336,6 +475,7 @@ var Beneficio = {
     },
     onCargaSeleccionImagenesGenerica:function(){
         //limpiamos a imagenes ejemplos
+      VisualizadorImg.cleanImgValidas();
       
       var haSeleccionado=false;
       //tipo carga imagen, 1: Privada,2:Generica
@@ -350,7 +490,12 @@ var Beneficio = {
                 var src = $(this).attr("src");
                 name = src.split("/")[src.split("/").length-1];
                 $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
+                $(".thumbnail:eq("+index+")").removeClass("load")
+                                             .addClass("load");
+                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").css("display","block");
                 $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(name));
+                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.t-image").text(name);
+                VisualizadorImg.addImgValida(name);
             }
         });
       }
@@ -380,6 +525,11 @@ var Beneficio = {
             inputSucursales+="<input class = 'i-sucursales' name='sucursalesSelected["+index+"]' type='hidden' value='"+v+"'/>";
         });
         $(".content-sucursales").append(inputSucursales);
+        //.- iamgene selecccionada
+        var imgP = $(".button-checkbox button.active").parent().find("input.nameImg").val();
+        $("#nameImagePrincipal").val(imgP);
+        $("#idTipoBeneficioSelected").val($("#li-tipo-promo li.active input.tb").val());
+        
         
         
         
@@ -409,7 +559,7 @@ var Beneficio = {
 //            return false;
 //        });
         
-    var fd = new FormData();
+    /*var fd = new FormData();
     var file_data = $('#form-beneficio input[type="file"]')[0].files; // for multiple files
     for(var i = 0;i<file_data.length;i++){
         fd.append("images["+i+"]", file_data[i]);
@@ -420,17 +570,18 @@ var Beneficio = {
     });
     $.ajax({
         url: context+'/beneficio/guardar.html',
-        data: fd,
+        data: fd,  
+        mimeType:"text/html; charset=ISO-8859-1",
         contentType: false,
         processData: false,
         type: 'POST',
         success: function(data){
             window.location.href = "../home.html";
         }
-    });
+    });*/
         
         
-        //$("#form-beneficio").submit();
+        $("#form-beneficio").submit();
     },
     onValidaUploadImagen:function(){
         var idCat=$("#select-categorias").val();

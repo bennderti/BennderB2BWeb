@@ -1,6 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,7 +51,7 @@
         <!-- TABLA MANTENEDOR --> 
         
         <div class="container formulario_mantenedor">   
-             <form:form  method="POST" 
+            <form:form  method="POST" 
                             action="../beneficio/guardar.html" 
                             id="form-beneficio" 
                             modelAttribute="beneficioForm" 
@@ -131,7 +132,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body content-condicion-comercial">
                         <div class="input-group control-group after-add-more">
-                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial">
+                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial (presione agregar o enter)"/>
                             <div class="input-group-btn"> 
                                     <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaCodicion(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                             </div>
@@ -172,11 +173,11 @@
                 <label for="t">Tipo de Promoción</label>
                 <!--begin tabs going in wide content -->
                 <ul class="nav nav-tabs" id="li-tipo-promo" role="tablist">
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'active':''}"><a href="#descuento" role="tab" data-toggle="tab">Descuento</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'active':''}"><input type="hidden" value="1" class="tb"/><a href="#descuento" role="tab" data-toggle="tab">Descuento</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><input type="hidden" value="2" class="tb"/><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><input type="hidden" value="3" class="tb"/><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
                 </ul><!--/.nav-tabs.content-tabs -->
-                <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}"/>
+                <input type="hidden" name="id-tipo-beneficio" value ="${beneficioForm.idTipoBeneficioSelected}" id="id-tipo-beneficio"/>
                 <input type="hidden" name="tipoCargaImagen" value ="${beneficioForm.tipoCargaImagen}" id="tipoCargaImagen"/>
                 <!-- CONTENIDOS TABS -->
                 <div class="tab-content">
@@ -212,7 +213,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body content-prod-servicio-adicional">
                                 <div class="input-group control-group after-add-more">
-                                <input type="text" name="add-adicional" id = "add-condicion" class="form-control" placeholder="Agregar producto/servicio adicional">
+                                <input type="text" name="add-adicional" id = "add-condicion" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
                                         <div class="input-group-btn"> 
                                                 <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                                         </div>
@@ -239,6 +240,7 @@
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
+                    <div class = "name-img-validas"></div>
                     <input type="hidden" id="totalPermitidos" value="${beneficioForm.totalImagenessPermitidos}"/>
                     <div class="container content-imagenes-add">                        
                     </div>
@@ -294,7 +296,8 @@
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/formulario/formulario.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script type="text/javascript">
             $(function () {
-                Beneficio.init();
+                var arrayImgs = JSON.parse('${arrayImagenesJson}');
+                Beneficio.init(arrayImgs);
                 $("#f-inicio").val('${beneficioForm.fechaInicio}');
                 $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
             });

@@ -11,6 +11,7 @@ import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
 import cl.bennder.bennderweb.session.BeneficioSession;
+import cl.bennder.entitybennderwebrest.model.BeneficioImagen;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
@@ -22,6 +23,7 @@ import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -68,6 +70,10 @@ public class BeneficioController {
         request.setIdBeneficio(idBeneficio);
         InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
         BeneficioForm beneficioForm = beneficioService.convertirDatosFormularioBeneficio(response.getDatosBeneficio());
+        
+        String arrayImagenes =  new Gson().toJson(beneficioForm.getImagenesBeneficio());
+        //var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+        modelAndView.addObject("arrayImagenesJson", arrayImagenes);
         modelAndView.addObject("beneficioForm", beneficioForm);
         modelAndView.addObject("categorias", response.getCategorias());
         modelAndView.addObject("regiones", response.getRegionesSucursal());          
@@ -85,7 +91,9 @@ public class BeneficioController {
         log.info("INICIO");
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
         ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
-        modelAndView.addObject("beneficioForm", new BeneficioForm());
+        BeneficioForm beneficioForm = new BeneficioForm();
+        modelAndView.addObject("beneficioForm", beneficioForm);
+        modelAndView.addObject("arrayImagenesJson", new Gson().toJson(beneficioForm.getImagenesBeneficio()));
         InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
         request.setIdUsuario(usuarioSession.getIdUsuario());
         InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);

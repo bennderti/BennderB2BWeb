@@ -15,6 +15,11 @@ jQuery(document).on('ready', function () {
     $(".img-generica").on("click",Beneficio.onImgGenericSelected);
     $("#f-adjuntar").on("change",Beneficio.onSeleccionImagenPrivadas);
     $(".icon-delete-img").on("click",VisualizadorImg.onDeleteImage);
+    $("#add-condicion").keypress(Beneficio.onKeyEnterCondicion);
+    $("#add-condicion").keypress(Beneficio.onKeyEnterAdicional);
+    
+    
+    
     
 });
 
@@ -151,10 +156,22 @@ var VisualizadorImg = {
     }
     
 };
-var Beneficio = {    
-    init:function(){
+var Beneficio = { 
+    onKeyEnterCondicion:function(e){
+        if(e.which === 13) {
+                Beneficio.agregaCodicion($(this).parent().find("button.add-more"));
+                return false;
+        }
+    },
+    onKeyEnterAdicional:function(e){
+        if(e.which === 13) {
+                Beneficio.agregaProductoAdicional($(this).parent().find("button.add-more"));
+                return false;
+        }
+    },
+    init:function(arrayImgs){
         //.- generamos visualizador de iamgenes cargadas        
-        this.generarVisualizadorImagenes([]);
+        this.generarVisualizadorImagenes(arrayImgs);
         VisualizadorImg.init(700,420);
         
     },
@@ -249,25 +266,39 @@ var Beneficio = {
     agregaProductoAdicional:function(btn){			
         var $btnAdd = $(btn);
         var index = $(".adicional-added").length;
+        //index = index === 0 || index === 1? 0:index - 1;
         var $inputAdicionalAdd = $btnAdd.parent().parent().find("input");
         var adicional = $inputAdicionalAdd.val();	
 
 
          var addAdicional = ' <div class="control-group input-group adicional-added" style="margin-top:10px">'+
-                                                '	<input type="text" name="adicional['+index+']" value = "'+adicional+'" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">'+
+                                                '	<input type="text" name="adicionales['+index+']" value = "'+adicional+'" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">'+
                                                 '	<div class="input-group-btn"> '+
                                                 '	  <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarProdAdicional(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>'+
                                                 '	</div>'
                                                 ' </div>';
          $(".content-prod-servicio-adicional").append(addAdicional);
          $inputAdicionalAdd.val("");
+         Beneficio.refreshListaAdicional();
     },
     eliminarProdAdicional:function(btn){			
         $(btn).parent().parent().remove();
+        Beneficio.refreshListaAdicional();
+    },
+    refreshListaAdicional:function(){
+        $(".adicional-added").each(function(index){
+            $(this).find("input[type='text']").attr("name","adicionales["+index+"]");
+        });
+    },
+    refreshListaCondiciones:function(){
+        $(".condition-added").each(function(index){
+            $(this).find("input[type='text']").attr("name","condiciones["+index+"]");
+        });
     },
     agregaCodicion:function(btn){
         var $btnAdd = $(btn);
         var index = $(".condition-added").length;
+        //index = index === 0 || index === 1? 0:index - 1;
         var $inputCondicionAdd = $btnAdd.parent().parent().find("input");
         var condicion = $inputCondicionAdd.val();	
 
@@ -280,9 +311,12 @@ var Beneficio = {
                                                 ' </div>';
          $(".content-condicion-comercial").append(addCondicion);
          $inputCondicionAdd.val("");
+         
+         Beneficio.refreshListaCondiciones();
     },
     eliminarCondicion:function(btn){
         $(btn).parent().parent().remove();
+        Beneficio.refreshListaCondiciones();
     },
     onImgGenericSelected:function(e){
         if($(this).hasClass("selected")){
@@ -495,7 +529,7 @@ var Beneficio = {
                 $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").css("display","block");
                 $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(name));
                 $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.t-image").text(name);
-                VisualizadorImg.addImgValida(name);
+                VisualizadorImg.addImgValida(src);
             }
         });
       }
@@ -528,7 +562,7 @@ var Beneficio = {
         //.- iamgene selecccionada
         var imgP = $(".button-checkbox button.active").parent().find("input.nameImg").val();
         $("#nameImagePrincipal").val(imgP);
-        $("#idTipoBeneficioSelected").val($("#li-tipo-promo li.active input.tb").val());
+        $("#id-tipo-beneficio").val($("#li-tipo-promo li.active input.tb").val());
         
         
         

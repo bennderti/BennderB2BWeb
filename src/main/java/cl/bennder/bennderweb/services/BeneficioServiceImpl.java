@@ -144,7 +144,11 @@ public class BeneficioServiceImpl implements BeneficioService{
             request.setPorcentajeDescuento(beneficioForm.getPorcentajeDescuento());
             request.setPrecioNormal(beneficioForm.getPrecioNormal());
             request.setPrecioOferta(beneficioForm.getPrecioOferta());
-            
+            if(beneficioForm.getIdTipoBeneficioSelected()!=null){
+                TipoBeneficio tb = new TipoBeneficio();
+                tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());
+                request.setTipoBeneficio(tb);
+            }
             
             /*
             int ordenBase = 1;
@@ -176,13 +180,14 @@ public class BeneficioServiceImpl implements BeneficioService{
             
             
             if(TipoImagenes.PRIVADA.equals(beneficioForm.getTipoCargaImagen())){
+                log.info("Proveedor ha indicado imágenes privadas...");
                 log.info("Cargando información de imágenes privadas...");
                 List<BeneficioImagen> temps = new ArrayList<>();
                 if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
                      for(MultipartFile m : beneficioForm.getImages()){
                          if(m!=null && m.getBytes()!=null && m.getBytes().length > 0){
                             
-                             if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().contains(m.getOriginalFilename())){
+                             if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size()> 0 && beneficioForm.getNameImagenesValidas().contains(m.getOriginalFilename())){
                                 log.info("m.getOriginalFilename() válida ->{}",m.getOriginalFilename());
                                 BeneficioImagen img = new BeneficioImagen();
                                 img.setNombre(m.getOriginalFilename());
@@ -206,29 +211,29 @@ public class BeneficioServiceImpl implements BeneficioService{
                      if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size()>0){
                         request.setTieneImagenGenerica(false);
                      }
-                     if(beneficioForm.getIdTipoBeneficioSelected()!=null){
-                         TipoBeneficio tb = new TipoBeneficio();
-                         tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());
-                         request.setTipoBeneficio(tb);
-                     }
                  } 
             }
             else{
-                log.info("Vendedro ha indicador imágenes genéricas...");
-                if(beneficioForm.getImagenesGenericas()!=null && beneficioForm.getImagenesGenericas().size() > 0){
+                log.info("Proveedor ha indicado imágenes genéricas...");
+                log.info("Cargando información de imágenes genéricas...");
+                if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size() > 0){
                     List<ImagenGenerica> temps = new ArrayList<>();
-                    for(ImagenGenerica imgG : beneficioForm.getImagenesGenericas()){
-                            if(!imgG.getNombre().equals(beneficioForm.getNameImagePrincipal())){                                
-                                temps.add(imgG);
+                    ImagenGenerica imgGenerica = null;
+                    for(String urlImg : beneficioForm.getNameImagenesValidas()){
+                            imgGenerica = new ImagenGenerica();
+                            imgGenerica.setUrlImagen(urlImg);
+                            if(!urlImg.contains(beneficioForm.getNameImagePrincipal())){                                
+                                temps.add(imgGenerica);
                             }
                             else{
                                 log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
-                                request.getImagenesGenericas().add(imgG);
+                                request.getImagenesGenericas().add(imgGenerica);
                             }
                     }
                     if(request.getImagenesGenericas()!=null && request.getImagenesGenericas().size() > 0){
                         request.setTieneImagenGenerica(true);
                     }
+                    
                     
                     request.getImagenesGenericas().addAll(temps);
                 }                
@@ -237,7 +242,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             
             
             request.setImagenesGenericas(beneficioForm.getImagenesGenericas());
-            log.info("Datos formulario(parte 2) ->{}",beneficioForm.toString());
+            log.info("Datos formulario(parte 2,request) ->{}",request.toString());
             log.info("consumiendo servicio encargado de guardar datos de beneficio");      
             InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());
             log.info("Validación de servicio guardar beneficio ->{}",rGuardarBeneficio.toString());

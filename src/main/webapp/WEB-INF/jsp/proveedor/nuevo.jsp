@@ -177,7 +177,7 @@
                     <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><input type="hidden" value="2" class="tb"/><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
                     <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><input type="hidden" value="3" class="tb"/><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
                 </ul><!--/.nav-tabs.content-tabs -->
-                <input type="hidden" name="id-tipo-beneficio" value ="${beneficioForm.idTipoBeneficioSelected}" id="id-tipo-beneficio"/>
+                <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}" id="id-tipo-beneficio"/>
                 <input type="hidden" name="tipoCargaImagen" value ="${beneficioForm.tipoCargaImagen}" id="tipoCargaImagen"/>
                 <!-- CONTENIDOS TABS -->
                 <div class="tab-content">

@@ -259,10 +259,23 @@
                         </label>
                         <small id="fileHelp" class="form-text text-muted">Si no dispones de imagenes, utiliza ésta opción para oferecerte de nuestro repositorio asociado a categoria seleccionada</small>
                         <div class="contents-imagen-generica">
+                            <c:if test="${beneficioForm.tipoCargaImagen eq 2}">
+                                <c:if test="${not empty beneficioForm.imagenesBeneficio}">
+                                    <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
+                                        <input name="imagenesGenericas[${i.index}].urlImagen" type="hidden" value="${img}"/>";
+                                    </c:forEach>                                    
+                                </c:if>
+                            </c:if>
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
-                    <div class = "name-img-validas"></div>
+                    <div class = "name-img-validas">
+                        <c:if test="${not empty beneficioForm.imagenesBeneficio}">
+                            <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
+                                <input name="nameImagenesValidas[${i.index}]" type="hidden" value="${img}"/>
+                            </c:forEach>                                    
+                        </c:if>                        
+                    </div>
                     <input type="hidden" id="totalPermitidos" value="${beneficioForm.totalImagenessPermitidos}"/>
                     <div class="container content-imagenes-add">                        
                     </div>

@@ -175,10 +175,23 @@ var Beneficio = {
         VisualizadorImg.init(700,420);
         
     },
-    generarItemRow:function(urlImg,nombreImagenPrincipal,includeBtn){
+    generarItemRow:function(urlImg,nombreImagenPrincipal,includeBtn,setPrincipal){
       var item = "";
       if(includeBtn){
-          item =    '<div class="col-md-3 content-img-benefio">'+                    
+          if(setPrincipal){
+                item =    '<div class="col-md-3 content-img-benefio">'+                    
+                    '    <span class="button-checkbox sup-izq">'+
+                    '        <button type="button" class="btn btn-primary active" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-check"></i>Pricipal</button>'+
+                    '        <input type="checkbox" class="hidden">'+
+                    '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
+                    '    </span>'+
+                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
+                    '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
+                    '</div>';
+          }
+          else{
+                     item =    '<div class="col-md-3 content-img-benefio">'+                    
                     '    <span class="button-checkbox sup-izq">'+
                     '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>'+
                     '        <input type="checkbox" class="hidden">'+
@@ -187,7 +200,10 @@ var Beneficio = {
                     '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
-                    '</div>';
+                    '</div>';   
+          }
+          
+
       }  
       else{
           item =    '<div class="col-md-3 content-img-benefio">'+
@@ -197,7 +213,7 @@ var Beneficio = {
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
       }
-        
+      
         return item;
     },
     generarVisualizadorImagenes:function(arrayImagenes){
@@ -237,7 +253,7 @@ var Beneficio = {
                 name = "example-"+i;
                 urlImagen = imgExample;
             }
-            htmlTemp+= this.generarItemRow(urlImagen,name,i < nImages);
+            htmlTemp+= this.generarItemRow(urlImagen,name,i < nImages,nImages > 0 && i === 0);
             countFila++;                            
         }
         htmlFinal += '<div class="item">'+

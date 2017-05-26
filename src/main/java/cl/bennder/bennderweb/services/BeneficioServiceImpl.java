@@ -199,35 +199,59 @@ public class BeneficioServiceImpl implements BeneficioService{
                 log.info("Proveedor ha indicado imágenes privadas...");
                 log.info("Cargando información de imágenes privadas...");
                 List<BeneficioImagen> temps = new ArrayList<>();
-                if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
-                     for(MultipartFile m : beneficioForm.getImages()){
-                         if(m!=null && m.getBytes()!=null && m.getBytes().length > 0){
-                            
-                             if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size()> 0 && beneficioForm.getNameImagenesValidas().contains(m.getOriginalFilename())){
-                                log.info("m.getOriginalFilename() válida ->{}",m.getOriginalFilename());
-                                BeneficioImagen img = new BeneficioImagen();
-                                img.setNombre(m.getOriginalFilename());
-                                img.setImagen(m.getBytes());
-                                if(!img.getNombre().equals(beneficioForm.getNameImagePrincipal())){
-
-                                    temps.add(img);
+                if(beneficioForm.getIdBeneficio()!=null && (beneficioForm.getImages() ==null || beneficioForm.getImages().isEmpty())){
+                    log.info("Edición de beneficio con imagenes privadas pero sin modificar iumagenes desde dialogo...");
+                    
+                    if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size() > 0){
+                        List<ImagenGenerica> tempsPrivada = new ArrayList<>();
+                        ImagenGenerica imgGenerica = null;
+                        for(String urlImg : beneficioForm.getNameImagenesValidas()){
+                                imgGenerica = new ImagenGenerica();
+                                imgGenerica.setUrlImagen(urlImg);
+                                if(!urlImg.contains(beneficioForm.getNameImagePrincipal())){                                
+                                    tempsPrivada.add(imgGenerica);
                                 }
                                 else{
                                     log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
-                                    request.getImagenesBeneficio().add(img);
+                                    request.getImagenesGenericas().add(imgGenerica);
                                 }
-                             }
-                             else{
-                                 log.info("m.getOriginalFilename() NO válida(dimensiones no válidas)->{}",m.getOriginalFilename());
-                             }
+                        }
+                        //utilizamos aitrbuto de imagene genérica
+                        request.setTieneImagenGenerica(false);
+                        request.getImagenesGenericas().addAll(tempsPrivada);
+                        request.setImagenesBeneficio(null);
+                    } 
+                }
+                else{
+                    if(beneficioForm.getImages()!=null && beneficioForm.getImages().size() > 0){
+                         for(MultipartFile m : beneficioForm.getImages()){
+                             if(m!=null && m.getBytes()!=null && m.getBytes().length > 0){                            
+                                 if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size()> 0 && beneficioForm.getNameImagenesValidas().contains(m.getOriginalFilename())){
+                                    log.info("m.getOriginalFilename() válida ->{}",m.getOriginalFilename());
+                                    BeneficioImagen img = new BeneficioImagen();
+                                    img.setNombre(m.getOriginalFilename());
+                                    img.setImagen(m.getBytes());
+                                    if(!img.getNombre().equals(beneficioForm.getNameImagePrincipal())){
 
+                                        temps.add(img);
+                                    }
+                                    else{
+                                        log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
+                                        request.getImagenesBeneficio().add(img);
+                                    }
+                                 }
+                                 else{
+                                     log.info("m.getOriginalFilename() NO válida(dimensiones no válidas)->{}",m.getOriginalFilename());
+                                 }
+
+                             }
+                         }
+                         request.getImagenesBeneficio().addAll(temps);
+                         if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size()>0){
+                            request.setTieneImagenGenerica(false);
                          }
                      }
-                     request.getImagenesBeneficio().addAll(temps);
-                     if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size()>0){
-                        request.setTieneImagenGenerica(false);
-                     }
-                 } 
+                }
             }
             else{
                 log.info("Proveedor ha indicado imágenes genéricas...");

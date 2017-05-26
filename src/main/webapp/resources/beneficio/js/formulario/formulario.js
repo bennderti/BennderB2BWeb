@@ -673,7 +673,7 @@ var Beneficio = {
                         for(var i= 0;i < array.length;i++){
                             var sp = array[i];
                             htmlSucursal =  '<div class="form-check form-check-inline">'+
-                                                ' <label class="form-check-label">'+
+                                                ' <label class="form-control">'+
                                                 '   <input class="form-check-input" type="checkbox" id="suc-'+i+'" value="'+sp.idSucursal+'" > '+sp.nombreSucursal+' '+                                    
                                                 '  </label>'
                                                 '</div>';

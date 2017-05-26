@@ -166,29 +166,11 @@
                 <label for="t">Sucursal / Tienda de Canje</label>
                 <div class="panel panel-default">
                     <div class="panel-body"> 
-                        <div class="form-group">
-                            <label for="select-region">Región</label>
-                            <form:select path="idRegionSelected" 
-                                         id = "select-region" 
-                                         cssClass="form-control" 
-                                         onchange="Beneficio.onChangeRegion();">
-                                <form:option value="-1" label="--Seleccione Región--"/>
-                                <form:options items="${regiones}" itemValue="idRegion" itemLabel="nombre"/> 
-                            </form:select>
-                            
-                        </div>
-                        <div class="form-group">
-                            <label for="select-comuna">Comuna</label>
-                            <select id = "select-comuna" class="form-control" >
-                                <option value="-1">--Seleccione Comuna--</option>                                
-                            </select>  
-                            <input type="hidden" name="idComunaSelected" id="input-idComunaSelected"/>
-                        </div>
                         <div class = "content-sucursales">
                             <c:if test="${not empty sucursales}">
                                 <c:forEach items="${sucursales}" varStatus="i" var = "sp">
                                     <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
+                                        <label class="form-control">
                                           <input class="form-check-input" type="checkbox"   ${sp.selected eq  1?'checked':''} id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
                                         </label>
                                     </div>

@@ -79,10 +79,22 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="select-sub-categorias">Sub-Categoría</label>
-                            <select id = "select-sub-categorias" class="form-control">
-                                <option value="-1">--Seleccione Sub Categoria--</option>                                
-                            </select>
+                            <label for="select-sub-categorias">Sub-Categoría</label>                                                
+                            <c:choose>
+                                <c:when test="${not empty subcategorias}">
+                                    <form:select path="idSubCategoriaSelected" 
+                                         id = "select-sub-categorias" 
+                                         cssClass="form-control">
+                                        <form:option value="-1" label="--Seleccione Sub Categoria--"/>
+                                        <form:options items="${subcategorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
+                                    </form:select>                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <select id = "select-sub-categorias" class="form-control">
+                                        <option value="-1">--Seleccione Sub Categoria--</option>                                
+                                    </select>                                    
+                                </c:otherwise>                                                    
+                            </c:choose>                            
                             <input type="hidden" name="idSubCategoriaSelected" id="input-idSubCategoriaSelected"/>
                         </div>
                     </div>
@@ -136,7 +148,17 @@
                             <div class="input-group-btn"> 
                                     <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaCodicion(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                             </div>
-                        </div>
+                        </div>                        
+                        <c:if test="${not empty condiciones}">                            
+                            <c:forEach items="${condiciones}" varStatus="i" var = "condicion">
+                               <div class="control-group input-group condition-added" style="margin-top:10px">
+                                    <input type="text" name="condiciones[${i.index}]" value = "${condicion}" class="form-control" placeholder="Eliminar condición comercial">
+                                    <div class="input-group-btn"> 
+                                      <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarCondicion(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
                     </div>
                   </div>
                 <!-- CONDICIONES COMERCIALES -->
@@ -157,12 +179,21 @@
                         </div>
                         <div class="form-group">
                             <label for="select-comuna">Comuna</label>
-                            <select id = "select-comuna" class="form-control" onchange="Beneficio.onChangeComuna();">
+                            <select id = "select-comuna" class="form-control" >
                                 <option value="-1">--Seleccione Comuna--</option>                                
-                            </select>
+                            </select>  
                             <input type="hidden" name="idComunaSelected" id="input-idComunaSelected"/>
                         </div>
-                        <div class = "content-sucursales">                            
+                        <div class = "content-sucursales">
+                            <c:if test="${not empty sucursales}">
+                                <c:forEach items="${sucursales}" varStatus="i" var = "sp">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                          <input class="form-check-input" type="checkbox" id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
+                                        </label>
+                                    </div>
+                                 </c:forEach>                                
+                            </c:if>
                         </div>
                     </div>
 
@@ -217,8 +248,17 @@
                                         <div class="input-group-btn"> 
                                                 <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                                         </div>
-                                  </div>
-
+                                </div>
+                                <c:if test="${not empty adicionales}">                            
+                                    <c:forEach items="${adicionales}" varStatus="i" var = "adicional">                                            
+                                        <div class="control-group input-group adicional-added" style="margin-top:10px">
+                                           <input type="text" name="adicionales[${i.index}]" value = "${adicional}" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">
+                                           <div class="input-group-btn"> 
+                                             <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarProdAdicional(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
+                                           </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
                         </div>
                       </div>
                     <!-- PRODUCTO / SERVICIO ADICIONAL-->

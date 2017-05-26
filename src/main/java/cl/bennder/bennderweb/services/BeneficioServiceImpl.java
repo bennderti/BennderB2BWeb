@@ -344,6 +344,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             for(Categoria c : beneficioSession.getCategorias()){
                 if(c.getIdCategoria().compareTo(idCat) == 0){
                    subCategorias = c.getSubCategorias();
+                   break;
                 }
             }
         }

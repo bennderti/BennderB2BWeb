@@ -5,6 +5,7 @@
  */
 package cl.bennder.bennderweb.controller;
 
+import cl.bennder.bennderweb.constantes.TiposBeneficio;
 import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.bennderweb.model.ImagenGenericaForm;
 import cl.bennder.bennderweb.services.BeneficioService;
@@ -16,6 +17,7 @@ import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
+import cl.bennder.entitybennderwebrest.model.TipoBeneficio;
 import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
@@ -75,14 +77,28 @@ public class BeneficioController {
         //var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
         modelAndView.addObject("arrayImagenesJson", arrayImagenes);
         modelAndView.addObject("beneficioForm", beneficioForm);
-        modelAndView.addObject("categorias", response.getCategorias());
+        modelAndView.addObject("categorias", response.getCategorias());        
         modelAndView.addObject("regiones", response.getRegionesSucursal());          
         modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
         beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
         beneficioSession.setComunasSucursales(response.getComunasSucursales());
         beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
-        beneficioSession.setSucursales(response.getSucursales());     
+        beneficioSession.setSucursales(response.getSucursales()); 
+        beneficioSession.setCategorias(response.getCategorias());
+        List<Categoria> subcategorias = beneficioService.getSubCategoriasByIdCat(beneficioForm.getIdCategoriaSelected());
+        modelAndView.addObject("subcategorias", subcategorias); 
+        //.- condiciones
+        modelAndView.addObject("condiciones",  beneficioForm.getCondiciones());        
+        //.- comunas beneficio
+        //modelAndView.addObject("comunas",  beneficioService.getComunaByIdReg(beneficioForm.getIdRegionSelected()));
         
+        //.- comunas
+        
+        
+        //.- adicionales
+        if(beneficioForm.getIdTipoBeneficioSelected()!=null && beneficioForm.getIdTipoBeneficioSelected().compareTo(TiposBeneficio.PRODUCTO_ADICIONAL) == 0){
+            modelAndView.addObject("adicionales",  beneficioForm.getAdicionales()); 
+        }        
         log.info("FIN");
         return modelAndView;
     }

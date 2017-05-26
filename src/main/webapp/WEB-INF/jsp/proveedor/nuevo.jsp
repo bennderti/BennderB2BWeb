@@ -189,7 +189,7 @@
                                 <c:forEach items="${sucursales}" varStatus="i" var = "sp">
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
-                                          <input class="form-check-input" type="checkbox" id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
+                                          <input class="form-check-input" type="checkbox"   ${sp.selected eq  1?'checked':''} id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
                                         </label>
                                     </div>
                                  </c:forEach>                                

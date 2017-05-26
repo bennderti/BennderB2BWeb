@@ -82,8 +82,10 @@ public class BeneficioController {
         modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
         beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
         beneficioSession.setComunasSucursales(response.getComunasSucursales());
-        beneficioSession.setRegionesSucursal(response.getRegionesSucursal());
+        beneficioSession.setRegionesSucursal(response.getRegionesSucursal());        
+        beneficioService.seleccionaSucursales(response.getSucursales(), beneficioForm.getSucursalesSelected());
         beneficioSession.setSucursales(response.getSucursales()); 
+        modelAndView.addObject("sucursales", response.getSucursales());
         beneficioSession.setCategorias(response.getCategorias());
         List<Categoria> subcategorias = beneficioService.getSubCategoriasByIdCat(beneficioForm.getIdCategoriaSelected());
         modelAndView.addObject("subcategorias", subcategorias); 

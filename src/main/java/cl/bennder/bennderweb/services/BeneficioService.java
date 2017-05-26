@@ -38,6 +38,8 @@ public interface BeneficioService {
     
     public List<SucursalProveedor> sucursalesProveedor();
     
+    public void seleccionaSucursales(List<SucursalProveedor> sucursales,List<Integer> sucursalesSelecciondas);
+    
     /***
      * Obtiene todas las categorias/subcategorias con datos simples.
      * @param request

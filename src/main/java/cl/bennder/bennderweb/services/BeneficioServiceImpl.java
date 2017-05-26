@@ -53,6 +53,22 @@ public class BeneficioServiceImpl implements BeneficioService{
     private BeneficioSession beneficioSession;
 
     @Override
+    public void seleccionaSucursales(List<SucursalProveedor> sucursales, List<Integer> sucursalesSelecciondas) {
+        if(sucursales!=null && sucursales.size() > 0){
+            for(SucursalProveedor sp : sucursales){
+                for(Integer is : sucursalesSelecciondas){
+                    if(sp.getIdSucursal().compareTo(is) == 0){
+                        sp.setSelected(1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    
+
+    @Override
     public BeneficioForm convertirDatosFormularioBeneficio(InfoBeneficioRequest request) {
         
         BeneficioForm beneficioForm = new BeneficioForm();
@@ -344,6 +360,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             for(Categoria c : beneficioSession.getCategorias()){
                 if(c.getIdCategoria().compareTo(idCat) == 0){
                    subCategorias = c.getSubCategorias();
+                   log.info("sub.categorias encontradas para categoria ->{}",idCat);
                    break;
                 }
             }

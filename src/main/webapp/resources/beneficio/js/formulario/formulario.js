@@ -630,7 +630,7 @@ var Beneficio = {
         }
     });*/
         
-        
+        //$("#form-beneficio").attr("action","../../beneficio/guardar.html");
         $("#form-beneficio").submit();
     },
     onValidaUploadImagen:function(){

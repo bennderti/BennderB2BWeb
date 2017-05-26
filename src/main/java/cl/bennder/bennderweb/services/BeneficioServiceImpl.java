@@ -199,7 +199,15 @@ public class BeneficioServiceImpl implements BeneficioService{
                 log.info("Proveedor ha indicado imágenes privadas...");
                 log.info("Cargando información de imágenes privadas...");
                 List<BeneficioImagen> temps = new ArrayList<>();
-                if(beneficioForm.getIdBeneficio()!=null && (beneficioForm.getImages() ==null || beneficioForm.getImages().isEmpty())){
+                boolean tieneImages = true;
+                if(beneficioForm.getImages()!=null && beneficioForm.getImages().size()==1 && 
+                   beneficioForm.getImages().get(0).getBytes()!=null && beneficioForm.getImages().get(0).getBytes().length == 0){
+                    tieneImages = false;
+                    log.info("Sin imágenes privadas válidas...");
+                }
+                
+                
+                if(beneficioForm.getIdBeneficio()!=null && !tieneImages){
                     log.info("Edición de beneficio con imagenes privadas pero sin modificar iumagenes desde dialogo...");
                     
                     if(beneficioForm.getNameImagenesValidas()!=null && beneficioForm.getNameImagenesValidas().size() > 0){

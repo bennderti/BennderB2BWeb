@@ -61,8 +61,9 @@ public class BeneficioController {
     private BeneficioService beneficioService;
     
     //.- Index
-    @RequestMapping(value = "/beneficio/obtener/{idBeneficio}.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public ModelAndView editarBeneficio(@PathVariable Integer idBeneficio) {
+    //@RequestMapping(value = "/beneficio/obtener/{idBeneficio}.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/beneficio/editar.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView editarBeneficio(@RequestParam("id") Integer idBeneficio) {
         log.info("INICIO");
         log.info("idBeneficio ->{}",idBeneficio);
         ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");

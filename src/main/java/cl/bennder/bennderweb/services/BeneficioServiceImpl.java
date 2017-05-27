@@ -297,7 +297,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             
             
             
-            request.setImagenesGenericas(beneficioForm.getImagenesGenericas());
+            //request.setImagenesGenericas(beneficioForm.getImagenesGenericas());
             log.info("Datos formulario(parte 2,request) ->{}",request.toString());
             log.info("consumiendo servicio encargado de guardar datos de beneficio");      
             InfoBeneficioResponse rGuardarBeneficio = RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_GUARDAR_BENEFICIO, request, InfoBeneficioResponse.class, usuarioSession.getToken());

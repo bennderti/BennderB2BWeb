@@ -181,7 +181,7 @@ var Beneficio = {
           if(setPrincipal){
                 item =    '<div class="col-md-3 content-img-benefio">'+                    
                     '    <span class="button-checkbox sup-izq">'+
-                    '        <button type="button" class="btn btn-primary active" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-check"></i>Pricipal</button>'+
+                    '        <button type="button" class="btn btn-primary active" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-check"></i>Principal</button>'+
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
@@ -193,7 +193,7 @@ var Beneficio = {
           else{
                      item =    '<div class="col-md-3 content-img-benefio">'+                    
                     '    <span class="button-checkbox sup-izq">'+
-                    '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Pricipal</button>'+
+                    '        <button type="button" class="btn btn-default" data-color="primary" onclick="Beneficio.onChangePrincipal(this);"><i class="state-icon glyphicon glyphicon-unchecked"></i>Principal</button>'+
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+

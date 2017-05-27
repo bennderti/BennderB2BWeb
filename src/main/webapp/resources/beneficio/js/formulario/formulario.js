@@ -16,7 +16,7 @@ jQuery(document).on('ready', function () {
     $("#f-adjuntar").on("change",Beneficio.onSeleccionImagenPrivadas);
     $(".icon-delete-img").on("click",VisualizadorImg.onDeleteImage);
     $("#add-condicion").keypress(Beneficio.onKeyEnterCondicion);
-    $("#add-condicion").keypress(Beneficio.onKeyEnterAdicional);
+    $("#add-adicional").keypress(Beneficio.onKeyEnterAdicional);
     
     
     

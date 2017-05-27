@@ -185,7 +185,7 @@ var Beneficio = {
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
-                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <a style="cursor: pointer;"class="thumbnail" onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
@@ -197,7 +197,7 @@ var Beneficio = {
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
-                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <a style="cursor: pointer;" class="thumbnail"  onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';   
@@ -208,7 +208,7 @@ var Beneficio = {
       else{
           item =    '<div class="col-md-3 content-img-benefio">'+
                     '    <span class="button-checkbox sup-izq"/>'+
-                    '    <a href="#" class="thumbnail"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <a style="cursor: pointer;" class="thumbnail"  onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image"></span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
@@ -740,14 +740,21 @@ var Beneficio = {
         }
     },
     previewImage:function(a){
-        var imgSrc = $(a).parent().parent().parent().find("td div img").attr("src");
-        if(imgSrc !== undefined && imgSrc !== ''){
-            $('#imagepreview').attr('src', imgSrc); 
-            $('#imagemodal').modal('show'); 
+        
+        var imgSrc = $(a).find("img").attr("src");
+        var name= $(a).parent().find(".t-image").text();
+        if(name!=="" && name!=="undefined" && imgSrc!=="" && imgSrc!==null && name!==null){
+            if(imgSrc !== undefined && imgSrc !== ''){
+                $('#imagepreview').attr('src', imgSrc);
+                $("#imagemodal #myModalLabel").html("Preview Imagen: "+name);
+                $('#imagemodal').modal('show'); 
+            }
+            else{
+                ModalBennder.mostrar({tipo: "advertencia", mensaje: "Aún no ha cargado imagen", titulo: "Cargador"});
+            }
         }
-        else{
-            ModalBennder.mostrar({tipo: "advertencia", mensaje: "Aún no ha cargado imagen", titulo: "Cargador"});
-        }
+        return false;
+        
     },
     saveTempImg:function(input){
         ModalLoading.mostrar();

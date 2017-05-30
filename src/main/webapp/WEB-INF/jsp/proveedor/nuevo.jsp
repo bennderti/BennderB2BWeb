@@ -1,6 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,7 +51,7 @@
         <!-- TABLA MANTENEDOR --> 
         
         <div class="container formulario_mantenedor">   
-             <form:form  method="POST" 
+            <form:form  method="POST" 
                             action="../beneficio/guardar.html" 
                             id="form-beneficio" 
                             modelAttribute="beneficioForm" 
@@ -78,10 +79,22 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="select-sub-categorias">Sub-Categoría</label>
-                            <select id = "select-sub-categorias" class="form-control">
-                                <option value="-1">--Seleccione Sub Categoria--</option>                                
-                            </select>
+                            <label for="select-sub-categorias">Sub-Categoría</label>                                                
+                            <c:choose>
+                                <c:when test="${not empty subcategorias}">
+                                    <form:select path="idSubCategoriaSelected" 
+                                         id = "select-sub-categorias" 
+                                         cssClass="form-control">
+                                        <form:option value="-1" label="--Seleccione Sub Categoria--"/>
+                                        <form:options items="${subcategorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
+                                    </form:select>                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <select id = "select-sub-categorias" class="form-control">
+                                        <option value="-1">--Seleccione Sub Categoria--</option>                                
+                                    </select>                                    
+                                </c:otherwise>                                                    
+                            </c:choose>                            
                             <input type="hidden" name="idSubCategoriaSelected" id="input-idSubCategoriaSelected"/>
                         </div>
                     </div>
@@ -131,11 +144,21 @@
                 <div class="panel panel-default">
                     <div class="panel-body content-condicion-comercial">
                         <div class="input-group control-group after-add-more">
-                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial">
+                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial (presione agregar o enter)"/>
                             <div class="input-group-btn"> 
                                     <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaCodicion(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                             </div>
-                        </div>
+                        </div>                        
+                        <c:if test="${not empty condiciones}">                            
+                            <c:forEach items="${condiciones}" varStatus="i" var = "condicion">
+                               <div class="control-group input-group condition-added" style="margin-top:10px">
+                                    <input type="text" name="condiciones[${i.index}]" value = "${condicion}" class="form-control" placeholder="Eliminar condición comercial">
+                                    <div class="input-group-btn"> 
+                                      <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarCondicion(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
                     </div>
                   </div>
                 <!-- CONDICIONES COMERCIALES -->
@@ -143,25 +166,16 @@
                 <label for="t">Sucursal / Tienda de Canje</label>
                 <div class="panel panel-default">
                     <div class="panel-body"> 
-                        <div class="form-group">
-                            <label for="select-region">Región</label>
-                            <form:select path="idRegionSelected" 
-                                         id = "select-region" 
-                                         cssClass="form-control" 
-                                         onchange="Beneficio.onChangeRegion();">
-                                <form:option value="-1" label="--Seleccione Región--"/>
-                                <form:options items="${regiones}" itemValue="idRegion" itemLabel="nombre"/> 
-                            </form:select>
-                            
-                        </div>
-                        <div class="form-group">
-                            <label for="select-comuna">Comuna</label>
-                            <select id = "select-comuna" class="form-control" onchange="Beneficio.onChangeComuna();">
-                                <option value="-1">--Seleccione Comuna--</option>                                
-                            </select>
-                            <input type="hidden" name="idComunaSelected" id="input-idComunaSelected"/>
-                        </div>
-                        <div class = "content-sucursales">                            
+                        <div class = "content-sucursales">
+                            <c:if test="${not empty sucursales}">
+                                <c:forEach items="${sucursales}" varStatus="i" var = "sp">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-control">
+                                          <input class="form-check-input" type="checkbox"   ${sp.selected eq  1?'checked':''} id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
+                                        </label>
+                                    </div>
+                                 </c:forEach>                                
+                            </c:if>
                         </div>
                     </div>
 
@@ -172,11 +186,11 @@
                 <label for="t">Tipo de Promoción</label>
                 <!--begin tabs going in wide content -->
                 <ul class="nav nav-tabs" id="li-tipo-promo" role="tablist">
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'active':''}"><a href="#descuento" role="tab" data-toggle="tab">Descuento</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'active':''}"><input type="hidden" value="1" class="tb"/><a href="#descuento" role="tab" data-toggle="tab">Descuento</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><input type="hidden" value="2" class="tb"/><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
+                    <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><input type="hidden" value="3" class="tb"/><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
                 </ul><!--/.nav-tabs.content-tabs -->
-                <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}"/>
+                <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}" id="id-tipo-beneficio"/>
                 <input type="hidden" name="tipoCargaImagen" value ="${beneficioForm.tipoCargaImagen}" id="tipoCargaImagen"/>
                 <!-- CONTENIDOS TABS -->
                 <div class="tab-content">
@@ -212,12 +226,21 @@
                     <div class="panel panel-default">
                         <div class="panel-body content-prod-servicio-adicional">
                                 <div class="input-group control-group after-add-more">
-                                <input type="text" name="add-adicional" id = "add-condicion" class="form-control" placeholder="Agregar producto/servicio adicional">
+                                <input type="text" name="add-adicional" id = "add-adicional" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
                                         <div class="input-group-btn"> 
                                                 <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                                         </div>
-                                  </div>
-
+                                </div>
+                                <c:if test="${not empty adicionales}">                            
+                                    <c:forEach items="${adicionales}" varStatus="i" var = "adicional">                                            
+                                        <div class="control-group input-group adicional-added" style="margin-top:10px">
+                                           <input type="text" name="adicionales[${i.index}]" value = "${adicional}" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">
+                                           <div class="input-group-btn"> 
+                                             <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarProdAdicional(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
+                                           </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
                         </div>
                       </div>
                     <!-- PRODUCTO / SERVICIO ADICIONAL-->
@@ -236,9 +259,23 @@
                         </label>
                         <small id="fileHelp" class="form-text text-muted">Si no dispones de imagenes, utiliza ésta opción para oferecerte de nuestro repositorio asociado a categoria seleccionada</small>
                         <div class="contents-imagen-generica">
+                            <c:if test="${beneficioForm.tipoCargaImagen eq 2}">
+                                <c:if test="${not empty beneficioForm.imagenesBeneficio}">
+                                    <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
+                                        <input name="imagenesGenericas[${i.index}].urlImagen" type="hidden" value="${img}"/>";
+                                    </c:forEach>                                    
+                                </c:if>
+                            </c:if>
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
+                    <div class = "name-img-validas">
+                        <c:if test="${not empty beneficioForm.imagenesBeneficio}">
+                            <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
+                                <input name="nameImagenesValidas[${i.index}]" type="hidden" value="${img}"/>
+                            </c:forEach>                                    
+                        </c:if>                        
+                    </div>
                     <input type="hidden" id="totalPermitidos" value="${beneficioForm.totalImagenessPermitidos}"/>
                     <div class="container content-imagenes-add">                        
                     </div>
@@ -294,7 +331,8 @@
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/formulario/formulario.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script type="text/javascript">
             $(function () {
-                Beneficio.init();
+                var arrayImgs = JSON.parse('${arrayImagenesJson}');
+                Beneficio.init(arrayImgs);
                 $("#f-inicio").val('${beneficioForm.fechaInicio}');
                 $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
             });
@@ -310,4 +348,24 @@
         <!-- Loading -->
         <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         </body>
+        
+        
+        <!--Preview Imagen-->
+         <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Preview Imagen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="imagepreview" style="width: 100%;height: 100%;">
+                        <!--img src="" id="imagepreview" style="width: 400px; height: 264px;" >-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </html>

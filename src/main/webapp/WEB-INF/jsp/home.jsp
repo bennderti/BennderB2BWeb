@@ -143,7 +143,11 @@
         
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="<c:url value="/resources/beneficio/js/ie10-viewport-bug-workaround.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
-        <script type="text/javascript">
+        <script type="text/javascript">            
+            
+            function onEditarB(id){
+                window.location.href = "beneficio/editar.html?id="+id;
+            }
             $(document).ready(function() {
                 $('#example').DataTable( {
                     "language": {

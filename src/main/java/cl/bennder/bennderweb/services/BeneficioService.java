@@ -11,7 +11,9 @@ import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
+import cl.bennder.entitybennderwebrest.request.PublicarBeneficiosRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
+import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.UploadImagenesGenericaResponse;
@@ -65,4 +67,7 @@ public interface BeneficioService {
     
     public List<SucursalProveedor> getSucursalByIdComuna(Integer idComuna);
     
+    public CargarMantenedorBeneficioResponse cargarMantenedorBeneficio ();
+
+    public ValidacionResponse publicarBeneficios (PublicarBeneficiosRequest request);
 }

@@ -1,6 +1,6 @@
 <%@page import="java.util.Calendar"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include.jsp" %>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/jsp/include.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,7 +41,7 @@
                     <img src="<c:url value="/resources/beneficio/img/logo-bennder-300.png"/>" alt = "Bennder">
                 </div>
                 <!-- LOGO BENNDER -->
-                <h1>Nuevo Beneficio</h1>
+                <h1>Mantenedor de Beneficios</h1>
             </div>
             <p class="lead">Crea, edita y publica un nuevo beneficio en Bennder.</p>
         </div>
@@ -86,33 +86,45 @@
                         <th>Estado de Publicaci&oacute;n</th>
                     </tr>
                 </tfoot>-->
-                   <tbody>
-                    <tr>
-                        <td>Cena para 2</td>
-                        <td>Restaurante</td>
-                        <td>16-05-2017</td>
-                        <td>28-05-2017</td>
-                        <td>Publicado</td>
-                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
-                    </tr>
-                    <tr>
-                        <td>60 Piezas Sushi</td>
-                        <td>Restaurante</td>
-                        <td>16-05-2017</td>
-                        <td>28-05-2017</td>
-                        <td>Por publicar</td>
-                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
-                    </tr>
-                   </tbody>
+                <tbody>
+                    <c:choose>
+                        <c:when test="${not empty beneficios}"> 
+                            <c:forEach items="${beneficios}" var="beneficio">
+                                <tr>
+                                    <td>${beneficio.titulo}</td>
+                                    <td>${beneficio.nombreCategoria}</td>
+                                    <td>${beneficio.fechaInicial}</td>
+                                    <td>${beneficio.fechaExpiracion}</td>
+                                    <td>
+<!--                                        <div class="checkbox">
+                                            <input type="checkbox" value="">
+                                        </div>-->
+                                        ${beneficio.habilitado}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>  
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
+                </tbody>
             </table>
-
         </div>
         <!-- BOTÓN PROCESAR FORMULARIO --> 
-        <!-- TABLA MANTENEDOR -->
-        
-
-
-
+        <!-- TABLA MANTENEDOR -->    
         <!-- FOOTER MANTENEDOR -->
         <footer class="footer">
             <div class="container">

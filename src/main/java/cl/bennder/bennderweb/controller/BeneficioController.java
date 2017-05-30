@@ -9,20 +9,22 @@ import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.bennderweb.model.ImagenGenericaForm;
 import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
-import cl.bennder.bennderweb.services.UsuarioServices;
 import cl.bennder.bennderweb.session.BeneficioSession;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.model.Validacion;
+import cl.bennder.entitybennderwebrest.request.CargarMantenedorBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
+import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -227,5 +229,32 @@ public class BeneficioController {
         return respJson;
     }
     
+//    @RequestMapping(value = "/mantenedorBeneficio.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+//    public ModelAndView mantenedorBeneficio() {
+//        log.info("INICIO");
+//        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+//        
+//        
+//        
+//        ModelAndView modelAndView = new ModelAndView("home");
+//        log.info("FIN");
+//        return modelAndView;
+//    }
+//    
+    //    @RequestMapping(value = "beneficio/cargarMantenedorBeneficio", method = RequestMethod.POST)
+    @RequestMapping(value = "/home.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView cargarMantenedorBeneficio() {
+        log.info("Inicio");                    
+        
+        CargarMantenedorBeneficioResponse response = beneficioService.cargarMantenedorBeneficio();
+        
+        ModelAndView modelAndView = new ModelAndView("home");
+        
+        modelAndView.addObject("beneficios", response.getListaBeneficios());        
+        
+        log.info("Fin");
+        
+        return modelAndView;
+    }
     
 }

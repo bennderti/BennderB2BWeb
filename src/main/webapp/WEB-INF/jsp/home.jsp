@@ -93,7 +93,7 @@
                         <td>16-05-2017</td>
                         <td>28-05-2017</td>
                         <td>Publicado</td>
-                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true" onclick="onEditarB(22)"></span></button></td>
                     </tr>
                     <tr>
                         <td>60 Piezas Sushi</td>
@@ -101,7 +101,7 @@
                         <td>16-05-2017</td>
                         <td>28-05-2017</td>
                         <td>Por publicar</td>
-                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td>
+                        <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"  onclick="onEditarB(22);"></span></button></td>
                     </tr>
                    </tbody>
             </table>
@@ -131,7 +131,11 @@
         
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="<c:url value="/resources/beneficio/js/ie10-viewport-bug-workaround.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
-        <script type="text/javascript">
+        <script type="text/javascript">            
+            
+            function onEditarB(id){
+                window.location.href = "beneficio/editar.html?id="+id;
+            }
             $(document).ready(function() {
                 $('#example').DataTable( {
                     "language": {

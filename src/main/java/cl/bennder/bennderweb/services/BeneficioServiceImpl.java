@@ -70,37 +70,45 @@ public class BeneficioServiceImpl implements BeneficioService{
 
     @Override
     public BeneficioForm convertirDatosFormularioBeneficio(InfoBeneficioRequest request) {
-        
+        log.info("inicio");
         BeneficioForm beneficioForm = new BeneficioForm();
-        beneficioForm.setNombre(request.getTitulo());
-        beneficioForm.setIdBeneficio(request.getIdBeneficio());
-        beneficioForm.setDescripcion(request.getDescripcion());
-        beneficioForm.setStock(request.getStock());
-        beneficioForm.setLimiteStock(request.getLimiteStock());
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-        beneficioForm.setFechaInicio(formatoDelTexto.format(request.getFechaInicial()));
-        beneficioForm.setFechaExpiracion(formatoDelTexto.format(request.getFechaExpiracion()));
-        beneficioForm.setIdCategoriaSelected(request.getIdCategoria());
-        beneficioForm.setIdSubCategoriaSelected(request.getIdSubCategoria());
-        beneficioForm.setAdicionales(request.getAdicionales());
-        beneficioForm.setSucursalesSelected(request.getSucursales());
-        beneficioForm.setCondiciones(request.getCondiciones());
-        beneficioForm.setPorcentajeDescuento(request.getPorcentajeDescuento());
-        beneficioForm.setPrecioNormal(request.getPrecioNormal());
-        beneficioForm.setPrecioOferta(request.getPrecioOferta());
-        beneficioForm.setIdTipoBeneficioSelected(request.getTipoBeneficio().getIdTipoBeneficio());
-        if(request.isTieneImagenGenerica()){
-           beneficioForm.setTipoCargaImagen(TipoImagenes.GENERICA);
-        }
-        else{
-            beneficioForm.setTipoCargaImagen(TipoImagenes.PRIVADA);
-        }
-        //genéricos y específicos
-        if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size() > 0){
-            for(BeneficioImagen bimg: request.getImagenesBeneficio()){
-               beneficioForm.getImagenesBeneficio().add(bimg.getUrlImagen());
+        
+        if(request != null){
+            log.info("datos recibidos para beneficio ->{}",request.getIdBeneficio());
+            beneficioForm.setNombre(request.getTitulo());
+            beneficioForm.setIdBeneficio(request.getIdBeneficio());
+            beneficioForm.setDescripcion(request.getDescripcion());
+            beneficioForm.setStock(request.getStock());
+            beneficioForm.setLimiteStock(request.getLimiteStock());
+            SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+            beneficioForm.setFechaInicio(formatoDelTexto.format(request.getFechaInicial()));
+            beneficioForm.setFechaExpiracion(formatoDelTexto.format(request.getFechaExpiracion()));
+            beneficioForm.setIdCategoriaSelected(request.getIdCategoria());
+            beneficioForm.setIdSubCategoriaSelected(request.getIdSubCategoria());
+            beneficioForm.setAdicionales(request.getAdicionales());
+            beneficioForm.setSucursalesSelected(request.getSucursales());
+            beneficioForm.setCondiciones(request.getCondiciones());
+            beneficioForm.setPorcentajeDescuento(request.getPorcentajeDescuento());
+            beneficioForm.setPrecioNormal(request.getPrecioNormal());
+            beneficioForm.setPrecioOferta(request.getPrecioOferta());
+            beneficioForm.setIdTipoBeneficioSelected(request.getTipoBeneficio().getIdTipoBeneficio());
+            if(request.isTieneImagenGenerica()){
+               beneficioForm.setTipoCargaImagen(TipoImagenes.GENERICA);
+            }
+            else{
+                beneficioForm.setTipoCargaImagen(TipoImagenes.PRIVADA);
+            }
+            //genéricos y específicos
+            if(request.getImagenesBeneficio()!=null && request.getImagenesBeneficio().size() > 0){
+                for(BeneficioImagen bimg: request.getImagenesBeneficio()){
+                   beneficioForm.getImagenesBeneficio().add(bimg.getUrlImagen());
+                }
             }
         }
+        else{
+            log.info("sin datos para beneficio encontrado");
+        }
+
         
         
         return beneficioForm;

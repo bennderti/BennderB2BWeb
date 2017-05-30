@@ -226,7 +226,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body content-prod-servicio-adicional">
                                 <div class="input-group control-group after-add-more">
-                                <input type="text" name="add-adicional" id = "add-condicion" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
+                                <input type="text" name="add-adicional" id = "add-adicional" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
                                         <div class="input-group-btn"> 
                                                 <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                                         </div>
@@ -348,4 +348,24 @@
         <!-- Loading -->
         <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         </body>
+        
+        
+        <!--Preview Imagen-->
+         <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Preview Imagen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="imagepreview" style="width: 100%;height: 100%;">
+                        <!--img src="" id="imagepreview" style="width: 400px; height: 264px;" >-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </html>

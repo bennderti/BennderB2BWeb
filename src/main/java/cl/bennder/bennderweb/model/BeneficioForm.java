@@ -7,6 +7,7 @@ package cl.bennder.bennderweb.model;
 
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.utils.UtilsBennder;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,11 +38,17 @@ public class BeneficioForm {
     private Integer tipoCargaImagen;//tipo carga imagen, 1: Privada,2:Generica
     private String nameImagePrincipal;//nombre de imagen principal seleccionada
     private Integer totalImagenessPermitidos;//total de imagenes permitidas
+    private Integer anchoMaxImg;
+    private Integer altoMaxImg;
+    private List<String> imagenesBeneficio;
+    private List<String> nameImagenesValidas;
     
     public BeneficioForm() {
         this.idTipoBeneficioSelected = -1;
         this.tipoCargaImagen = 0;
         this.totalImagenessPermitidos = 12;
+        this.anchoMaxImg = 720;
+        this.altoMaxImg = 420;
     }
 
     public String getDescripcion() {
@@ -112,6 +119,17 @@ public class BeneficioForm {
            fechaExpiracion = UtilsBennder.getFechaActualFormato(fechaExpiracion); 
         }
         return fechaExpiracion;
+    }
+
+    public List<String> getImagenesBeneficio() {
+        if(imagenesBeneficio == null){
+            imagenesBeneficio = new ArrayList<>();
+        }
+        return imagenesBeneficio;
+    }
+
+    public void setImagenesBeneficio(List<String> imagenesBeneficio) {
+        this.imagenesBeneficio = imagenesBeneficio;
     }
 
     public void setFechaExpiracion(String fechaExpiracion) {
@@ -230,10 +248,36 @@ public class BeneficioForm {
         this.totalImagenessPermitidos = totalImagenessPermitidos;
     }
 
+    public Integer getAnchoMaxImg() {
+        return anchoMaxImg;
+    }
+
+    public void setAnchoMaxImg(Integer anchoMaxImg) {
+        this.anchoMaxImg = anchoMaxImg;
+    }
+
+    public Integer getAltoMaxImg() {
+        return altoMaxImg;
+    }
+
+    public void setAltoMaxImg(Integer altoMaxImg) {
+        this.altoMaxImg = altoMaxImg;
+    }
+
+    public List<String> getNameImagenesValidas() {
+        return nameImagenesValidas;
+    }
+
+    public void setNameImagenesValidas(List<String> nameImagenesValidas) {
+        this.nameImagenesValidas = nameImagenesValidas;
+    }
+
     @Override
     public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + '}';
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", nameImagenesValidas=" + nameImagenesValidas + '}';
     }
+
+
 
     
 

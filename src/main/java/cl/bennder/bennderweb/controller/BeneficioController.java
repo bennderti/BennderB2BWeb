@@ -144,32 +144,53 @@ public class BeneficioController {
         log.info("FIN");
         return modelAndView;
     }
-    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
-        log.info("INICIO");
-        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-        log.info("Datos beneficio ->{}.",beneficioForm.toString());
-        
-        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        beneficioService.validaGuardarBeneficio(beneficioForm);
-        
-        log.info("FIN");
-        return modelAndView;
-    }
-    
 //    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-//    public @ResponseBody String  guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+//    public ModelAndView guardarBeneficio(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
 //        log.info("INICIO");
 //        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
 //        log.info("Datos beneficio ->{}.",beneficioForm.toString());
 //        
-//        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+//        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
 //        beneficioService.validaGuardarBeneficio(beneficioForm);
 //        
 //        log.info("FIN");
-//        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
-//        return respJson;
+//        return modelAndView;
 //    }
+    
+    
+    @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String  guardaDatosGenerales(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+        log.info("INICIO");
+        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+        log.info("Datos beneficio ->{}.",beneficioForm.toString());
+        
+        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        //beneficioService.validaGuardarBeneficio(beneficioForm);
+        beneficioSession.setBeneficioForm(beneficioForm);
+        
+        log.info("FIN");
+        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
+        return respJson;
+    }
+    @RequestMapping(value = "/beneficio/guardarImagenes.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String  guardaImagenes(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
+        log.info("INICIO");
+        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+        log.info("Datos imagenes upload ->{}.",beneficioForm.toString());
+        
+        if(beneficioSession.getBeneficioForm()!=null){
+            log.info("seteando imagenes upload->{}",usuarioSession.getIdUsuario());
+           beneficioSession.getBeneficioForm().setImages(beneficioForm.getImages());
+        }
+        log.info("Datos imagenes session ->{}.",beneficioSession.getBeneficioForm().toString());
+        
+        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        //beneficioService.validaGuardarBeneficio(beneficioForm);
+        
+        log.info("FIN");
+        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
+        return respJson;
+    }
     
     
     

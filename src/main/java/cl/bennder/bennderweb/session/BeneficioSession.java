@@ -5,6 +5,7 @@
  */
 package cl.bennder.bennderweb.session;
 
+import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.entitybennderwebrest.model.Categoria;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
@@ -22,6 +23,7 @@ public class BeneficioSession {
     private List<SucursalProveedor> sucursales;
     private List<Region> regionesSucursal;
     private List<Comuna> comunasSucursales;
+    private BeneficioForm beneficioForm;
     
     public BeneficioSession() {
     }
@@ -64,6 +66,14 @@ public class BeneficioSession {
 
     public void setComunasSucursales(List<Comuna> comunasSucursales) {
         this.comunasSucursales = comunasSucursales;
+    }
+
+    public BeneficioForm getBeneficioForm() {
+        return beneficioForm;
+    }
+
+    public void setBeneficioForm(BeneficioForm beneficioForm) {
+        this.beneficioForm = beneficioForm;
     }
     
 }

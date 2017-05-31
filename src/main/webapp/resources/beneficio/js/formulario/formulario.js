@@ -581,6 +581,8 @@ var Beneficio = {
         $("#id-tipo-beneficio").val($("#li-tipo-promo li.active input.tb").val());
         
         
+        Beneficio.onGuardaDatosGenerales();
+        
         
         
 //        ModalLoading.mostrar();
@@ -590,8 +592,10 @@ var Beneficio = {
 //            dataType: 'JSON',
 //            data: $("#form-beneficio").serialize(),
 //            success: function (data) {
-//                window.location.href = "../home.html";
+//                //window.location.href = "../home.html";
 //                ModalLoading.cerrar();
+//                ModalBennder.mostrar({tipo: "informativo", mensaje: "Guardar datos generales", titulo: "Datos Generales"});
+//                
 //            },
 //            error: function (x, y, z) {
 //                ModalLoading.cerrar();
@@ -608,8 +612,9 @@ var Beneficio = {
 //
 //            return false;
 //        });
-        
-    /*var fd = new FormData();
+   
+        /*
+    var fd = new FormData();
     var file_data = $('#form-beneficio input[type="file"]')[0].files; // for multiple files
     for(var i = 0;i<file_data.length;i++){
         fd.append("images["+i+"]", file_data[i]);
@@ -621,17 +626,100 @@ var Beneficio = {
     $.ajax({
         url: context+'/beneficio/guardar.html',
         data: fd,  
-        mimeType:"text/html; charset=ISO-8859-1",
+        mimeType:"text/html; charset=UTF-8",
         contentType: false,
         processData: false,
+        async: false,
         type: 'POST',
         success: function(data){
-            window.location.href = "../home.html";
+            //window.location.href = "../home.html";
+            alert("OK");
         }
-    });*/
+    });
+    */  
         
-        //$("#form-beneficio").attr("action","../../beneficio/guardar.html");
-        $("#form-beneficio").submit();
+        //.- version II
+        //$("#form-beneficio").submit();
+    },
+    onGuardaDatosGenerales:function(){
+       ModalLoading.mostrar();
+        $.ajax({
+            url: context+'/beneficio/guardar.html',
+            type: 'POST',
+            dataType: 'JSON',
+            data: $("#form-beneficio").serialize(),
+            success: function (data) {                
+                if(data!==null && data !=='undefined'){
+                    if(data.codigoNegocio === '0' && data.codigo ==='0'){
+                        Beneficio.onGuardarUploadImages();
+                        
+                    }
+                    else{
+                        ModalLoading.cerrar();
+                        ModalBennder.mostrar({tipo: "error", mensaje: "Guardar datos generales", titulo: data.mensaje});
+                    }
+                    
+                }
+                else{
+                    ModalLoading.cerrar();
+                    ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al guardar datos de beneficio" , titulo: "Guardar datos generales"});
+                }
+                //window.location.href = "../home.html";
+//                ModalLoading.cerrar();
+//                ModalBennder.mostrar({tipo: "informativo", mensaje: "Guardar datos generales", titulo: "Datos Generales"});
+                
+            },
+            error: function (x, y, z) {
+                ModalLoading.cerrar();
+                ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al validar usuario", titulo: "Beneficio"});
+            }
+        });
+    },
+    onGuardarUploadImages:function(){
+        
+        var fd = new FormData();
+        var file_data = $('#form-beneficio input[type="file"]')[0].files; // for multiple files
+        for(var i = 0;i<file_data.length;i++){
+            fd.append("images["+i+"]", file_data[i]);
+        }
+//        var other_data = $('#form-beneficio').serializeArray();
+//        $.each(other_data,function(key,input){
+//            fd.append(input.name,input.value);
+//        });
+        $.ajax({
+            url: context+'/beneficio/guardarImagenes.html',
+            data: fd,  
+            mimeType:"text/html; charset=UTF-8",
+            contentType: false,
+            processData: false,
+            async: false,
+            type: 'POST',
+            success: function(data){
+                data = JSON.parse(data);
+                if(data!==null && data !=='undefined'){
+                    if(data.codigoNegocio === '0' && data.codigo ==='0'){
+                        
+                        window.location.href = "../home.html";
+                    }
+                    else{
+                        ModalLoading.cerrar();
+                        ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Imágenes beneficio"});
+                    }
+                    
+                }
+                else{
+                    ModalLoading.cerrar();
+                    ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al guardar datos de beneficio" , titulo: "Guardar datos generales"});
+                }
+                //window.location.href = "../home.html";
+                //alert("OK");
+            },
+            error: function (x, y, z) {
+                ModalLoading.cerrar();
+                ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al guarda imágenes", titulo: "Beneficio"});
+            }
+        });
+        
     },
     onValidaUploadImagen:function(){
         var idCat=$("#select-categorias").val();

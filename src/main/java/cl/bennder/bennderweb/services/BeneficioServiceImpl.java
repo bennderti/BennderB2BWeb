@@ -22,7 +22,9 @@ import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
+import cl.bennder.entitybennderwebrest.request.PublicarBeneficiosRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
+import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
 import cl.bennder.entitybennderwebrest.response.InfoBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
@@ -51,6 +53,8 @@ public class BeneficioServiceImpl implements BeneficioService{
     
     @Autowired
     private BeneficioSession beneficioSession;
+
+    
 
     @Override
     public void seleccionaSucursales(List<SucursalProveedor> sucursales, List<Integer> sucursalesSelecciondas) {
@@ -408,7 +412,14 @@ public class BeneficioServiceImpl implements BeneficioService{
         
         return subCategorias;
     }
-    
-    
-    
+
+    @Override
+    public CargarMantenedorBeneficioResponse cargarMantenedorBeneficio() {
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_CARGAR_MANTENEDOR_BENEFICIO, this, CargarMantenedorBeneficioResponse.class, usuarioSession.getToken());
+    }
+
+    @Override
+    public ValidacionResponse publicarBeneficios(PublicarBeneficiosRequest request) {
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_PUBLICAR_BENEFICIO, request, ValidacionResponse.class, usuarioSession.getToken());
+    }
 }

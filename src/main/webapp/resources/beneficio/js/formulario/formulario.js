@@ -582,66 +582,8 @@ var Beneficio = {
         
         
         Beneficio.onGuardaDatosGenerales();
-        
-        
-        
-//        ModalLoading.mostrar();
-//        $.ajax({
-//            url: context+'/beneficio/guardar.html',
-//            type: 'POST',
-//            dataType: 'JSON',
-//            data: $("#form-beneficio").serialize(),
-//            success: function (data) {
-//                //window.location.href = "../home.html";
-//                ModalLoading.cerrar();
-//                ModalBennder.mostrar({tipo: "informativo", mensaje: "Guardar datos generales", titulo: "Datos Generales"});
-//                
-//            },
-//            error: function (x, y, z) {
-//                ModalLoading.cerrar();
-//                ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al validar usuario", titulo: "Login"});
-//            }
-//        });
-//        $("#form-beneficio").submit(function() {
-//
-//            var formData = new FormData($(this)[0]);
-//
-//            $.post($(this).attr("action"), formData, function(data) {
-//                window.location.href = "../home.html";
-//            });
-//
-//            return false;
-//        });
-   
-        /*
-    var fd = new FormData();
-    var file_data = $('#form-beneficio input[type="file"]')[0].files; // for multiple files
-    for(var i = 0;i<file_data.length;i++){
-        fd.append("images["+i+"]", file_data[i]);
-    }
-    var other_data = $('#form-beneficio').serializeArray();
-    $.each(other_data,function(key,input){
-        fd.append(input.name,input.value);
-    });
-    $.ajax({
-        url: context+'/beneficio/guardar.html',
-        data: fd,  
-        mimeType:"text/html; charset=UTF-8",
-        contentType: false,
-        processData: false,
-        async: false,
-        type: 'POST',
-        success: function(data){
-            //window.location.href = "../home.html";
-            alert("OK");
-        }
-    });
-    */  
-        
-        //.- version II
-        //$("#form-beneficio").submit();
-    },
-    onGuardaDatosGenerales:function(){
+    }    
+    ,onGuardaDatosGenerales:function(){
        ModalLoading.mostrar();
         $.ajax({
             url: context+'/beneficio/guardar.html',
@@ -682,10 +624,6 @@ var Beneficio = {
         for(var i = 0;i<file_data.length;i++){
             fd.append("images["+i+"]", file_data[i]);
         }
-//        var other_data = $('#form-beneficio').serializeArray();
-//        $.each(other_data,function(key,input){
-//            fd.append(input.name,input.value);
-//        });
         $.ajax({
             url: context+'/beneficio/guardarImagenes.html',
             data: fd,  

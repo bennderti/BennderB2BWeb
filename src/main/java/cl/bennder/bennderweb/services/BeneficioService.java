@@ -12,7 +12,9 @@ import cl.bennder.entitybennderwebrest.model.SucursalProveedor;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
+import cl.bennder.entitybennderwebrest.request.PublicarBeneficiosRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
+import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.GetTodasCategoriaResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.UploadImagenesGenericaResponse;
@@ -39,6 +41,7 @@ public interface BeneficioService {
     public List<SucursalProveedor> sucursalesProveedor();
     
     public void seleccionaSucursales(List<SucursalProveedor> sucursales,List<Integer> sucursalesSelecciondas);
+    
     
     /***
      * Obtiene todas las categorias/subcategorias con datos simples.
@@ -69,4 +72,7 @@ public interface BeneficioService {
     
     public List<SucursalProveedor> getSucursalByIdComuna(Integer idComuna);
     
+    public CargarMantenedorBeneficioResponse cargarMantenedorBeneficio ();
+
+    public ValidacionResponse publicarBeneficios (PublicarBeneficiosRequest request);
 }

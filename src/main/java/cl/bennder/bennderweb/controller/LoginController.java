@@ -8,10 +8,13 @@ package cl.bennder.bennderweb.controller;
 import cl.bennder.bennderweb.body.response.LoginBodyResponse;
 import cl.bennder.bennderweb.constantes.GoToUrl;
 import cl.bennder.bennderweb.model.LoginForm;
+import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
+import cl.bennder.entitybennderwebrest.request.CargarMantenedorBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
+import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
@@ -43,6 +46,9 @@ public class LoginController {
     @Autowired
     private UsuarioServices usuarioServices;
     
+    @Autowired
+    BeneficioService beneficioService;
+    
         
     //.- Index
     @RequestMapping(value = "/index.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
@@ -60,6 +66,7 @@ public class LoginController {
         LoginResponse response = usuarioServices.validacionUsuario(new LoginRequest(loginForm.getUser(), loginForm.getPassword()));
         LoginBodyResponse rBody = new LoginBodyResponse();
         rBody.setValidacion(response.getValidacion());
+        
         if(response.getValidacion()!=null && response.getValidacion().getCodigo()!=null && "0".equals(response.getValidacion().getCodigo())){
 
             session.setAttribute("user", loginForm.getUser());
@@ -107,13 +114,13 @@ public class LoginController {
         return respJson;
     }
     
-    @RequestMapping(value = "/home.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public ModelAndView homeI() {
-        log.info("INICIO");
-        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-        ModelAndView modelAndView = new ModelAndView("home");
-        log.info("FIN");
-        return modelAndView;
-    }
-    
+//    @RequestMapping(value = "/home.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+//    public ModelAndView homeI() {
+//        log.info("INICIO");
+//        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+//        ModelAndView modelAndView = new ModelAndView("home");
+//        log.info("FIN");
+//        return modelAndView;
+//    }
+      
 }

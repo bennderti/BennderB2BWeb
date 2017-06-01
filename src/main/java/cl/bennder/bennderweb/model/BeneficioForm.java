@@ -46,7 +46,7 @@ public class BeneficioForm {
     public BeneficioForm() {
         this.idTipoBeneficioSelected = -1;
         this.tipoCargaImagen = 0;
-        this.totalImagenessPermitidos = 12;
+        this.totalImagenessPermitidos = 4;
         this.anchoMaxImg = 720;
         this.altoMaxImg = 420;
     }

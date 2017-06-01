@@ -104,7 +104,7 @@
                 <!-- DESCRIPCIÓN -->
                 <div class="form-group">
                     <label for="ta-descripcion">Descripción</label>
-                    <form:textarea  rows="3" path="descripcion" id="ta-descripcion" cssClass="form-control" placeholder="Escribe la descripción de la promoción, producto o servicio"/> 
+                    <form:textarea  rows="6" path="descripcion" id="ta-descripcion" cssClass="form-control" placeholder="Escribe la descripción de la promoción, producto o servicio"/> 
                 </div>
                 <!-- DESCRIPCIÓN --> 
                 <!-- FECHAS DE VIGENCIA STOCK -->
@@ -249,7 +249,7 @@
                     <!-- TIPO DE PROMOCIÓN -->
                     <div class="form-group">
                         <label class="btn btn-primary  btn-file">
-                            Cargar imagenes <input type="file" hidden id="f-adjuntar" multiple="multiple" name = "images">
+                            Cargar imagenes <input type="file" hidden id="f-adjuntar" multiple="multiple" name = "images[]">
                         </label>
                         <small id="fileHelp" class="form-text text-muted">Acá puedes cargar imagenes para tu promoción desde tu repositorio</small> 
                     </div>
@@ -332,7 +332,7 @@
         <script type="text/javascript">
             $(function () {
                 var arrayImgs = JSON.parse('${arrayImagenesJson}');
-                Beneficio.init(arrayImgs);
+                Beneficio.init(arrayImgs,'${beneficioForm.anchoMaxImg}','${beneficioForm.altoMaxImg}');
                 $("#f-inicio").val('${beneficioForm.fechaInicio}');
                 $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
             });

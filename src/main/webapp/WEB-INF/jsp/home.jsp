@@ -143,9 +143,18 @@
         
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="<c:url value="/resources/beneficio/js/ie10-viewport-bug-workaround.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        <!--Modal -->
+        <jsp:include page="/WEB-INF/jsp/utils/modal.jsp">     
+            <jsp:param name="btnAceptar" value="Aceptar"/>
+            <jsp:param name="btnCancelar" value="Cancelar"/>
+        </jsp:include>
+        <!--Modal-->    
+        <!-- Loading -->
+        <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         <script type="text/javascript">            
             
             function onEditarB(id){
+                ModalLoading.mostrar();
                 window.location.href = "beneficio/editar.html?id="+id;
             }
             $(document).ready(function() {
@@ -159,14 +168,5 @@
                   } );
             } );
         </script> 
-        
-        <!--Modal -->
-        <jsp:include page="/WEB-INF/jsp/utils/modal.jsp">     
-            <jsp:param name="btnAceptar" value="Aceptar"/>
-            <jsp:param name="btnCancelar" value="Cancelar"/>
-        </jsp:include>
-        <!--Modal-->    
-        <!-- Loading -->
-        <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         </body>
 </html>

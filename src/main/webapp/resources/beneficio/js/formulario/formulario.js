@@ -169,11 +169,23 @@ var Beneficio = {
                 return false;
         }
     },
-    init:function(arrayImgs){
+    init:function(arrayImgs,w,h){
         //.- generamos visualizador de iamgenes cargadas        
         this.generarVisualizadorImagenes(arrayImgs);
-        VisualizadorImg.init(700,420);
+        VisualizadorImg.init(parseInt(w),parseInt(h));
+        Beneficio.onValidateImgLoad();
         
+
+    },
+    onValidateImgLoad:function(){
+        $("a.thumbnail img").error(function() {
+            //alert('Image does not exist !!');
+            $img = $(this);
+            $img.attr("src",VisualizadorImg.getImgExample());
+            $img.parent().parent().find("span.t-image").text("");
+            $img.parent().parent().find("a.thumbnail").removeClass("load");
+            $img.parent().parent().find(".button-checkbox").css("display","none");
+        });
     },
     generarItemRow:function(urlImg,nombreImagenPrincipal,includeBtn,setPrincipal){
       var item = "";

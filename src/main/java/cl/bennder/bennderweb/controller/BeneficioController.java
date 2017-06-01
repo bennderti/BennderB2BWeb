@@ -24,6 +24,7 @@ import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
+import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -180,14 +181,14 @@ public class BeneficioController {
         log.info("Datos imagenes upload ->{}.",beneficioForm.toString());
         
         if(beneficioSession.getBeneficioForm()!=null){
-            log.info("seteando imagenes upload->{}",usuarioSession.getIdUsuario());
+            log.info("seteando imagenes upload");
            beneficioSession.getBeneficioForm().setImages(beneficioForm.getImages());
         }
         log.info("Datos imagenes session ->{}.",beneficioSession.getBeneficioForm().toString());
         
         //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        //beneficioService.validaGuardarBeneficio(beneficioForm);
-        String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));        
+        ValidacionResponse validacion = beneficioService.validaGuardarBeneficio(beneficioSession.getBeneficioForm());
+        String respJson =  new Gson().toJson(validacion.getValidacion());        
         log.info("FIN");
         return respJson;
     }

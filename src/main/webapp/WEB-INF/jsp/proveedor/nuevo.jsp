@@ -63,7 +63,7 @@
                     <input type="hidden" name="nameImagePrincipal" id="nameImagePrincipal" value="${beneficioForm.nameImagePrincipal}"/>
                     <div class="col-md-4">
                         <label for="nombrePromo">Nombre Promoción</label>
-                        <form:input path="nombre" autocomplete="off" id="ti-nombre-promocion" maxlength="150" cssClass="form-control" placeholder="Ingrese nombre de promoción"/>
+                        <form:input path="nombre" data-toggle="tooltip" title="${beneficioForm.nombre}" autocomplete="off" id="ti-nombre-promocion" maxlength="150" cssClass="form-control" placeholder="Ingrese nombre de promoción"/>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">

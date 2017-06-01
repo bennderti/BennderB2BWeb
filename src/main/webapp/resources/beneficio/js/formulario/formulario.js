@@ -174,8 +174,12 @@ var Beneficio = {
         this.generarVisualizadorImagenes(arrayImgs);
         VisualizadorImg.init(parseInt(w),parseInt(h));
         Beneficio.onValidateImgLoad();
+        Beneficio.onHabilitaToolTips();
         
 
+    },
+    onHabilitaToolTips:function(){
+      $('[data-toggle="tooltip"]').tooltip();   
     },
     onValidateImgLoad:function(){
         $("a.thumbnail img").error(function() {

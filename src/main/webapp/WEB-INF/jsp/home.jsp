@@ -1,6 +1,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -93,13 +94,11 @@
                                 <tr>
                                     <td>${beneficio.titulo}</td>
                                     <td>${beneficio.nombreCategoria}</td>
-                                    <td>${beneficio.fechaInicial}</td>
-                                    <td>${beneficio.fechaExpiracion}</td>
+                                    <td><fmt:formatDate value="${beneficio.fechaInicial}" pattern="dd/MM/yyyy" /></td>
+                                    <td><fmt:formatDate value="${beneficio.fechaExpiracion}" pattern="dd/MM/yyyy" /></td>
                                     <td>
-<!--                                        <div class="checkbox">
-                                            <input type="checkbox" value="">
-                                        </div>-->
-                                        ${beneficio.habilitado}
+                                        <input type="checkbox" id="${beneficio.idBeneficio}" <c:if test="${beneficio.habilitado}"> checked </c:if> 
+                                               onclick="publicar(${beneficio.idBeneficio}, $(this).prop('checked'))">                                        
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" onclick="onEditarB(${beneficio.idBeneficio})">
@@ -111,12 +110,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>Proveedor Sin Beneficios</td>                                
                             </tr>
                         </c:otherwise>
                     </c:choose>
@@ -152,6 +146,7 @@
         <!-- Loading -->
         <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         <script type="text/javascript">            
+            var listaBeneficiosPublicados = [];
             
             function onEditarB(id){
                 ModalLoading.mostrar();
@@ -167,6 +162,32 @@
                     }
                   } );
             } );
+            
+            function publicar(idBeneficio, habilitado){
+                var agregar = true;
+                
+//                alert(idBeneficio);
+//                
+//                alert(habilitado);
+//                            
+                for(i=0;i<listaBeneficiosPublicados.length;i++)
+                {
+                    if(listaBeneficiosPublicados[i].idBeneficio == idBeneficio)
+                    {
+                        agregar = false;
+                        break;
+                    }
+                }
+                
+                if(agregar)
+                {
+                    var beneficio = new Object();
+                    beneficio.idBeneficio = idBeneficio;
+                    beneficio.habilitado = habilitado;
+                    
+                    listaBeneficiosPublicados.push(beneficio);
+                }             
+            }
         </script> 
         </body>
 </html>

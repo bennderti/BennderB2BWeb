@@ -303,6 +303,7 @@
             <div class="form-group"> 
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-primary btn-guardar-beneficio" onclick="Beneficio.onValidaGuardaBeneficio();">Guardar Beneficio</button>
+                    <button type="button" class="btn btn-default" onclick="onCancelar();">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -330,6 +331,11 @@
         <!-- AGREGA ELIMINA -->
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/formulario/formulario.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script type="text/javascript">
+            function onCancelar(){
+                ModalBennder.mostrar({titulo:"Beneficio",mensaje:"¿Está seguro que desea salir?",eventoAceptar:function(){
+                     window.location.href = "../home.html";   
+                }});
+            }
             $(function () {
                 var arrayImgs = JSON.parse('${arrayImagenesJson}');
                 Beneficio.init(arrayImgs,'${beneficioForm.anchoMaxImg}','${beneficioForm.altoMaxImg}');

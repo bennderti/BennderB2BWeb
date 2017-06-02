@@ -97,8 +97,8 @@
                                     <td><fmt:formatDate value="${beneficio.fechaInicial}" pattern="dd/MM/yyyy" /></td>
                                     <td><fmt:formatDate value="${beneficio.fechaExpiracion}" pattern="dd/MM/yyyy" /></td>
                                     <td>
-                                        <input type="checkbox" id="${beneficio.idBeneficio}" <c:if test="${beneficio.habilitado}"> checked </c:if> 
-                                               onclick="publicar(${beneficio.idBeneficio}, $(this).prop('checked'))">                                        
+                                        <input class="chbx-publicar" type="checkbox" id="${beneficio.idBeneficio}" 
+                                               <c:if test="${beneficio.habilitado}"> checked </c:if> >                                        
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-sm" onclick="onEditarB(${beneficio.idBeneficio})">
@@ -116,6 +116,11 @@
                     </c:choose>
                 </tbody>
             </table>
+            <div class="form-group">        
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" onclick="onConfirmarPublicacion();">Confirmar publicación</button>
+                </div>
+            </div>
         </div>
         <!-- BOTÓN PROCESAR FORMULARIO --> 
         <!-- TABLA MANTENEDOR -->    
@@ -148,46 +153,63 @@
         <script type="text/javascript">            
             var listaBeneficiosPublicados = [];
             
+            function onConfirmarPublicacion(){
+                listaBeneficiosPublicados =[];
+                $("input.chbx-publicar").each(function(){
+                    if ($(this).is(':checked')){
+                        var idB = $(this).attr("id");
+                        listaBeneficiosPublicados.push(idB);
+                    } 
+                    
+                });
+                console.log(listaBeneficiosPublicados);
+            }
+            
             function onEditarB(id){
                 ModalLoading.mostrar();
                 window.location.href = "beneficio/editar.html?id="+id;
             }
             $(document).ready(function() {
                 $('#example').DataTable( {
-                    "language": {
-                      "paginate": {
-                        "next": "siguiente",
-                        "previous": "Anterior"
-                      }
+                    language: {
+                        search: 'Buscar',
+                        paginate: {
+                            first: '&lt;&lt;',
+                            last: '&gt;&gt;',
+                            next: '&gt;',
+                            previous: '&lt;'
+                        },
+                        emptyTable: 'No hay beneficios disponibles',
+                        processing: 'Los datos estan cargandose'
                     }
                   } );
             } );
             
-            function publicar(idBeneficio, habilitado){
-                var agregar = true;
-                
-//                alert(idBeneficio);
+//            function publicar(idBeneficio, habilitado){
+//                var agregar = true;
 //                
-//                alert(habilitado);
-//                            
-                for(i=0;i<listaBeneficiosPublicados.length;i++)
-                {
-                    if(listaBeneficiosPublicados[i].idBeneficio == idBeneficio)
-                    {
-                        agregar = false;
-                        break;
-                    }
-                }
-                
-                if(agregar)
-                {
-                    var beneficio = new Object();
-                    beneficio.idBeneficio = idBeneficio;
-                    beneficio.habilitado = habilitado;
-                    
-                    listaBeneficiosPublicados.push(beneficio);
-                }             
-            }
+////                alert(idBeneficio);
+////                
+////                alert(habilitado);
+////                            
+//                for(i=0;i<listaBeneficiosPublicados.length;i++)
+//                {
+//                    if(listaBeneficiosPublicados[i].idBeneficio == idBeneficio)
+//                    {
+//                        agregar = false;
+//                        break;
+//                    }
+//                }
+//                
+//                if(agregar)
+//                {
+//                    var beneficio = new Object();
+//                    beneficio.idBeneficio = idBeneficio;
+//                    beneficio.habilitado = habilitado;
+//                    
+//                    listaBeneficiosPublicados.push(beneficio);
+//                }             
+//            }
         </script> 
         </body>
 </html>

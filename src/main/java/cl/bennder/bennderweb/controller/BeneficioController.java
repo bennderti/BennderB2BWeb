@@ -76,7 +76,7 @@ public class BeneficioController {
         request.setIdBeneficio(idBeneficio);
         InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
         BeneficioForm beneficioForm = beneficioService.convertirDatosFormularioBeneficio(response.getDatosBeneficio());
-        
+        beneficioForm.setTotalImagenessPermitidos(response.getMaxImagenes());
         String arrayImagenes =  new Gson().toJson(beneficioForm.getImagenesBeneficio());
         //var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
         modelAndView.addObject("arrayImagenesJson", arrayImagenes);
@@ -114,11 +114,12 @@ public class BeneficioController {
         log.info("Usuario proveedor ->{}",usuarioSession.getIdUsuario());
         ModelAndView modelAndView = new ModelAndView("proveedor/nuevo");
         BeneficioForm beneficioForm = new BeneficioForm();
-        modelAndView.addObject("beneficioForm", beneficioForm);
-        modelAndView.addObject("arrayImagenesJson", new Gson().toJson(beneficioForm.getImagenesBeneficio()));
         InfoInicioBeneficioRequest  request = new InfoInicioBeneficioRequest();
         request.setIdUsuario(usuarioSession.getIdUsuario());
         InfoInicioBeneficioResponse response = beneficioService.getInfoInicioCreaActualizaBeneficio(request);
+        beneficioForm.setTotalImagenessPermitidos(response.getMaxImagenes());
+        modelAndView.addObject("beneficioForm", beneficioForm);
+        modelAndView.addObject("arrayImagenesJson", new Gson().toJson(beneficioForm.getImagenesBeneficio()));        
         modelAndView.addObject("categorias", response.getCategorias());
         modelAndView.addObject("regiones", response.getRegionesSucursal());          
         modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");

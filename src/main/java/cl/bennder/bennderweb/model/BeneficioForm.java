@@ -274,9 +274,10 @@ public class BeneficioForm {
 
     @Override
     public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", nameImagenesValidas=" + nameImagenesValidas + '}';
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", imagenesBeneficio=" + imagenesBeneficio + ", nameImagenesValidas=" + nameImagenesValidas + '}';
     }
 
+    
 
 
     

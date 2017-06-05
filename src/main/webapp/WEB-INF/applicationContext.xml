@@ -21,6 +21,9 @@
     <bean id="beneficioSession" class="cl.bennder.bennderweb.session.BeneficioSession" scope="session">
         <aop:scoped-proxy/>
     </bean> 
+    <bean id="sucursalSession" class="cl.bennder.bennderweb.session.SucursalSession" scope="session">
+        <aop:scoped-proxy/>
+    </bean> 
     <bean id="SessionFilter" name="SessionFilter" class="cl.bennder.bennderweb.filter.SessionFilter" />
   
 </beans>

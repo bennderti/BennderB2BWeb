@@ -25,5 +25,6 @@ public abstract class URLServiciosBennderB2B {
     public static final String URL_CARGAR_MANTENEDOR_BENEFICIO = "beneficio/cargarMantenedorBeneficio";
     public static final String URL_PUBLICAR_BENEFICIO = "beneficio/publicarBeneficios";
     public static final String URL_ELIMINAR_BENEFICIO = "beneficio/eliminarBeneficio";
+    public static final String URL_SUCURSAL_INFO_INICIO = "sucursal/getInfoInicio";
     
 }

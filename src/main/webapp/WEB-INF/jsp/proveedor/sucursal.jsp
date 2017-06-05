@@ -41,7 +41,7 @@
                     <img src="<c:url value="/resources/beneficio/img/logo-bennder-300.png"/>" alt = "Bennder">
                 </div>
                 <!-- LOGO BENNDER -->
-                <h1>Nuevo Sucursal</h1>
+                <h1>Nueva Sucursal</h1>
             </div>
             <p class="lead">Crea, edita sucursales para vuestro comercio.</p>
         </div>
@@ -52,266 +52,88 @@
         <div class="container formulario_mantenedor">   
             <form:form  method="POST" 
                             action="../beneficio/guardar.html" 
-                            id="form-beneficio" 
-                            modelAttribute="beneficioForm" 
-                            enctype="multipart/form-data"
-                            accept-charset="iso-8859-1">
-                <!-- PROMOCIÓN -->	
-                <div class="row">
-                    <form:hidden path="idBeneficio"/>  
-                    <input type="hidden" name="nameImagePrincipal" id="nameImagePrincipal" value="${beneficioForm.nameImagePrincipal}"/>
-                    <div class="col-md-4">
-                        <label for="nombrePromo">Nombre Promoción</label>
-                        <form:input path="nombre" data-toggle="tooltip" title="${beneficioForm.nombre}" autocomplete="off" id="ti-nombre-promocion" maxlength="150" cssClass="form-control" placeholder="Ingrese nombre de promoción"/>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Categoría</label>
-                            <form:select path="idCategoriaSelected" 
-                                         id = "select-categorias" 
-                                         cssClass="form-control" 
-                                         onchange="Beneficio.onChangeCategoria();">
-                                <form:option value="-1" label="--Seleccione Categoria--"/>
-                                <form:options items="${categorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
-                            </form:select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="select-sub-categorias">Sub-Categoría</label>                                                
-                            <c:choose>
-                                <c:when test="${not empty subcategorias}">
-                                    <form:select path="idSubCategoriaSelected" 
-                                         id = "select-sub-categorias" 
-                                         cssClass="form-control">
-                                        <form:option value="-1" label="--Seleccione Sub Categoria--"/>
-                                        <form:options items="${subcategorias}" itemValue="idCategoria" itemLabel="nombre"/>                           
-                                    </form:select>                                    
-                                </c:when>
-                                <c:otherwise>
-                                    <select id = "select-sub-categorias" class="form-control">
-                                        <option value="-1">--Seleccione Sub Categoria--</option>                                
-                                    </select>                                    
-                                </c:otherwise>                                                    
-                            </c:choose>                            
-                            <input type="hidden" name="idSubCategoriaSelected" id="input-idSubCategoriaSelected"/>
-                        </div>
-                    </div>
-                </div>
-                <!-- PROMOCIÓN -->
-
-                <!-- DESCRIPCIÓN -->
-                <div class="form-group">
-                    <label for="ta-descripcion">Descripción</label>
-                    <form:textarea  rows="6" path="descripcion" id="ta-descripcion" cssClass="form-control" placeholder="Escribe la descripción de la promoción, producto o servicio"/> 
-                </div>
-                <!-- DESCRIPCIÓN --> 
-                <!-- FECHAS DE VIGENCIA STOCK -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="f-inicio">Fecha Inicio</label>
-                            <input class="form-control" type="date" value="" id="f-inicio" name="fechaInicio"/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="f-expiracion" >Fecha Expiración</label>
-                            <input class="form-control" type="date" value="" id="f-expiracion" name="fechaExpiracion"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="ti-stock">Stock</label>
-                            <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese stock"/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="ti-limite-stock">Limite Stock</label>
-                            <form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese límite stock para alertar"/>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FECHAS DE VIGENCIA STOCK -->
-
-                <!-- CONDICIONES COMERCIALES -->
-                <label>Condiciones Comerciales</label>
-                <div class="panel panel-default">
-                    <div class="panel-body content-condicion-comercial">
-                        <div class="input-group control-group after-add-more">
-                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial (presione agregar o enter)"/>
-                            <div class="input-group-btn"> 
-                                    <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaCodicion(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
-                            </div>
-                        </div>                        
-                        <c:if test="${not empty condiciones}">                            
-                            <c:forEach items="${condiciones}" varStatus="i" var = "condicion">
-                               <div class="control-group input-group condition-added" style="margin-top:10px">
-                                    <input type="text" name="condiciones[${i.index}]" value = "${condicion}" class="form-control" placeholder="Eliminar condición comercial">
-                                    <div class="input-group-btn"> 
-                                      <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarCondicion(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:if>
+                            id="form-sucursal" 
+                            modelAttribute="sucursalForm"
+                            accept-charset="iso-8859-1"
+                            cssClass="form-horizontal">
+                <form:hidden path="idSucursal"/> 
+                 <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-nombre">Nombre Sucursal:</label>
+                    <div class="col-md-4">          
+                        <form:input path="nombre" id="ipt-nombre" cssClass="form-control" placeholder="Ingrese nombre de sucursal" maxlength="50"/>
                     </div>
                   </div>
-                <!-- CONDICIONES COMERCIALES -->
-                <!-- SUCURSALES COMERCIALES -->
-                <label for="t">Sucursal / Tienda de Canje</label>
-                <div class="panel panel-default">
-                    <div class="panel-body"> 
-                        <div class = "content-sucursales">
-                            <c:if test="${not empty sucursales}">
-                                <c:forEach items="${sucursales}" varStatus="i" var = "sp">
-                                    <div class="form-check form-check-inline">
-                                        <label class="form-control">
-                                          <input class="form-check-input" type="checkbox"   ${sp.selected eq  1?'checked':''} id="suc-${i.index}" value="${sp.idSucursal}" > ${sp.nombreSucursal}                                 
-                                        </label>
-                                    </div>
-                                 </c:forEach>                                
-                            </c:if>
-                        </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-hora-atencion">Horario Atención:</label>
+                    <div class="col-md-4">          
+                      <form:input path="horarioAtencion" id="ipt-hora-atencion" cssClass="form-control" placeholder="Ingrese horario de atención" maxlength="100"/>
                     </div>
-
-                </div>
-                <!-- SUCURSALES COMERCIALES -->
-
-                <!-- TIPO DE PROMOCIÓN -->
-                <label for="t">Tipo de Promoción</label>
-                <!--begin tabs going in wide content -->
-                <ul class="nav nav-tabs" id="li-tipo-promo" role="tablist">
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'active':''}"><input type="hidden" value="1" class="tb"/><a href="#descuento" role="tab" data-toggle="tab">Descuento</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 2 ? 'active':''}"><input type="hidden" value="2" class="tb"/><a href="#precio" role="tab" data-toggle="tab">Precio Oferta</a></li>
-                    <li class="${beneficioForm.idTipoBeneficioSelected eq 3 ? 'active':''}"><input type="hidden" value="3" class="tb"/><a href="#adicional" role="tab" data-toggle="tab">Producto / Servicio Adicional</a></li>
-                </ul><!--/.nav-tabs.content-tabs -->
-                <input type="hidden" name="idTipoBeneficioSelected" value ="${beneficioForm.idTipoBeneficioSelected}" id="id-tipo-beneficio"/>
-                <input type="hidden" name="tipoCargaImagen" value ="${beneficioForm.tipoCargaImagen}" id="tipoCargaImagen"/>
-                <!-- CONTENIDOS TABS -->
-                <div class="tab-content">
-                    <!-- DESCUENTO -->
-                    <div class="tab-pane fade ${beneficioForm.idTipoBeneficioSelected eq 1 || beneficioForm.idTipoBeneficioSelected eq -1 ? 'in active':''}" id="descuento">
-                        <div class="row">
-                            <div class="col-md-4"><br>
-                                <label for="ti-descuento">% Descuento</label>
-                                <form:input path="porcentajeDescuento" autocomplete="off" id="ti-descuento" maxlength="50" cssClass="form-control" placeholder = "Ingrese % de descuento"/>
-                            </div>
-                        </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-oficina">Oficina:</label>
+                    <div class="col-md-4">          
+                      <form:input path="oficina" id="ipt-oficina" cssClass="form-control" placeholder="Ingrese oficina" maxlength="100"/>
                     </div>
-                    <!-- DESCUENTO -->
-
-                    <!-- PRECIO OFERTA ANTES y HOY -->
-                    <div class="tab-pane fade ${beneficioForm.idTipoBeneficioSelected eq 2 ? 'in active':''}" id="precio">
-                        <div class="row"><br>
-                            <div class="col-md-4">
-                                <label for="ti-normal">Precio Antes</label>
-                                <form:input path="precioNormal" autocomplete="off" id="ti-normal" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio normal"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="ti-oferta">Precio Hoy</label>
-                                <form:input path="precioOferta" autocomplete="off" id="ti-oferta" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio oferta"/>
-                            </div>
-                        </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-pwd-pos">Contraseña Caje POS:</label>
+                    <div class="col-md-4">          
+                      <form:input path="passwordPOS" id="ipt-pwd-pos" cssClass="form-control" placeholder="Ingrese password de canje beneficio en POS" maxlength="50"/>
                     </div>
-                    <br>
-                    <!-- PRECIO OFERTA ANTES y HOY -->
-
-                    <!-- PRODUCTO / SERVICIO ADICIONAL-->
-                    <div class="tab-pane fade ${beneficioForm.idTipoBeneficioSelected eq 3 ? 'in active':''}" id="adicional">
-                    <div class="panel panel-default">
-                        <div class="panel-body content-prod-servicio-adicional">
-                                <div class="input-group control-group after-add-more">
-                                <input type="text" name="add-adicional" id = "add-adicional" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
-                                        <div class="input-group-btn"> 
-                                                <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
-                                        </div>
-                                </div>
-                                <c:if test="${not empty adicionales}">                            
-                                    <c:forEach items="${adicionales}" varStatus="i" var = "adicional">                                            
-                                        <div class="control-group input-group adicional-added" style="margin-top:10px">
-                                           <input type="text" name="adicionales[${i.index}]" value = "${adicional}" class="form-control" placeholder="Eliminar producto adicional" maxlength="150">
-                                           <div class="input-group-btn"> 
-                                             <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarProdAdicional(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
-                                           </div>
-                                        </div>
-                                    </c:forEach>
-                                </c:if>
-                        </div>
-                      </div>
-                    <!-- PRODUCTO / SERVICIO ADICIONAL-->
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="select-region">Región:</label>
+                    <div class="col-md-4">
+                        <form:select path="direccion.comuna.region.idRegion" 
+                                     id = "select-region" 
+                                     cssClass="form-control" 
+                                     onchange="Sucursal.onChangeRegion();">
+                            <form:option value="-1" label="--Seleccione Región--"/>
+                            <form:options items="${regiones}" itemValue="idRegion" itemLabel="nombre"/>                           
+                        </form:select>
                     </div>
-                    <!-- CONTENIDOS TABS -->
-                    <!-- TIPO DE PROMOCIÓN -->
-                    <div class="form-group">
-                        <label class="btn btn-primary  btn-file">
-                            Cargar imagenes <input type="file" hidden id="f-adjuntar" multiple="multiple" name = "images[]">
-                        </label>
-                        <small id="fileHelp" class="form-text text-muted">Acá puedes cargar imagenes para tu promoción desde tu repositorio</small> 
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="select-comunas">Comuna:</label>
+                    <div class="col-md-4">
+                        <c:choose>
+                            <c:when test="${not empty comunasRegion}">
+                                <form:select path="direccion.comuna.idComuna" 
+                                     id = "select-comunas" 
+                                     cssClass="form-control">
+                                    <form:option value="-1" label="--Seleccione Comuna--"/>
+                                    <form:options items="${comunasRegion}" itemValue="idComuna" itemLabel="nombre"/>                           
+                                </form:select>                                    
+                            </c:when>
+                            <c:otherwise>
+                                <select id = "select-comunas" class="form-control">
+                                    <option value="-1">--Seleccione Comuna--</option>                                
+                                </select>                                    
+                            </c:otherwise>                                                    
+                        </c:choose>  
                     </div>
-                    <div class="form-group">
-                        <label class="btn btn-default btn-file">
-                            <button type="button" class="btn btn-primary adj-generica"  onclick="Beneficio.onLoadImagenGenerica();">Cargar imagenes Genérico</button>
-                        </label>
-                        <small id="fileHelp" class="form-text text-muted">Si no dispones de imagenes, utiliza ésta opción para oferecerte de nuestro repositorio asociado a categoria seleccionada</small>
-                        <div class="contents-imagen-generica">
-                            <c:if test="${beneficioForm.tipoCargaImagen eq 2}">
-                                <c:if test="${not empty beneficioForm.imagenesBeneficio}">
-                                    <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
-                                        <input name="imagenesGenericas[${i.index}].urlImagen" type="hidden" value="${img}"/>";
-                                    </c:forEach>                                    
-                                </c:if>
-                            </c:if>
-                        </div>                        
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-calle">Calle:</label>
+                    <div class="col-md-4">          
+                      <form:input path="direccion.calle" id="ipt-calle" cssClass="form-control" placeholder="Ingrese Calle" maxlength="20"/>
                     </div>
-                    <label>Imagenes cargadas para la promoción</label>
-                    <div class = "name-img-validas">
-                        <c:if test="${not empty beneficioForm.imagenesBeneficio}">
-                            <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">
-                                <input name="nameImagenesValidas[${i.index}]" type="hidden" value="${img}"/>
-                            </c:forEach>                                    
-                        </c:if>                        
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-nro">Nro:</label>
+                    <div class="col-md-4">          
+                      <form:input path="direccion.numero" id="ipt-nro" cssClass="form-control" placeholder="Ingrese Número" maxlength="10"/>
                     </div>
-                    <input type="hidden" id="totalPermitidos" value="${beneficioForm.totalImagenessPermitidos}"/>
-                    <div class="container content-imagenes-add">                        
-                    </div>
-
-                    <!-- Creates the bootstrap modal where the image will appear -->
-                    <div class="modal fade" id="gallery-imagen-generica" tabindex="-1" role="dialog" aria-labelledby="gallery-imagen-generica" aria-hidden="true">
-                        <div class="modal-dialog  modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">Imagenes Genéricas</h4>
-                                </div>
-                                <div class="modal-body content-body-generico">                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="Beneficio.onCargaSeleccionImagenesGenerica();">Cargar Selección</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- BOTÓN PROCESAR FORMULARIO --> 
-                    </div>
-               </div>
-             <input type="hidden" value="${rutaImagenExample}" id="rutaImagenExample"/>
+                  </div>               
             </form:form>
             <div class="form-group"> 
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary btn-guardar-beneficio" onclick="Beneficio.onValidaGuardaBeneficio();">Guardar Beneficio</button>
+                    <button type="submit" class="btn btn-primary btn-guardar-beneficio" onclick="Sucursal.onValidaGuardaSucursal();">Guardar Sucursal</button>
                     <button type="button" class="btn btn-default" onclick="onCancelar();">Cancelar</button>
                 </div>
             </div>
         </div>
-        <!-- BOTÓN PROCESAR FORMULARIO --> 
-        <!-- TABLA MANTENEDOR -->
         
-
-
-
         <!-- FOOTER MANTENEDOR -->
         <footer class="footer">
             <div class="container">
@@ -331,16 +153,10 @@
         <script type="text/javascript" src="<c:url value="/resources/beneficio/js/sucursal/sucursal.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script type="text/javascript">
             function onCancelar(){
-                ModalBennder.mostrar({titulo:"Beneficio",mensaje:"¿Está seguro que desea salir?",eventoAceptar:function(){
+                ModalBennder.mostrar({titulo:"Sucursal",mensaje:"¿Está seguro que desea salir?",eventoAceptar:function(){
                      window.location.href = "../home.html";   
                 }});
             }
-            $(function () {
-                var arrayImgs = JSON.parse('${arrayImagenesJson}');
-                Beneficio.init(arrayImgs,'${beneficioForm.anchoMaxImg}','${beneficioForm.altoMaxImg}');
-                $("#f-inicio").val('${beneficioForm.fechaInicio}');
-                $("#f-expiracion").val('${beneficioForm.fechaExpiracion}');
-            });
         </script>
         <!-- AGREGA ELIMINA -->
         

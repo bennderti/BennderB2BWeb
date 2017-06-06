@@ -178,13 +178,8 @@
                     traditional:true,
                     success: function (data) {
                         if(data!==null && data !=='undefined'){
-                            if(data.codigoNegocio === '0' && data.codigo ==='0'){                        
-                              window.location.href = "../home.html";
-                            }
-                            else{
-                                ModalLoading.cerrar();
-                                ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Publicación"});
-                            }
+                            ModalBennder.close();
+                            ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Publicación"});
 
                         }
                         else{

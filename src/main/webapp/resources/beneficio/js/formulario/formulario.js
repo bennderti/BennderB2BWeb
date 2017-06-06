@@ -614,13 +614,13 @@ var Beneficio = {
                     }
                     else{
                         ModalLoading.cerrar();
-                        ModalBennder.mostrar({tipo: "error", mensaje: "Guardar datos generales", titulo: data.mensaje});
+                        ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Beneficio"});
                     }
                     
                 }
                 else{
                     ModalLoading.cerrar();
-                    ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al guardar datos de beneficio" , titulo: "Guardar datos generales"});
+                    ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al guardar datos de beneficio" , titulo: "Beneficio"});
                 }
                 //window.location.href = "../home.html";
 //                ModalLoading.cerrar();

@@ -135,7 +135,7 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="<c:url value="/resources/beneficio/js/jquery.1.12.4.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
+        <jsp:include page="/WEB-INF/jsp/template-e-comerce/jsTemplate.jsp"/>
         <script src="<c:url value="/resources/beneficio/js/bootstrap.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script src="<c:url value="/resources/beneficio/js/jquery.dataTables.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
         <script src="<c:url value="/resources/beneficio/js/dataTables.bootstrap.min.js"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>"></script>
@@ -155,6 +155,7 @@
             
             function onConfirmarPublicacion(){
                 listaBeneficiosPublicados =[];
+                
                 $("input.chbx-publicar").each(function(){
                     if ($(this).is(':checked')){
                         var idB = $(this).attr("id");
@@ -163,6 +164,28 @@
                     
                 });
                 console.log(listaBeneficiosPublicados);
+                
+                ModalBennder.mostrar({tipo: "advertencia", mensaje: "¿Está seguro de hacer las modificaciònes en sus publicaciones?", titulo: "Publicación de Beneficios", eventoAceptar: publicar()});
+            }
+            
+            function publicar()
+            {
+                $.ajax({
+                    url: context+'/beneficio/publicarBeneficios.html',
+                    type: 'POST',
+                    data: {listaIdBeneficios:listaBeneficiosPublicados},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        if(data !==undefined && data !== null)
+                        {
+                            ModalBennder.mostrar({tipo: "informativo", mensaje: data.mensaje, titulo: "Publicación de Beneficios"});
+                        }
+                    },
+                    error: function (x, y, z) {
+                        ModalBennder.mostrar({tipo: "error", mensaje: "Error", titulo: "Publicación de Beneficios"});
+                    }
+                }); 
             }
             
             function onEditarB(id){

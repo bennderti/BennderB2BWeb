@@ -21,6 +21,7 @@ import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.CargarMantenedorBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.GetTodasCategoriaRequest;
 import cl.bennder.entitybennderwebrest.request.InfoInicioBeneficioRequest;
+import cl.bennder.entitybennderwebrest.request.PublicarBeneficiosRequest;
 import cl.bennder.entitybennderwebrest.request.UploadImagenesGenericaRequest;
 import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.InfoInicioBeneficioResponse;
@@ -328,6 +329,24 @@ public class BeneficioController {
         log.info("Fin");
         
         return modelAndView;
+    }
+   
+    @RequestMapping(value="/beneficio/publicarBeneficios.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String publicarBeneficios(@RequestParam("listaIdBeneficios") List<Integer> listaIdBeneficios, HttpSession session){
+        log.info("INICIO");
+        log.info("Cantidad de beneficios a publicar",listaIdBeneficios.size());
+        
+        ValidacionResponse response = new ValidacionResponse();        
+        
+        PublicarBeneficiosRequest request = new PublicarBeneficiosRequest();
+        request.setListaIdBeneficios(listaIdBeneficios);
+        
+        response = beneficioService.publicarBeneficios(request);
+        
+        String respuesta = response.getValidacion().getMensaje();
+        
+        log.info("FIN");
+        return respuesta;
     }
     
 }

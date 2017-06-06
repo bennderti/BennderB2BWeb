@@ -165,7 +165,7 @@
                 });
                 console.log(listaBeneficiosPublicados);
                 
-                ModalBennder.mostrar({tipo: "advertencia", mensaje: "¿Está seguro de hacer las modificaciònes en sus publicaciones?", titulo: "Publicación de Beneficios", eventoAceptar: publicar()});
+                ModalBennder.mostrar({tipo: "advertencia", mensaje: "¿Está seguro de hacer las modificaciònes en sus publicaciones?", titulo: "Publicación de Beneficios", eventoAceptar: publicar});
             }
             
             function publicar()
@@ -174,12 +174,22 @@
                     url: context+'/beneficio/publicarBeneficios.html',
                     type: 'POST',
                     data: {listaIdBeneficios:listaBeneficiosPublicados},
-                    dataType: 'JSON',
+                    dataType: 'json',
+                    traditional:true,
                     success: function (data) {
-                        data = JSON.parse(data);
-                        if(data !==undefined && data !== null)
-                        {
-                            ModalBennder.mostrar({tipo: "informativo", mensaje: data.mensaje, titulo: "Publicación de Beneficios"});
+                        if(data!==null && data !=='undefined'){
+                            if(data.codigoNegocio === '0' && data.codigo ==='0'){                        
+                              window.location.href = "../home.html";
+                            }
+                            else{
+                                ModalLoading.cerrar();
+                                ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Publicación"});
+                            }
+
+                        }
+                        else{
+                            ModalLoading.cerrar();
+                            ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al publicar beneficios" , titulo: "Publicación"});
                         }
                     },
                     error: function (x, y, z) {

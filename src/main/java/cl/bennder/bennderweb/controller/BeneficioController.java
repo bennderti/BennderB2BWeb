@@ -328,7 +328,7 @@ public class BeneficioController {
     @RequestMapping(value="/beneficio/publicarBeneficios.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody String publicarBeneficios(@RequestParam("listaIdBeneficios") List<Integer> listaIdBeneficios, HttpSession session){
         log.info("INICIO");
-        log.info("Cantidad de beneficios a publicar",listaIdBeneficios.size());
+        log.info("Cantidad de beneficios a publicar ->{}",listaIdBeneficios.size());
         
         ValidacionResponse response = new ValidacionResponse();        
         
@@ -337,10 +337,11 @@ public class BeneficioController {
         
         response = beneficioService.publicarBeneficios(request);
         
-        String respuesta = response.getValidacion().getMensaje();
-        
+        //String respuesta = response.getValidacion().getMensaje();
+        String respJson =  new Gson().toJson(response.getValidacion());
+        log.info("respJson->{}",respJson);
         log.info("FIN");
-        return respuesta;
+        return respJson;
     }
     
 }

@@ -106,7 +106,7 @@
                                 </form:select>                                    
                             </c:when>
                             <c:otherwise>
-                                <select id = "select-comunas" class="form-control">
+                                <select id = "select-comunas" class="form-control" name="direccion.comuna.idComuna">
                                     <option value="-1">--Seleccione Comuna--</option>                                
                                 </select>                                    
                             </c:otherwise>                                                    
@@ -124,7 +124,8 @@
                     <div class="col-md-4">          
                       <form:input path="direccion.numero" id="ipt-nro" cssClass="form-control" placeholder="Ingrese Número" maxlength="10"/>
                     </div>
-                  </div>               
+                  </div>
+                      <form:hidden path="direccion.idDireccion"/>
             </form:form>
             <div class="form-group"> 
                 <div class="col-sm-offset-2 col-sm-10">

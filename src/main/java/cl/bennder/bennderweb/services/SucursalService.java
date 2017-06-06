@@ -7,7 +7,9 @@ package cl.bennder.bennderweb.services;
 
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.request.InfoInicioSucursalRequest;
+import cl.bennder.entitybennderwebrest.request.InfoSucursalRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioSucursalResponse;
+import cl.bennder.entitybennderwebrest.response.InfoSucursalResponse;
 import java.util.List;
 
 /**
@@ -20,5 +22,7 @@ public interface SucursalService {
     public InfoInicioSucursalResponse getInfoInicioSucursal(InfoInicioSucursalRequest request);
     
     public List<Comuna> getComunasByRegion(Integer idRegion);
+    
+    public InfoSucursalResponse guardarSucursal(InfoSucursalRequest request);
     
 }

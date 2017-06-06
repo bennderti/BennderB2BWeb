@@ -34,6 +34,33 @@ var Sucursal = {
     },
     onValidaGuardaSucursal:function(){
         
+        ModalLoading.mostrar();
+        $.ajax({
+            url: context+'/sucursal/guardar.html',
+            type: 'POST',
+            dataType: 'JSON',
+            data: $("#form-sucursal").serialize(),
+            success: function (data) {                
+                if(data!==null && data !=='undefined'){
+                    if(data.codigoNegocio === '0' && data.codigo ==='0'){                        
+                      window.location.href = "../home.html";
+                    }
+                    else{
+                        ModalLoading.cerrar();
+                        ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Sucursal"});
+                    }
+                    
+                }
+                else{
+                    ModalLoading.cerrar();
+                    ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al guardar datos de beneficio" , titulo: "Sucursal"});
+                }
+            },
+            error: function (x, y, z) {
+                ModalLoading.cerrar();
+                ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al guardar información  de sucursal", titulo: "Sucursal"});
+            }
+        });
     }
 };
 

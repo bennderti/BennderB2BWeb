@@ -5,12 +5,16 @@
  */
 package cl.bennder.bennderweb.controller;
 
+import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.bennderweb.services.SucursalService;
 import cl.bennder.bennderweb.session.SucursalSession;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.Sucursal;
+import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.InfoInicioSucursalRequest;
+import cl.bennder.entitybennderwebrest.request.InfoSucursalRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioSucursalResponse;
+import cl.bennder.entitybennderwebrest.response.InfoSucursalResponse;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -18,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,6 +79,16 @@ public class SucursalController {
         }
         String respJson =  new Gson().toJson(comunas);
         log.info("FIN");
+        return respJson;
+    }
+    
+    @RequestMapping(value = "/sucursal/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String  guardaDatosGenerales(@ModelAttribute("sucusalForm") Sucursal sucursal) {
+        log.info("INICIO");
+        log.info("Datos sucursal ->{}.",sucursal.toString());
+        InfoSucursalResponse response = sucursalService.guardarSucursal(new InfoSucursalRequest(sucursal));
+        log.info("FIN");
+        String respJson =  new Gson().toJson(response.getValidacion());
         return respJson;
     }
 }

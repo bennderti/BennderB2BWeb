@@ -118,6 +118,7 @@ public class BeneficioController {
         modelAndView.addObject("categorias", response.getCategorias());
         modelAndView.addObject("regiones", response.getRegionesSucursal());          
         modelAndView.addObject("rutaImagenExample", "/BennderB2BWeb/resources/beneficio/img/example.png");
+        modelAndView.addObject("sucursales", response.getSucursales());
         beneficioSession.setIamgenesGenericas(response.getImgenesGenericas());
         beneficioSession.setComunasSucursales(response.getComunasSucursales());
         beneficioSession.setRegionesSucursal(response.getRegionesSucursal());

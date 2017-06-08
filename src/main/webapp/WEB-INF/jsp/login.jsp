@@ -25,7 +25,7 @@
                                 <div class="row logo-bennder">
                                     <div class="">
                                         <div class="logo">
-                                            <a href="index.html"><img src="<c:url value="/resources/img/bennder/logo.png"/>"></a>
+                                            <a href="index.html"><img src="<c:url value="/resources/beneficio/img/logo-bennder-300.png"/>"></a>
                                         </div>
                                     </div>
                                 </div>

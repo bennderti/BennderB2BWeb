@@ -13,8 +13,10 @@ import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.request.InfoInicioSucursalRequest;
 import cl.bennder.entitybennderwebrest.request.InfoSucursalRequest;
+import cl.bennder.entitybennderwebrest.request.SucursalesRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioSucursalResponse;
 import cl.bennder.entitybennderwebrest.response.InfoSucursalResponse;
+import cl.bennder.entitybennderwebrest.response.SucursalesResponse;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,12 @@ public class SucursalServiceImpl implements SucursalService{
     public InfoSucursalResponse guardarSucursal(InfoSucursalRequest request) {
         return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_SUCURSAL_GUARDAR, request, InfoSucursalResponse.class, usuarioSession.getToken());
     }
+
+    @Override
+    public SucursalesResponse getSucursalesProveedor(SucursalesRequest request) {
+        return RestConnector.clientRestGeneric(Properties.URL_SERVIDOR + URLServiciosBennderB2B.URL_SUCURSALES_PROVEEDOR, request, SucursalesResponse.class, usuarioSession.getToken());
+    }
+    
     
 
     @Override

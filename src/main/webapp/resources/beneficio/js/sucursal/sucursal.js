@@ -43,7 +43,7 @@ var Sucursal = {
             success: function (data) {                
                 if(data!==null && data !=='undefined'){
                     if(data.codigoNegocio === '0' && data.codigo ==='0'){                        
-                      window.location.href = "../home.html";
+                      window.location.href = "../sucursales.html";
                     }
                     else{
                         ModalLoading.cerrar();

@@ -33,7 +33,7 @@
         <!-- HEADER INCICIO -->
         <jsp:include page="/WEB-INF/jsp/proveedor/navbar.jsp"/>
         <!-- HEADER FINAL -->
-
+        <!--http://findicons.com/search/shop -->
         <!-- CONTENIDO INICIO-->
         <div class="container">
             <div class="page-header">
@@ -59,14 +59,36 @@
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Nombre Sucursal</th>
-                        <th>Dirección</th>
+                        <th>Sucursal - dirección</th>
                         <th>Horario Atención</th>
                         <th>Habilitada</th>
                         <th>Editar</th>
                     </tr>
                 </thead>
-                <tbody>
+             <tbody>
+                    <c:choose>
+                        <c:when test="${not empty sucursales}"> 
+                            <c:forEach items="${sucursales}" var="s">
+                                <tr>
+                                    <td>${s.nombre}</td>
+                                    <td>${s.horarioAtencion}</td>
+                                    <td>
+                                        ${s.habilitado?'SI':'NO'}                                       
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm" onclick="onEditarSucursal(${s.idSucursal})">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>  
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td>Proveedor Sin Sucursales Creadas</td>                                
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
         </div>

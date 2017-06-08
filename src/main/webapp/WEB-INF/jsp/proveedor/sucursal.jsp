@@ -81,6 +81,12 @@
                       <form:input path="passwordPOS" id="ipt-pwd-pos" cssClass="form-control" placeholder="Ingrese password de canje beneficio en POS" maxlength="50"/>
                     </div>
                   </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="ipt-pwd-pos">Habilitada:</label>
+                    <div class="col-md-4">          
+                      <form:checkbox  path="habilitado"/>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label class="control-label col-sm-2" for="select-region">Región:</label>
                     <div class="col-md-4">

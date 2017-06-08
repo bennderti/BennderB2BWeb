@@ -27,5 +27,5 @@ public abstract class URLServiciosBennderB2B {
     public static final String URL_ELIMINAR_BENEFICIO = "beneficio/eliminarBeneficio";
     public static final String URL_SUCURSAL_INFO_INICIO = "sucursal/getInfoInicio";
     public static final String URL_SUCURSAL_GUARDAR = "sucursal/guardarSucusal";
-    
+    public static final String URL_SUCURSALES_PROVEEDOR = "sucursal/getTodas";
 }

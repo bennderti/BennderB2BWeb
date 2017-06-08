@@ -11,8 +11,10 @@ import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.Sucursal;
 import cl.bennder.entitybennderwebrest.request.InfoInicioSucursalRequest;
 import cl.bennder.entitybennderwebrest.request.InfoSucursalRequest;
+import cl.bennder.entitybennderwebrest.request.SucursalesRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioSucursalResponse;
 import cl.bennder.entitybennderwebrest.response.InfoSucursalResponse;
+import cl.bennder.entitybennderwebrest.response.SucursalesResponse;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -93,6 +95,8 @@ public class SucursalController {
     public ModelAndView sucursales() {
         log.info("INICIO");
         ModelAndView modelAndView = new ModelAndView("sucursales");
+        SucursalesResponse response = sucursalService.getSucursalesProveedor(new SucursalesRequest());
+        modelAndView.addObject("sucursales", response.getSucursales());
         log.info("FIN");
         return modelAndView;
     }

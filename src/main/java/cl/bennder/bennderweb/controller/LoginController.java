@@ -11,10 +11,8 @@ import cl.bennder.bennderweb.model.LoginForm;
 import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
-import cl.bennder.entitybennderwebrest.request.CargarMantenedorBeneficioRequest;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
-import cl.bennder.entitybennderwebrest.response.CargarMantenedorBeneficioResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
@@ -72,7 +70,7 @@ public class LoginController {
             session.setAttribute("user", loginForm.getUser());
             usuarioSession.setToken(response.getToken());
 
-            rBody.setGoToUrl(GoToUrl.URL_HOME);
+            rBody.setGoToUrl(GoToUrl.URL_FUNCIONALIDADES);
             String uri = request.getScheme() + "://" +
              request.getServerName() + 
              ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +

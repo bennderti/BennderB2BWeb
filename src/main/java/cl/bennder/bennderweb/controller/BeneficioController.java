@@ -311,13 +311,13 @@ public class BeneficioController {
 //    }
 //    
     //    @RequestMapping(value = "beneficio/cargarMantenedorBeneficio", method = RequestMethod.POST)
-    @RequestMapping(value = "/home.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/beneficios.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public ModelAndView cargarMantenedorBeneficio() {
         log.info("Inicio");                    
         
         CargarMantenedorBeneficioResponse response = beneficioService.cargarMantenedorBeneficio();
         
-        ModelAndView modelAndView = new ModelAndView("home");
+        ModelAndView modelAndView = new ModelAndView("beneficios");
         
         modelAndView.addObject("beneficios", response.getListaBeneficios());        
         

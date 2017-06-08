@@ -333,7 +333,7 @@
         <script type="text/javascript">
             function onCancelar(){
                 ModalBennder.mostrar({titulo:"Beneficio",mensaje:"¿Está seguro que desea salir?",eventoAceptar:function(){
-                     window.location.href = "../home.html";   
+                     window.location.href = "../beneficios.html";   
                 }});
             }
             $(function () {

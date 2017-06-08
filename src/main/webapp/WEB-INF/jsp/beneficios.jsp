@@ -39,7 +39,9 @@
             <div class="page-header">
                 <!-- LOGO BENNDER -->
                 <div class="text-center">
+                    <a href="funcionalidades.html">
                     <img src="<c:url value="/resources/beneficio/img/logo-bennder-300.png"/>" alt = "Bennder">
+                    </a>
                 </div>
                 <!-- LOGO BENNDER -->
                 <h1>Mantenedor de Beneficios</h1>

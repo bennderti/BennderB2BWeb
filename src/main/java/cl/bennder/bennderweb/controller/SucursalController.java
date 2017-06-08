@@ -5,12 +5,10 @@
  */
 package cl.bennder.bennderweb.controller;
 
-import cl.bennder.bennderweb.model.BeneficioForm;
 import cl.bennder.bennderweb.services.SucursalService;
 import cl.bennder.bennderweb.session.SucursalSession;
 import cl.bennder.entitybennderwebrest.model.Comuna;
 import cl.bennder.entitybennderwebrest.model.Sucursal;
-import cl.bennder.entitybennderwebrest.model.Validacion;
 import cl.bennder.entitybennderwebrest.request.InfoInicioSucursalRequest;
 import cl.bennder.entitybennderwebrest.request.InfoSucursalRequest;
 import cl.bennder.entitybennderwebrest.response.InfoInicioSucursalResponse;
@@ -90,5 +88,12 @@ public class SucursalController {
         log.info("FIN");
         String respJson =  new Gson().toJson(response.getValidacion());
         return respJson;
+    }
+    @RequestMapping(value = "sucursales.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView sucursales() {
+        log.info("INICIO");
+        ModelAndView modelAndView = new ModelAndView("sucursales");
+        log.info("FIN");
+        return modelAndView;
     }
 }

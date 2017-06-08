@@ -52,6 +52,16 @@ public class ProveedorController {
     @Autowired
     private ProveedorSession proveedorSession;
     
+    
+    @RequestMapping(value = "funcionalidades.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView funcionalidades() {
+        log.info("INICIO");
+        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+        ModelAndView modelAndView = new ModelAndView("funcionalidades");
+        log.info("FIN");
+        return modelAndView;
+    }
+    
     /***
      * Método que carga propias del proveedor
      * @return View para visualizar funcionalidaes de proveedor

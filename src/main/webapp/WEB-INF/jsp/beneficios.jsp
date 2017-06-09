@@ -148,30 +148,25 @@
         <jsp:include page="/WEB-INF/jsp/utils/modal.jsp">     
             <jsp:param name="btnAceptar" value="Aceptar"/>
             <jsp:param name="btnCancelar" value="Cancelar"/>
+            <jsp:param name="soloAceptar" value="1"/>
         </jsp:include>
         <!--Modal-->    
         <!-- Loading -->
         <jsp:include page="/WEB-INF/jsp/utils/loading.jsp"/>
         <script type="text/javascript">            
             var listaBeneficiosPublicados = [];
-            
-            function onConfirmarPublicacion(){
-                listaBeneficiosPublicados =[];
-                
-                $("input.chbx-publicar").each(function(){
-                    if ($(this).is(':checked')){
-                        var idB = $(this).attr("id");
-                        listaBeneficiosPublicados.push(idB);
-                    } 
-                    
-                });
-                console.log(listaBeneficiosPublicados);
-                
-                ModalBennder.mostrar({tipo: "advertencia", mensaje: "¿Está seguro de hacer las modificaciònes en sus publicaciones?", titulo: "Publicación de Beneficios", eventoAceptar: publicar});
-            }
-            
-            function publicar()
-            {
+            var ModalPublicacion = {
+              mostrar:function(){
+                 $("#modalPublicacion .modal-title").html("Publicación de beneficios");
+                 $("#modalPublicacion .odal-text").html("¿Está seguro de hacer las modificaciònes en sus publicaciones?");
+                 $('#modalPublicacion').modal('show'); 
+              },
+              cerrar:function(){
+                  $('#modalPublicacion').modal('hide');
+              },
+              publicar:function(){
+                  ModalPublicacion.cerrar();
+              ModalLoading.mostrar();
                 $.ajax({
                     url: context+'/beneficio/publicarBeneficios.html',
                     type: 'POST',
@@ -179,22 +174,36 @@
                     dataType: 'json',
                     traditional:true,
                     success: function (data) {
+                        ModalLoading.cerrar();
                         if(data!==null && data !=='undefined'){
-                            ModalBennder.close();
-                            ModalBennder.mostrar({tipo: "error", mensaje: data.mensaje, titulo: "Publicación"});
+                            ModalBennder.mostrar({tipo: "informativo", mensaje: data.mensaje, titulo: "Publicación"});
 
                         }
                         else{
-                            ModalLoading.cerrar();
                             ModalBennder.mostrar({tipo: "error", mensaje:"Problemas al publicar beneficios" , titulo: "Publicación"});
                         }
                     },
                     error: function (x, y, z) {
+                        ModalLoading.cerrar();
                         ModalBennder.mostrar({tipo: "error", mensaje: "Error", titulo: "Publicación de Beneficios"});
                     }
                 }); 
+                  
+              }
+            };
+            function onConfirmarPublicacion(){
+                listaBeneficiosPublicados =[];                
+                $("input.chbx-publicar").each(function(){
+                    if ($(this).is(':checked')){
+                        var idB = $(this).attr("id");
+                        listaBeneficiosPublicados.push(idB);
+                    } 
+                    
+                });
+                //console.log(listaBeneficiosPublicados);
+                ModalPublicacion.mostrar();
+                //ModalBennder.mostrar({tipo: "advertencia", mensaje: "¿Está seguro de hacer las modificaciònes en sus publicaciones?", titulo: "Publicación de Beneficios", eventoAceptar: publicar});
             }
-            
             function onEditarB(id){
                 ModalLoading.mostrar();
                 window.location.href = "beneficio/editar.html?id="+id;
@@ -214,32 +223,33 @@
                     }
                   } );
             } );
-            
-//            function publicar(idBeneficio, habilitado){
-//                var agregar = true;
-//                
-////                alert(idBeneficio);
-////                
-////                alert(habilitado);
-////                            
-//                for(i=0;i<listaBeneficiosPublicados.length;i++)
-//                {
-//                    if(listaBeneficiosPublicados[i].idBeneficio == idBeneficio)
-//                    {
-//                        agregar = false;
-//                        break;
-//                    }
-//                }
-//                
-//                if(agregar)
-//                {
-//                    var beneficio = new Object();
-//                    beneficio.idBeneficio = idBeneficio;
-//                    beneficio.habilitado = habilitado;
-//                    
-//                    listaBeneficiosPublicados.push(beneficio);
-//                }             
-//            }
         </script> 
         </body>
+ 
+        
+<!--Modal de confirmación-->
+<!-- responsive css -->
+<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/modal/bennder-modal.css"/>?v=<%=Calendar.getInstance().getTimeInMillis()%>">
+<!--Modal Incio-->
+<!-- Modal -->
+  <div class="modal fade modal-bennder2" id="modalPublicacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"  aria-hidden="true" onclick="ModalPublicacion.cerrar()">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Publicación de Beneficios</h4>
+        </div>
+        <div class="modal-body">
+          <p class = "modal-text">¿Está seguro de hacer las modificaciònes en sus publicaciones?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-cancelar-bennder" onclick="ModalPublicacion.cerrar()">Cerrar</button>
+          <button type="button" class="btn btn-primary btn-aceptar-bennder" onclick="ModalPublicacion.publicar()">Publicar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
+        
+        
 </html>

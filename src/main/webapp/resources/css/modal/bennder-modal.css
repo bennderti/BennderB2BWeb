@@ -23,3 +23,30 @@
 .modal-bennder .modal-header.informativo{    background-color: #0082c8;}
 .modal-bennder .modal-header.advertencia{    background-color: #FF9800;}
 .modal-bennder .modal-header .modal-title{   color: white;} 
+
+
+
+.modal 
+{
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-bennder2 .modal-header{    background-color: #0082c8;}
+.modal-bennder2 .modal-header.error{background-color: #F64747;}
+.modal-bennder2 .modal-header.informativo{    background-color: #0082c8;}
+.modal-bennder2 .modal-header.advertencia{    background-color: #FF9800;}
+.modal-bennder2 .modal-header .modal-title{   color: white;}

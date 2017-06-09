@@ -40,8 +40,16 @@
           <p class = "modal-text"></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-cancelar-bennder" onclick="ModalBennder.close()"><c:out value="${param.btnCancelar}"/></button>
-          <button type="button" class="btn btn-primary btn-aceptar-bennder" onclick="ModalBennder.close()"><c:out value="${param.btnAceptar}"/></button>
+            <c:choose>
+                <c:when test="${param.soloAceptar eq 1}">
+                    <button type="button" class="btn btn-primary btn-aceptar-bennder" onclick="ModalBennder.close()"><c:out value="${param.btnAceptar}"/></button>
+                </c:when>
+                <c:otherwise>
+                    <button type="button" class="btn btn-default btn-cancelar-bennder" onclick="ModalBennder.close()"><c:out value="${param.btnCancelar}"/></button>
+                    <button type="button" class="btn btn-primary btn-aceptar-bennder" onclick="ModalBennder.close()"><c:out value="${param.btnAceptar}"/></button>
+                </c:otherwise>
+            </c:choose>
+          
         </div>
       </div>
       <!-- /.modal-content -->

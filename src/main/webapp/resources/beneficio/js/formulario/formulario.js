@@ -653,7 +653,7 @@ var Beneficio = {
                 if(data!==null && data !=='undefined'){
                     if(data.codigoNegocio === '0' && data.codigo ==='0'){
                         
-                        window.location.href = "../home.html";
+                        window.location.href = "../beneficios.html";
                     }
                     else{
                         ModalLoading.cerrar();

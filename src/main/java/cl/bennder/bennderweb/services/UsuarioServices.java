@@ -5,8 +5,10 @@
  */
 package cl.bennder.bennderweb.services;
 
+import cl.bennder.entitybennderwebrest.request.CambioPasswordRequest;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
+import cl.bennder.entitybennderwebrest.response.CambioPasswordResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 
@@ -23,5 +25,8 @@ public interface UsuarioServices {
      * @return Validación de recuperación de contraseña
      */
     public ValidacionResponse recuperacionPassword(RecuperacionPasswordRequest request);
+    
+    
+    public CambioPasswordResponse cambioPassword(CambioPasswordRequest request);
     
 }

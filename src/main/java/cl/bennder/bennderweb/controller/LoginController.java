@@ -11,8 +11,10 @@ import cl.bennder.bennderweb.model.LoginForm;
 import cl.bennder.bennderweb.services.BeneficioService;
 import cl.bennder.bennderweb.session.UsuarioSession;
 import cl.bennder.bennderweb.services.UsuarioServices;
+import cl.bennder.entitybennderwebrest.request.CambioPasswordRequest;
 import cl.bennder.entitybennderwebrest.request.LoginRequest;
 import cl.bennder.entitybennderwebrest.request.RecuperacionPasswordRequest;
+import cl.bennder.entitybennderwebrest.response.CambioPasswordResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
@@ -57,6 +59,30 @@ public class LoginController {
         log.info("FIN");
         return modelAndView;
     }
+    @RequestMapping(value = "/changepassword.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public ModelAndView changepassword() {
+        log.info("INICIO");
+        ModelAndView modelAndView = new ModelAndView("changepassword");
+        modelAndView.addObject("cambioPassword", new CambioPasswordRequest());
+        log.info("FIN");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/changepassword.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String updatepassword(@ModelAttribute("cambioPassword") CambioPasswordRequest cambioPassword, HttpSession session,HttpServletRequest request) {
+        log.info("INICIO");
+        log.info("consumiendo servicio para cambiar password de usuario ->{}",usuarioSession.getUsuario());
+        log.info("cambioPassword.getNewPassword()->{}",cambioPassword.getNewPassword());
+        CambioPasswordResponse response = usuarioServices.cambioPassword(new CambioPasswordRequest(cambioPassword.getNewPassword(),usuarioSession.getUsuario()));
+        LoginBodyResponse rBody = new LoginBodyResponse();
+        rBody.setValidacion(response.getValidacion());
+        log.info("validacion ->{}",response.getValidacion().toString());
+        rBody.setGoToUrl("index.html");        
+        String respJson =  new Gson().toJson(rBody);
+        log.info("FIN");
+        return respJson;
+    }
+    
+    
     @RequestMapping(value="login.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpSession session,HttpServletRequest request){
         log.info("INICIO");
@@ -69,15 +95,22 @@ public class LoginController {
 
             session.setAttribute("user", loginForm.getUser());
             usuarioSession.setToken(response.getToken());
+            if(response.isEsPasswordTemporal()){
+                log.info("se procede enviar a usuario para cambiar password ->{}",loginForm.getUser());
+                usuarioSession.setUsuario(loginForm.getUser());
+                rBody.setGoToUrl(GoToUrl.URL_CAMBIAR_PASSWORD_TEMP);
+            }            
+            else{
+                log.info("se procede enviar a home de funcionalidades->{}",loginForm.getUser());
+                rBody.setGoToUrl(GoToUrl.URL_FUNCIONALIDADES);
+            }
+//            String uri = request.getScheme() + "://" +
+//             request.getServerName() + 
+//             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+//             request.getRequestURI() +
+//            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
 
-            rBody.setGoToUrl(GoToUrl.URL_FUNCIONALIDADES);
-            String uri = request.getScheme() + "://" +
-             request.getServerName() + 
-             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
-             request.getRequestURI() +
-            (request.getQueryString() != null ? "?" + request.getQueryString() : "");
-
-            log.info("{} Se redirecciona a login");
+            //log.info("{} Se redirecciona a login");
         }
         String respJson =  new Gson().toJson(rBody);
         log.info("FIN");

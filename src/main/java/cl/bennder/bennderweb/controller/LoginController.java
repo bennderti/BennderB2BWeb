@@ -71,7 +71,7 @@ public class LoginController {
     public @ResponseBody String updatepassword(@ModelAttribute("cambioPassword") CambioPasswordRequest cambioPassword, HttpSession session,HttpServletRequest request) {
         log.info("INICIO");
         log.info("consumiendo servicio para cambiar password de usuario ->{}",usuarioSession.getUsuario());
-        log.info("cambioPassword.getNewPassword()->{}",cambioPassword.getNewPassword());
+        //log.info("cambioPassword.getNewPassword()->{}",cambioPassword.getNewPassword());
         CambioPasswordResponse response = usuarioServices.cambioPassword(new CambioPasswordRequest(cambioPassword.getNewPassword(),usuarioSession.getUsuario()));
         LoginBodyResponse rBody = new LoginBodyResponse();
         rBody.setValidacion(response.getValidacion());

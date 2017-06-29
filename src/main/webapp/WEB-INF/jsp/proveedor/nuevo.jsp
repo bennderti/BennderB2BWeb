@@ -126,7 +126,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="ti-stock">Stock</label>
-                            <form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese stock"/>
+                            <%--<form:input path="stock" autocomplete="off" id="ti-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese stock"/>--%>
+                            <input type="number" class="form-control" maxlength="50" id="ti-stock" name="stock" value="${beneficioForm.stock}" placeholder="Ingrese stock"/>
                         </div>
                     </div>
                     <div class="col-md-4">

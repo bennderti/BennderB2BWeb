@@ -241,7 +241,7 @@ public class BeneficioController {
         } catch (IOException ex) {
                     log.error("Error IOException.",ex);
         }
-        ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+        ModelAndView modelAndView = new ModelAndView("redirect:../beneficio/imagenesGenericas.html");
         log.info("FIN");
         return modelAndView;
     }

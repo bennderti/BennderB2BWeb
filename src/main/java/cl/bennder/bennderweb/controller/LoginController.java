@@ -18,11 +18,14 @@ import cl.bennder.entitybennderwebrest.response.CambioPasswordResponse;
 import cl.bennder.entitybennderwebrest.response.LoginResponse;
 import cl.bennder.entitybennderwebrest.response.ValidacionResponse;
 import com.google.gson.Gson;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author dyanez 28-12-2016
  */
+@PropertySource("classpath:bennder.properties")
 @Controller
 public class LoginController {
     
@@ -49,6 +53,8 @@ public class LoginController {
     @Autowired
     BeneficioService beneficioService;
     
+    @Resource
+    private Environment env;
         
     //.- Index
     @RequestMapping(value = "/index.html", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
@@ -128,17 +134,19 @@ public class LoginController {
     /***
      * Permite solicitar/recuperar la contraseña la cual es enviada al correo ingresado
      * @param usuario usuario bennder, usualmente email
+     * @param request Solciitud http
      * @return 
      */
     @RequestMapping(value="requestPassword.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody String recuperarPassword(@RequestParam("u") String usuario,HttpServletRequest request){
         log.info("INICIO");
         log.info("Usuario/correo a recuperar password ->{}",usuario);
-        String uri = request.getScheme() + "://" +
-             request.getServerName() + 
-             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
-             "/BennderB2BWeb/index.html";
-        log.info("url index->{}",uri);    
+//        String uri = request.getScheme() + "://" +
+//             request.getServerName() + 
+//             ("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+//             "/BennderB2BWeb/index.html";
+        String uri = env.getProperty("dns");
+        log.info("url bennder b2b->{}",uri);    
         ValidacionResponse response = usuarioServices.recuperacionPassword(new RecuperacionPasswordRequest(usuario,uri));
         String respJson =  new Gson().toJson(response);
         log.info("FIN");

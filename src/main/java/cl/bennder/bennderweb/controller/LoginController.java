@@ -69,7 +69,9 @@ public class LoginController {
     public ModelAndView changepassword() {
         log.info("INICIO");
         ModelAndView modelAndView = new ModelAndView("changepassword");
+        log.info("cambiando password temporal de usuario ->{}",usuarioSession.getUsuario());
         modelAndView.addObject("cambioPassword", new CambioPasswordRequest());
+        modelAndView.addObject("usuario", usuarioSession.getUsuario()==null?"":usuarioSession.getUsuario());
         log.info("FIN");
         return modelAndView;
     }
@@ -81,9 +83,19 @@ public class LoginController {
         CambioPasswordResponse response = usuarioServices.cambioPassword(new CambioPasswordRequest(cambioPassword.getNewPassword(),usuarioSession.getUsuario()));
         LoginBodyResponse rBody = new LoginBodyResponse();
         rBody.setValidacion(response.getValidacion());
-        log.info("validacion ->{}",response.getValidacion().toString());
-        rBody.setGoToUrl("index.html");        
-        String respJson =  new Gson().toJson(rBody);
+        String respJson = "";
+        log.info("validacion cambio de password ->{}",response.getValidacion().toString());
+        if(response.getValidacion()!=null && response.getValidacion().getCodigoNegocio().equalsIgnoreCase("0")){
+            log.info("realizando login automático");
+            respJson = this.login(new LoginForm(usuarioSession.getUsuario(), cambioPassword.getNewPassword()), session, request);
+        }
+        else{
+            log.info("redireccionando a index...");
+            rBody.setGoToUrl("index.html"); 
+            respJson =  new Gson().toJson(rBody);
+        }    
+        log.info("respJson->{}",respJson);
+        
         log.info("FIN");
         return respJson;
     }

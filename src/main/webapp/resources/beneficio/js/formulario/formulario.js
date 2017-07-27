@@ -627,7 +627,9 @@ var Beneficio = {
 //                ModalBennder.mostrar({tipo: "informativo", mensaje: "Guardar datos generales", titulo: "Datos Generales"});
                 
             },
-            error: function (x, y, z) {
+            error: function (xhr, status, error) {
+                var err = "responseText:["+xhr.responseText+"], error:["+error+"], statusText:["+xhr.statusText+"]";
+                Log.log(err);
                 ModalLoading.cerrar();
                 ModalBennder.mostrar({tipo: "error", mensaje: "Problemas al validar usuario", titulo: "Beneficio"});
             }
@@ -941,6 +943,20 @@ var Beneficio = {
             ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar categoróa.", titulo: "Cargador"});
         }
     }
+};
+var Log = {    
+    log:function(msg){
+        $.ajax({
+            url: context+'/beneficio/registrarLog.html',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {msg:msg},
+            success: function (data) {
+            },
+            error: function (x, y, z) {
+            }
+        });
+    },
 };
 
 

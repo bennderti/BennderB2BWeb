@@ -133,7 +133,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="ti-limite-stock">Limite Stock</label>
-                            <form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese límite stock para alertar"/>
+                            <%--<form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese límite stock para alertar"/>--%>
+                            <input type="number" class="form-control" autocomplete="off" maxlength="50" id="ti-limite-stock" name="limiteStock" value="${beneficioForm.limiteStock}" placeholder="Ingrese límite stock para alertar"/>
                         </div>
                     </div>
                 </div>
@@ -200,7 +201,8 @@
                         <div class="row">
                             <div class="col-md-4"><br>
                                 <label for="ti-descuento">% Descuento</label>
-                                <form:input path="porcentajeDescuento" autocomplete="off" id="ti-descuento" maxlength="50" cssClass="form-control" placeholder = "Ingrese % de descuento"/>
+                                <%--<form:input path="porcentajeDescuento" autocomplete="off" id="ti-descuento" maxlength="50" cssClass="form-control" placeholder = "Ingrese % de descuento"/>--%>
+                                <input type="number" class="form-control" autocomplete="off"  id="ti-descuento" name="porcentajeDescuento" value="${beneficioForm.porcentajeDescuento}" placeholder="Ingrese % de descuento" min="0" max = "100"/>
                             </div>
                         </div>
                     </div>
@@ -211,11 +213,13 @@
                         <div class="row"><br>
                             <div class="col-md-4">
                                 <label for="ti-normal">Precio Antes</label>
-                                <form:input path="precioNormal" autocomplete="off" id="ti-normal" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio normal"/>
+                                <%--<form:input path="precioNormal" autocomplete="off" id="ti-normal" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio normal"/>--%>
+                                <input type="number" class="form-control" autocomplete="off" maxlength="50" id="ti-normal" name="precioNormal" value="${beneficioForm.precioNormal}" placeholder="Ingrese precio normal"/>
                             </div>
                             <div class="col-md-4">
                                 <label for="ti-oferta">Precio Hoy</label>
-                                <form:input path="precioOferta" autocomplete="off" id="ti-oferta" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio oferta"/>
+                                <%--<form:input path="precioOferta" autocomplete="off" id="ti-oferta" maxlength="50" cssClass="form-control" placeholder = "Ingrese precio oferta"/>--%>
+                                <input type="number" class="form-control" autocomplete="off" maxlength="50" id="ti-oferta" name="precioOferta" value="${beneficioForm.precioOferta}" placeholder="Ingrese precio oferta"/>
                             </div>
                         </div>
                     </div>
@@ -317,7 +321,7 @@
         <!-- FOOTER MANTENEDOR -->
         <footer class="footer">
             <div class="container">
-                <p class="text-muted">Copyright ©2017 Bennder. Todos los derechos reservados. | ¿Tienes alguna duda? <a href="mailto:soporte@bennder.cl?subject=Contacto por soporte proveedor">soporte@bennder.cl</a></p>
+                <p class="text-muted">Copyright ©2017 Bennder. Todos los derechos reservados. | ¿Tienes alguna duda? <a href="mailto:soporte@bennder.club?subject=Contacto por soporte proveedor">soporte@bennder.club</a></p>
             </div>
         </footer>
         <!-- FOOTER MANTENEDOR -->

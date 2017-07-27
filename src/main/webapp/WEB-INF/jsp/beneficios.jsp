@@ -129,7 +129,7 @@
         <!-- FOOTER MANTENEDOR -->
         <footer class="footer">
             <div class="container">
-                <p class="text-muted">Copyright ©2017 Bennder. Todos los derechos reservados. | ¿Tienes alguna duda? <a href="mailto:soporte@bennder.cl?subject=Contacto por soporte proveedor">soporte@bennder.cl</a></p>
+                <p class="text-muted">Copyright ©2017 Bennder. Todos los derechos reservados. | ¿Tienes alguna duda? <a href="mailto:soporte@bennder.club?subject=Contacto por soporte proveedor">soporte@bennder.club</a></p>
             </div>
         </footer>
         <!-- FOOTER MANTENEDOR -->

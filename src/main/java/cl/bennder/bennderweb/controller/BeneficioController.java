@@ -161,12 +161,15 @@ public class BeneficioController {
     @RequestMapping(value = "/beneficio/guardar.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody String  guardaDatosGenerales(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
         log.info("INICIO");
-        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-        log.info("Datos beneficio ->{}.",beneficioForm.toString());
-        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        //beneficioService.validaGuardarBeneficio(beneficioForm);
-        beneficioSession.setBeneficioForm(beneficioForm);
-        
+        try {
+            log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+            log.info("Datos beneficio ->{}.",beneficioForm.toString());
+            //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+            //beneficioService.validaGuardarBeneficio(beneficioForm);
+            beneficioSession.setBeneficioForm(beneficioForm);
+        } catch (Exception e) {
+            log.error("error en guardaDatosGenerales:",e);
+        }
         log.info("FIN");
         String respJson =  new Gson().toJson(new Validacion("0", "0", "OK"));
         return respJson;
@@ -174,18 +177,24 @@ public class BeneficioController {
     @RequestMapping(value = "/beneficio/guardarImagenes.html", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public @ResponseBody String  guardaImagenes(@ModelAttribute("beneficioForm") BeneficioForm beneficioForm) {
         log.info("INICIO");
-        log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
-        log.info("Datos imagenes upload ->{}.",beneficioForm.toString());
-        
-        if(beneficioSession.getBeneficioForm()!=null){
-            log.info("seteando imagenes upload");
-           beneficioSession.getBeneficioForm().setImages(beneficioForm.getImages());
+        String respJson =  new Gson().toJson(new Validacion("0", "1", "Problemas al guardar imágenes..."));
+        try {
+            log.info("Usuario connected ->{}",usuarioSession.getIdUsuario());
+            log.info("Datos imagenes upload ->{}.",beneficioForm.toString());
+
+            if(beneficioSession.getBeneficioForm()!=null){
+                log.info("seteando imagenes upload");
+               beneficioSession.getBeneficioForm().setImages(beneficioForm.getImages());
+            }
+            log.info("Datos imagenes session ->{}.",beneficioSession.getBeneficioForm().toString());
+
+            //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
+            ValidacionResponse validacion = beneficioService.validaGuardarBeneficio(beneficioSession.getBeneficioForm());
+            respJson =  new Gson().toJson(validacion.getValidacion()); 
+        } catch (Exception e) {
+            log.error("error en guardaImagenes:",e);
         }
-        log.info("Datos imagenes session ->{}.",beneficioSession.getBeneficioForm().toString());
         
-        //ModelAndView modelAndView = new ModelAndView("redirect:../home.html");
-        ValidacionResponse validacion = beneficioService.validaGuardarBeneficio(beneficioSession.getBeneficioForm());
-        String respJson =  new Gson().toJson(validacion.getValidacion());        
         log.info("FIN");
         return respJson;
     }

@@ -109,6 +109,7 @@ public class LoginController {
             else{
                 log.info("se procede enviar a home de funcionalidades->{}",loginForm.getUser());
                 rBody.setGoToUrl(GoToUrl.URL_FUNCIONALIDADES);
+                usuarioSession.setUsuario(loginForm.getUser());
             }
 //            String uri = request.getScheme() + "://" +
 //             request.getServerName() + 
@@ -161,5 +162,15 @@ public class LoginController {
 //        log.info("FIN");
 //        return modelAndView;
 //    }
+    
+    @RequestMapping(value="registrarLog.html", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public @ResponseBody String registrarLog(@RequestParam("msg") String responseText,HttpServletRequest request){
+        log.info("INICIO");
+        log.info("usuario ->{}",usuarioSession.getUsuario());
+        log.info("responseText->{}",responseText);
+        String respJson =  "OK";
+        log.info("FIN");
+        return respJson;
+    }
       
 }

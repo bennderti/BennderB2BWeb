@@ -26,7 +26,20 @@ jQuery(document).on('ready', function () {
     });
 
 });
-
+var Log = {    
+    log:function(msg){
+        $.ajax({
+            url: 'registrarLog.html',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {msg:msg},
+            success: function (data) {
+            },
+            error: function (x, y, z) {
+            }
+        });
+    },
+};
 var LoginBennder = {    
     recuperacionPassword:function(){
         //.- validar formato

@@ -56,7 +56,7 @@
                         <p>
                             <label>
                                 Password <span class="required">*</span></label>
-                                <form:input path="newPassword" autocomplete="off" id="new-password" maxlength="50"/>
+                                <form:password path="newPassword" autocomplete="off" id="new-password" maxlength="50"/>
                         </p>
                         <p>
                             <label>

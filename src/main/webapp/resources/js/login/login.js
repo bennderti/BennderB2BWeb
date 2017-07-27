@@ -24,6 +24,11 @@ jQuery(document).on('ready', function () {
             LoginBennder.changePassword();
         }
     });
+    $("#username-bennder").keyup(function (e) {
+        if (e.keyCode === 13) {
+            LoginBennder.recuperacionPassword();
+        }
+    });
 
 });
 var Log = {    

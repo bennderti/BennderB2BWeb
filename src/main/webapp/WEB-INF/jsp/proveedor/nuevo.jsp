@@ -274,6 +274,10 @@
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
+                    <div class="alert alert-warning valida-upload-img" style="display: none;">
+                        <strong>Adventencia:</strong><span></span>
+                      </div>
+                    
                     <div class = "name-img-validas">
                         <c:if test="${not empty beneficioForm.imagenesBeneficio}">
                             <c:forEach items="${beneficioForm.imagenesBeneficio}" varStatus="i" var = "img">

@@ -84,6 +84,7 @@ var VisualizadorImg = {
             VisualizadorImg.eliminarImgsNoValidas();
             
         }
+        VisualizadorImg.filesUp = 0;
      },
     eliminarImgsNoValidas:function(){
 
@@ -447,22 +448,30 @@ var Beneficio = {
         var haSeleccionado=false;
         var fileList = this.files;
         if(fileList!==null && fileList!=='undefined' && fileList.length > 0){
-            Beneficio.cleanThumbnail();
-            var anyWindow = window.URL || window.webkitURL;
-            for(var i = 0; i < fileList.length; i++){
-                haSeleccionado = true;
-              //get a blob to play with
-              var objectUrl = anyWindow.createObjectURL(fileList[i]);
-              $(".thumbnail:eq("+i+") img").attr("src", objectUrl );
-              $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").css("display","block");
-              $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(fileList[i].name));
-              $(".thumbnail:eq("+i+")").addClass("load");
-              $(".thumbnail:eq("+i+")").parent().find("span.t-image").text(fileList[i].name);
-              //$('.preview-area').append('<img src="' + objectUrl + '" />');
-              // get rid of the blob
-              window.URL.revokeObjectURL(fileList[i]);
-              VisualizadorImg.validaDimensionImg(fileList[i],fileList.length);
+            
+            if(fileList.length < 2){
+                ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar un mínimo de 2 imágenes.", titulo: "Imágenes"});
             }
+            else{
+                Beneficio.cleanThumbnail();
+                var anyWindow = window.URL || window.webkitURL;
+                for(var i = 0; i < fileList.length; i++){
+                    haSeleccionado = true;
+                  //get a blob to play with
+                  var objectUrl = anyWindow.createObjectURL(fileList[i]);
+                  $(".thumbnail:eq("+i+") img").attr("src", objectUrl );
+                  $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").css("display","block");
+                  $(".thumbnail:eq("+i+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(fileList[i].name));
+                  $(".thumbnail:eq("+i+")").addClass("load");
+                  $(".thumbnail:eq("+i+")").parent().find("span.t-image").text(fileList[i].name);
+                  //$('.preview-area').append('<img src="' + objectUrl + '" />');
+                  // get rid of the blob
+                  window.URL.revokeObjectURL(fileList[i]);
+                  VisualizadorImg.validaDimensionImg(fileList[i],fileList.length);
+                }
+            }
+            
+
         }
         else{
             ModalBennder.mostrar({tipo: "advertencia", mensaje: "Ud no ha seleccionado ninguna imágen, se conservan las anteriores", titulo: "Imágenes"});
@@ -549,21 +558,27 @@ var Beneficio = {
       var nSelected =$(".img-generica.selected").length;
       var name = "";
       if(nSelected>0){
-        this.cleanThumbnail();
-        $(".img-generica.selected").each(function(index){
-            haSeleccionado = true;
-            if(index < nImg){
-                var src = $(this).attr("src");
-                name = src.split("/")[src.split("/").length-1];
-                $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
-                $(".thumbnail:eq("+index+")").removeClass("load")
-                                             .addClass("load");
-                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").css("display","block");
-                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(name));
-                $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.t-image").text(name);
-                VisualizadorImg.addImgValida(src);
+            if(nSelected < 2){
+                ModalBennder.mostrar({tipo: "advertencia", mensaje: "Favor seleccionar un mínimo de 2 imágenes.", titulo: "Imágenes"});
+            } 
+            else{
+                this.cleanThumbnail();
+                $(".img-generica.selected").each(function(index){
+                    haSeleccionado = true;
+                    if(index < nImg){
+                        var src = $(this).attr("src");
+                        name = src.split("/")[src.split("/").length-1];
+                        $(".carousel-inner .thumbnail img:eq("+index+")").attr("src",src);
+                        $(".thumbnail:eq("+index+")").removeClass("load")
+                                                     .addClass("load");
+                        $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").css("display","block");
+                        $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.button-checkbox").html(Beneficio.getHtmlBtnPrincipal(name));
+                        $(".carousel-inner .thumbnail:eq("+index+")").parent().find("span.t-image").text(name);
+                        VisualizadorImg.addImgValida(src);
+                    }
+                }); 
             }
-        });
+
       }
       else{
           ModalBennder.mostrar({tipo: "advertencia", mensaje: "Ud no ha seleccionado ninguna imágen, se conservan las anteriores", titulo: "Imágenes"});

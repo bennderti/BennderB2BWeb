@@ -36,6 +36,8 @@ var VisualizadorImg = {
     },
     onDeleteImage:function(){
         $iconDelte = $(this);
+        $iconDelte.parent().find("img").removeAttr("height");
+        $iconDelte.parent().find("img").removeAttr("width");
         $iconDelte.parent().find("img").attr("src",VisualizadorImg.getImgExample());
         $iconDelte.parent().find("span.t-image").text("");
         $iconDelte.parent().find("a.thumbnail").removeClass("load");
@@ -66,12 +68,15 @@ var VisualizadorImg = {
             window.URL.revokeObjectURL( img.src );
             VisualizadorImg.filesUp++;
             if( width > VisualizadorImg.dimension.w || height > VisualizadorImg.dimension.h ) {
-                VisualizadorImg.imgNoVal.push(file.name);
+                //VisualizadorImg.imgNoVal.push(file.name);
+                VisualizadorImg.imgNoVal.push({name:file.name,w:width,h:height});
             }
-            else{
+            //se comenta para considerar imagenes a escalar
+            //Guardamos nombres de imagenes
+            //else{
                 VisualizadorImg.addImgValida(file.name);
      
-            }
+            //}
             if(VisualizadorImg.filesUp === N){
                 VisualizadorImg.validarImagenFueraRango();
             }
@@ -80,12 +85,80 @@ var VisualizadorImg = {
     validarImagenFueraRango:function(){
         if(VisualizadorImg.imgNoVal.length > 0){
             $(".valida-upload-img").css("display","block");
-            $(".valida-upload-img span").text("Las siguientes imágenes NO cumplen con dimensiones permitidas(ancho max: "+VisualizadorImg.dimension.w+" px, alto max: "+VisualizadorImg.dimension.h+" px) y fueron eliminadas: "+VisualizadorImg.imgNoVal);
-            VisualizadorImg.eliminarImgsNoValidas();
-            
+            //eliminando iumagenes cargadas
+//            $(".valida-upload-img span").text("Las siguientes imágenes NO cumplen con dimensiones permitidas(ancho max: "+VisualizadorImg.dimension.w+" px, alto max: "+VisualizadorImg.dimension.h+" px) y fueron eliminadas: "+VisualizadorImg.imgNoVal);
+//            VisualizadorImg.eliminarImgsNoValidas();
+            //.- escalando imagenes
+            $(".valida-upload-img span").text("Las siguientes imágenes superan las dimensiones permitidas(ancho max: "+VisualizadorImg.dimension.w+" px, alto max: "+VisualizadorImg.dimension.h+" px), serán escaladas y pueden que pierdan calidad: "+VisualizadorImg.getListadoImages());
+            VisualizadorImg.escalarTemporal();
         }
         VisualizadorImg.filesUp = 0;
      },
+     getListadoImages:function(){
+        var text = "";
+        for( var i=0;i<VisualizadorImg.imgNoVal.length;i++){
+            text+=VisualizadorImg.imgNoVal[i].name+"";
+            if(i< VisualizadorImg.imgNoVal.length-1){
+                text+=",";
+            }
+        }
+        return text;
+     },
+     escalarImagen:function(imagenElemento,dataImagen){
+         var newW = dataImagen.w;
+         var newH = dataImagen.h;
+         if(dataImagen.w > VisualizadorImg.dimension.w && dataImagen.h > VisualizadorImg.dimension.h ){
+             //Se toma referencia ancho para obtener nuevo alto
+             newW = VisualizadorImg.dimension.w;
+             newH = (VisualizadorImg.dimension.w * dataImagen.h)/dataImagen.w;
+             //validamos si nuevo alto supero el maximo
+             if(newH > VisualizadorImg.dimension.h){
+                 newW = (VisualizadorImg.dimension.w * VisualizadorImg.dimension.h)/newH;
+                 newH = VisualizadorImg.dimension.h;                 
+             }
+         }
+         else if(dataImagen.w > VisualizadorImg.dimension.w){
+             newW = VisualizadorImg.dimension.w;
+             newH = (VisualizadorImg.dimension.w * dataImagen.h)/dataImagen.w;
+         }
+         else{
+             newH = VisualizadorImg.dimension.h;
+             newW = (VisualizadorImg.dimension.h * dataImagen.w)/dataImagen.h;
+         }
+       //if( width > VisualizadorImg.dimension.w || height > VisualizadorImg.dimension.h ) {
+       newW = parseInt(newW);
+       newH = parseInt(newH);
+       $(imagenElemento).css("width",newW+"px");
+       $(imagenElemento).css("height",newH+"px");
+       dataImagen.w = newW;
+       dataImagen.h = newH;       
+     },
+     escalarTemporal:function(){
+        
+         $(".thumbnail.load").each(function(){	
+            var nameImg = $(this).parent().find("span.t-image").text();			
+            //if($.inArray(nameImg,VisualizadorImg.imgNoVal) !== -1){
+            for( var i=0;i<VisualizadorImg.imgNoVal.length;i++){
+                if(nameImg === VisualizadorImg.imgNoVal[i].name){
+                    VisualizadorImg.escalarImagen($(this).parent().find("img"),VisualizadorImg.imgNoVal[i]);
+                }
+            }
+            
+//            if($.inArray(nameImg,VisualizadorImg.imgNoVal.name) !== -1){    
+//                //$(this).parent().find("img").attr("src",VisualizadorImg.getImgExample());
+//                VisualizadorImg.escalarImagen($(this).parent().find("img"),VisualizadorImg.imgNoVal);
+////                $(this).parent().find("span.t-image").text("");
+////                $(this).parent().find("a.thumbnail").removeClass("load");
+////                $(this).parent().find(".button-checkbox").css("display","none");
+////                VisualizadorImg.deleImageFromTypeFile(nameImg);
+//            }
+        //$.inArray("3423454322254.jpg",imgs);
+        //imgLoad.push({src:$(this).find("img").attr("src"),name:$(this).parent().find("span.t-image").text()});
+       });
+//       if(VisualizadorImg.imgNoVal!==null && VisualizadorImg.imgNoVal.length > 0){
+//           VisualizadorImg.reordenarImagen();
+//       }
+    },
     eliminarImgsNoValidas:function(){
 
         /*$iconDelte = $(this);
@@ -541,7 +614,9 @@ var Beneficio = {
           
 
     },
-    cleanThumbnail:function(){       
+    cleanThumbnail:function(){
+       $(".carousel-inner .thumbnail img").removeAttr("height");
+       $(".carousel-inner .thumbnail img").removeAttr("width");
        $(".carousel-inner .thumbnail img").attr("src",$("#rutaImagenExample").val());
        $(".content-img-benefio span.button-checkbox").html('');
     },
@@ -611,7 +686,16 @@ var Beneficio = {
         $("#nameImagePrincipal").val(imgP);
         $("#id-tipo-beneficio").val($("#li-tipo-promo li.active input.tb").val());
         
+        //imagenes a escalar
         
+        var inputEscalables ="";
+        for( var i=0 ; i<VisualizadorImg.imgNoVal.length; i++){
+            var v = VisualizadorImg.imgNoVal[i];
+            inputEscalables+="<input class = 'i-escalables' name='imagenesEscalables["+i+"].nombre' type='hidden' value='"+v.name+"'/>";
+            inputEscalables+="<input class = 'i-escalables' name='imagenesEscalables["+i+"].anchoEscalable' type='hidden' value='"+v.w+"'/>";
+            inputEscalables+="<input class = 'i-escalables' name='imagenesEscalables["+i+"].altoEscalable' type='hidden' value='"+v.h+"'/>";
+        }
+        $("#imgEscalables").html(inputEscalables);
         Beneficio.onGuardaDatosGenerales();
     }    
     ,onGuardaDatosGenerales:function(){

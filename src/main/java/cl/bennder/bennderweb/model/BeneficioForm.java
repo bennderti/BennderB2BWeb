@@ -5,6 +5,7 @@
  */
 package cl.bennder.bennderweb.model;
 
+import cl.bennder.entitybennderwebrest.model.ImagenEscalable;
 import cl.bennder.entitybennderwebrest.model.ImagenGenerica;
 import cl.bennder.entitybennderwebrest.utils.UtilsBennder;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class BeneficioForm {
     private Integer altoMaxImg;
     private List<String> imagenesBeneficio;
     private List<String> nameImagenesValidas;
+    private List<ImagenEscalable> imagenesEscalables;
     
     public BeneficioForm() {
         this.idTipoBeneficioSelected = -1;
@@ -272,11 +274,24 @@ public class BeneficioForm {
         this.nameImagenesValidas = nameImagenesValidas;
     }
 
-    @Override
-    public String toString() {
-        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", imagenesBeneficio=" + imagenesBeneficio + ", nameImagenesValidas=" + nameImagenesValidas + '}';
+    public List<ImagenEscalable> getImagenesEscalables() {
+        return imagenesEscalables;
     }
 
+    public void setImagenesEscalables(List<ImagenEscalable> imagenesEscalables) {
+        this.imagenesEscalables = imagenesEscalables;
+    }
+    
+//    @Override
+//    public String toString() {
+//        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", images=" + images + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", imagenesBeneficio=" + imagenesBeneficio + ", nameImagenesValidas=" + nameImagenesValidas + '}';
+//    }
+
+    @Override
+    public String toString() {
+        return "BeneficioForm{" + "idBeneficio=" + idBeneficio + ", nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaExpiracion=" + fechaExpiracion + ", descripcion=" + descripcion + ", stock=" + stock + ", limiteStock=" + limiteStock + ", idCategoriaSelected=" + idCategoriaSelected + ", idSubCategoriaSelected=" + idSubCategoriaSelected + ", idTipoBeneficioSelected=" + idTipoBeneficioSelected + ", sucursalesSelected=" + sucursalesSelected + ", imagenesGenericas=" + imagenesGenericas + ", condiciones=" + condiciones + ", adicionales=" + adicionales + ", precioNormal=" + precioNormal + ", precioOferta=" + precioOferta + ", porcentajeDescuento=" + porcentajeDescuento + ", idRegionSelected=" + idRegionSelected + ", tipoCargaImagen=" + tipoCargaImagen + ", nameImagePrincipal=" + nameImagePrincipal + ", totalImagenessPermitidos=" + totalImagenessPermitidos + ", anchoMaxImg=" + anchoMaxImg + ", altoMaxImg=" + altoMaxImg + ", imagenesBeneficio=" + imagenesBeneficio + ", nameImagenesValidas=" + nameImagenesValidas + ", imagenesEscalables=" + imagenesEscalables + '}';
+    }
+    
     
 
 

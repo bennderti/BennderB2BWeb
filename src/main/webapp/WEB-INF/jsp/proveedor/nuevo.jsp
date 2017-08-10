@@ -274,6 +274,7 @@
                         </div>                        
                     </div>
                     <label>Imagenes cargadas para la promoción</label>
+                    <div style="display: none;" id="imgEscalables"></div>
                     <div class="alert alert-warning valida-upload-img" style="display: none;">
                         <strong>Adventencia:</strong><span></span>
                       </div>

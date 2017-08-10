@@ -172,6 +172,7 @@ public class BeneficioServiceImpl implements BeneficioService{
             request.setPorcentajeDescuento(beneficioForm.getPorcentajeDescuento());
             request.setPrecioNormal(beneficioForm.getPrecioNormal());
             request.setPrecioOferta(beneficioForm.getPrecioOferta());
+            request.setImagenesEscalables(beneficioForm.getImagenesEscalables());
             if(beneficioForm.getIdTipoBeneficioSelected()!=null){
                 TipoBeneficio tb = new TipoBeneficio();
                 tb.setIdTipoBeneficio(beneficioForm.getIdTipoBeneficioSelected());

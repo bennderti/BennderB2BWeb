@@ -39,9 +39,17 @@ var VisualizadorImg = {
         $iconDelte.parent().find("img").removeAttr("height");
         $iconDelte.parent().find("img").removeAttr("width");
         $iconDelte.parent().find("img").attr("src",VisualizadorImg.getImgExample());
-        $iconDelte.parent().find("span.t-image").text("");
         $iconDelte.parent().find("a.thumbnail").removeClass("load");
         $iconDelte.parent().find(".button-checkbox").css("display","none");
+        //.- elmiminar input hidden
+        var nombreImagen = $iconDelte.parent().find("span.t-image").text();
+        $(".name-img-validas input").each(function(){
+            if($(this).val().indexOf(nombreImagen) !== -1){
+                $(this).remove();
+                return false;
+            }
+        });
+        $iconDelte.parent().find("span.t-image").text("");
         
         //$iconDelte.remove();
         VisualizadorImg.reordenarImagen();
@@ -275,7 +283,7 @@ var Beneficio = {
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
-                    '    <a style="cursor: pointer;"class="thumbnail" onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <a style="cursor: pointer;"class="thumbnail load" onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';
@@ -287,7 +295,7 @@ var Beneficio = {
                     '        <input type="checkbox" class="hidden">'+
                     '        <input class="nameImg" type="hidden" value="'+nombreImagenPrincipal+'"/>'+
                     '    </span>'+
-                    '    <a style="cursor: pointer;" class="thumbnail"  onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
+                    '    <a style="cursor: pointer;" class="thumbnail load"  onclick="Beneficio.previewImage(this);"><img src="'+urlImg+'" alt="Image" style="max-width:100%;"></a>'+
                     '    <span class ="t-image">'+nombreImagenPrincipal+'</span>'+
                     '    <span class="glyphicon glyphicon-remove icon-delete-img" aria-hidden="true"></span>'+
                     '</div>';   

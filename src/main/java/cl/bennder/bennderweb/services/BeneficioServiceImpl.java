@@ -227,6 +227,7 @@ public class BeneficioServiceImpl implements BeneficioService{
                         List<ImagenGenerica> tempsPrivada = new ArrayList<>();
                         ImagenGenerica imgGenerica = null;
                         for(String urlImg : beneficioForm.getNameImagenesValidas()){
+                            if(urlImg!=null){
                                 imgGenerica = new ImagenGenerica();
                                 imgGenerica.setUrlImagen(urlImg);
                                 if(!urlImg.contains(beneficioForm.getNameImagePrincipal())){                                
@@ -236,6 +237,7 @@ public class BeneficioServiceImpl implements BeneficioService{
                                     log.info("Imagen principal ->{}",beneficioForm.getNameImagePrincipal());
                                     request.getImagenesGenericas().add(imgGenerica);
                                 }
+                            }
                         }
                         //utilizamos aitrbuto de imagene genérica
                         request.setTieneImagenGenerica(false);

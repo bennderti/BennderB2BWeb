@@ -418,7 +418,7 @@ var Beneficio = {
 
 
          var addCondicion = ' <div class="control-group input-group condition-added" style="margin-top:10px">'+
-                                                '	<input type="text" name="condiciones['+index+']" value = "'+condicion+'" class="form-control" placeholder="Eliminar condición comercial">'+
+                                                '	<input type="text" name="condiciones['+index+']" value = "'+condicion+'" class="form-control" placeholder="Eliminar condición comercial" maxlength="100">'+
                                                 '	<div class="input-group-btn"> '+
                                                 '	  <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarCondicion(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>'+
                                                 '	</div>'

@@ -104,7 +104,7 @@
                 <!-- DESCRIPCIÓN -->
                 <div class="form-group">
                     <label for="ta-descripcion">Descripción</label>
-                    <form:textarea  rows="6" path="descripcion" id="ta-descripcion" cssClass="form-control" placeholder="Escribe la descripción de la promoción, producto o servicio"/> 
+                    <form:textarea  maxlength="1000" rows="6" path="descripcion" id="ta-descripcion" cssClass="form-control" placeholder="Escribe la descripción de la promoción, producto o servicio"/> 
                 </div>
                 <!-- DESCRIPCIÓN --> 
                 <!-- FECHAS DE VIGENCIA STOCK -->
@@ -146,7 +146,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body content-condicion-comercial">
                         <div class="input-group control-group after-add-more">
-                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial (presione agregar o enter)"/>
+                            <input type="text" name="add-condicion" id = "add-condicion" class="form-control" placeholder="Ingresar condición comercial (presione agregar o enter)" maxlength="100"/>
                             <div class="input-group-btn"> 
                                     <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaCodicion(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                             </div>
@@ -154,7 +154,7 @@
                         <c:if test="${not empty condiciones}">                            
                             <c:forEach items="${condiciones}" varStatus="i" var = "condicion">
                                <div class="control-group input-group condition-added" style="margin-top:10px">
-                                    <input type="text" name="condiciones[${i.index}]" value = "${condicion}" class="form-control" placeholder="Eliminar condición comercial">
+                                    <input type="text" name="condiciones[${i.index}]" value = "${condicion}" class="form-control" placeholder="Eliminar condición comercial" maxlength="100">
                                     <div class="input-group-btn"> 
                                       <button class="btn btn-danger remove" type="button" onclick="Beneficio.eliminarCondicion(this)"><i class="glyphicon glyphicon-remove" ></i> Eliminar</button>
                                     </div>
@@ -231,7 +231,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body content-prod-servicio-adicional">
                                 <div class="input-group control-group after-add-more">
-                                <input type="text" name="add-adicional" id = "add-adicional" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)">
+                                <input type="text" name="add-adicional" id = "add-adicional" class="form-control" placeholder="Agregar producto/servicio adicional (presione Agregar o Enter)" maxlength="200">
                                         <div class="input-group-btn"> 
                                                 <button class="btn btn-success add-more" type="button" onclick="Beneficio.agregaProductoAdicional(this);"><i class="glyphicon glyphicon-plus"></i> Agregar</button>
                                         </div>

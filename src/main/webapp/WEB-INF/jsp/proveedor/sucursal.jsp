@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="ipt-pwd-pos">Contraseña Caje POS:</label>
+            <label class="control-label col-sm-2" for="ipt-pwd-pos">Contraseña Canje POS:</label>
             <div class="col-md-4">
                 <form:input path="passwordPOS" id="ipt-pwd-pos" cssClass="form-control"
                             placeholder="Ingrese password de canje beneficio en POS" maxlength="50"/>

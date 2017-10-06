@@ -132,9 +132,9 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="ti-limite-stock">Limite Stock</label>
+                            <label for="ti-limite-stock">Alerta de Stock</label>
                             <%--<form:input path="limiteStock" autocomplete="off" id="ti-limite-stock" maxlength="50" cssClass="form-control" placeholder="Ingrese límite stock para alertar"/>--%>
-                            <input type="number" class="form-control" autocomplete="off" maxlength="50" id="ti-limite-stock" name="limiteStock" value="${beneficioForm.limiteStock}" placeholder="Ingrese límite stock para alertar"/>
+                            <input type="number" class="form-control" autocomplete="off" maxlength="50" id="ti-limite-stock" name="limiteStock" value="${beneficioForm.limiteStock}" placeholder="Ingrese alerta stock para alertar"/>
                         </div>
                     </div>
                 </div>
